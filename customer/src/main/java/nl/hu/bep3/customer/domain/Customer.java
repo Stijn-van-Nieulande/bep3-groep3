@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Customer {
     private CustomerId id;
-    private List<ReviewId> reviewIds;
-
+    private String address;
+    private String email;
+    private String phoneNumber;
 }
