@@ -37,4 +37,22 @@ public class Ingredient {
   public void setName(String name) {
     this.name = name;
   }
+
+  public List<FoodAllergy> getAllergies() {
+    return allergies;
+  }
+
+  public boolean addAllergy(FoodAllergy foodAllergy){
+    if (!allergies.contains(foodAllergy)) {
+      return allergies.add(foodAllergy);
+    }
+    return false;
+  }
+
+  public boolean removeAllergy(FoodAllergy foodAllergy){
+    if (allergies.contains(foodAllergy)) {
+      return allergies.remove(foodAllergy);
+    }
+    return false;
+  }
 }

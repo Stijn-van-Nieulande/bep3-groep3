@@ -4,7 +4,7 @@ import nl.hu.bep3.dish.domain.FoodAllergy;
 
 import java.util.List;
 
-public class IngredientInDto {
+public class IngredientDto {
   public Long id;
   public String name;
   public List<FoodAllergy> allergies;
