@@ -28,10 +28,7 @@ public class QueueSender {
   }
 
   public void sendIngredient(Ingredient ingredient) {
-    IngredientDto ingredientDto = new IngredientDto();
-    ingredientDto.id = ingredient.getId();
-    ingredientDto.name = ingredient.getName();
-    ingredientDto.allergies = ingredient.getAllergies();
+    IngredientDto ingredientDto = new IngredientDto(ingredient.getId(), ingredient.getName(), ingredient.getAllergies());
 
     final String message = DishApplication.GSON.toJson(ingredientDto);
 
