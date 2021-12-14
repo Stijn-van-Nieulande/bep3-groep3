@@ -1,10 +1,17 @@
 package nl.hu.bep3.kitchen.domain;
 
-import nl.hu.bep3.kitchen.domain.idObjects.IngredientId;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-import java.util.List;
-
+@Entity
 public class IngredientInStock {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     private int amount;
-    private List<IngredientId> ingredient;
+    private Long ingredientId;
+    private AmountUnit amountUnit;
 }

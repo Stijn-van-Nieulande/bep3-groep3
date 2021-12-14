@@ -1,9 +1,15 @@
 package nl.hu.bep3.kitchen.domain;
 
-import nl.hu.bep3.kitchen.domain.idObjects.EmployeeId;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
 public class Employee {
-    private EmployeeId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private String firstName;
     private String lastName;
