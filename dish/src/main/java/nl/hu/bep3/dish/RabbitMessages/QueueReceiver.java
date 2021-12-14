@@ -20,7 +20,7 @@ public class QueueReceiver {
     System.out.println(" [x] Received '" + message + "'");
   }
 
-  @RabbitListener(queues = "bep.dish.dish")
+  @RabbitListener(queues = "bep.dish.requests")
   public String getDish(final Long id) {
     final String message = DishApplication.GSON.toJson(dishApplicationService.getDishById(id));
     return message;
