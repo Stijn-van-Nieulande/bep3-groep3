@@ -1,17 +1,18 @@
 package nl.hu.bep3.dish.domain;
 
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document
 public class IngredientAmount {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+//  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
   private float amount;
   private AmountUnit amountUnit;
 
-  @ManyToOne
-  @JoinColumn(name = "ingredient_id")
+//  @ManyToOne
+//  @JoinColumn(name = "ingredient_id")
   private Ingredient ingredient;
 
   public IngredientAmount() {

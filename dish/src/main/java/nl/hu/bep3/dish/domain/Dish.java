@@ -1,24 +1,26 @@
 package nl.hu.bep3.dish.domain;
 
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Document
 public class Dish {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+//  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
   private String name;
   private double price;
 
-  @OneToMany
-  @JoinTable(
-          name = "ingredient_amounts_in_dish",
-          joinColumns = @JoinColumn( name="dish_id"),
-          inverseJoinColumns = @JoinColumn( name="ingredient_amount_id")
-  )
+//  @OneToMany
+//  @JoinTable(
+//          name = "ingredient_amounts_in_dish",
+//          joinColumns = @JoinColumn( name="dish_id"),
+//          inverseJoinColumns = @JoinColumn( name="ingredient_amount_id")
+//  )
   private List<IngredientAmount> ingredients = new ArrayList<IngredientAmount>();
 
   public Dish() {}

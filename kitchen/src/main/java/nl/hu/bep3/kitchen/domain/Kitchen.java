@@ -1,33 +1,36 @@
 package nl.hu.bep3.kitchen.domain;
 
-import javax.persistence.*;
+import nl.hu.bep3.kitchen.domain.exceptions.orderNotFoundException;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+@Document
 public class Kitchen {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String restaurantName;
     private String address;
 
-    @OneToOne
+//    @OneToOne
     private Stock stock;
 
 //    private List<Employee> employees;
 
-    @ElementCollection
-    @CollectionTable(name = "kitchen_menu")
+//    @ElementCollection
+//    @CollectionTable(name = "kitchen_menu")
     private List<Long> menu;
 
-    @ElementCollection
-    @CollectionTable(name = "pending_orders")
+//    @ElementCollection
+//    @CollectionTable(name = "pending_orders")
     private List<Long> pendingOrders;
 
-    @ElementCollection
-    @CollectionTable(name = "orders")
+//    @ElementCollection
+//    @CollectionTable(name = "orders")
     private List<Long> ordersInProcess;
 
     public Kitchen(){ }
@@ -41,14 +44,25 @@ public class Kitchen {
         return orders;
     }
 
-    public void addPendingOrder(Long pendingOrder) {
-        this.pendingOrders.add(pendingOrder);
+    public void acceptOrder(Long pendingOrder) {
+        if (this.pendingOrders.contains(pendingOrder)) {
+            this.pendingOrders.remove(pendingOrder);
+            this.ordersInProcess.add(pendingOrder);
+        } else {
+            throw new orderNotFoundException(pendingOrder);
+        }
     }
 
-    public Boolean removePendingOrder(Long pendingOrder) {
+    public void removePendingOrder(Long pendingOrder) {
         if (this.pendingOrders.contains(pendingOrder)) {
-            return this.pendingOrders.add(pendingOrder);
+            this.pendingOrders.remove(pendingOrder);
         }
-        return false;
+        throw new orderNotFoundException(pendingOrder);
+    }
+
+    public Stock getStock() { return stock; }
+
+    public List<Long> getOrdersInProcess() {
+        return ordersInProcess;
     }
 }

@@ -2,7 +2,9 @@ package nl.hu.bep3.dish.RabbitMessages;
 
 import nl.hu.bep3.dish.DishApplication;
 import nl.hu.bep3.dish.adapter.IngredientRepository;
+import nl.hu.bep3.dish.adapter.dto.DishOutDto;
 import nl.hu.bep3.dish.application.DishApplicationService;
+import nl.hu.bep3.dish.domain.Dish;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
@@ -22,7 +24,10 @@ public class QueueReceiver {
 
   @RabbitListener(queues = "bep.dish.requests")
   public String getDish(final Long id) {
-    final String message = DishApplication.GSON.toJson(dishApplicationService.getDishById(id));
+    System.out.println(id);
+    DishOutDto dish = new DishOutDto(new Dish("kaasplank", 1, null));
+    //final String message = DishApplication.GSON.toJson(dishApplicationService.getDishById(id));
+    final String message = DishApplication.GSON.toJson(dish);
     return message;
   }
 

@@ -1,22 +1,24 @@
 package nl.hu.bep3.dish.domain;
 
-import javax.persistence.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
-@Entity
+@Document
 public class Ingredient {
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+//  @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;
 
   private String name;
 
-  @ElementCollection(targetClass = FoodAllergy.class)
-  @JoinTable(name = "ingredientAllergies", joinColumns = @JoinColumn(name = "ingredient_id"))
-  @Column(name = "allergies", nullable = false)
-  @Enumerated(EnumType.ORDINAL)
+//  @ElementCollection(targetClass = FoodAllergy.class)
+//  @JoinTable(name = "ingredientAllergies", joinColumns = @JoinColumn(name = "ingredient_id"))
+//  @Column(name = "allergies", nullable = false)
+//  @Enumerated(EnumType.ORDINAL)
   private List<FoodAllergy> allergies = new ArrayList<>();
 
   public Ingredient() {}

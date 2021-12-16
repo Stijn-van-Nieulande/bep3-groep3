@@ -2,6 +2,7 @@ package nl.hu.bep3.kitchen.rabbitmqMessages;
 
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 
 public class QueueSender {
 
@@ -13,6 +14,7 @@ public class QueueSender {
         this.exchange = exchange;
     }
 
+    @Scheduled(fixedDelay = 1000, initialDelay = 500)
     public void getDish(final Long id){
         System.out.println("Send request with id: " + id);
         String message = (String) template.convertSendAndReceive(exchange.getName(), "dish", id);
