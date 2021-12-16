@@ -8,10 +8,12 @@ Als keukenmedewerker wil ik inkomende orders kunnen inzien en accepteren/weigere
 (Als keukenmedewerker wil ik dat onmogelijke orders automatisch worden geweigerd)
 */
 
+import com.rabbitmq.client.Return;
 import nl.hu.bep3.kitchen.adapter.data.OrderDto;
 import nl.hu.bep3.kitchen.adapter.data.StockDto;
 import nl.hu.bep3.kitchen.application.KitchenService;
 import nl.hu.bep3.kitchen.domain.OrderStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +27,11 @@ public class KitchenController {
 
     public KitchenController(KitchenService service) {
         this.service = service;
+    }
+
+    @GetMapping()
+    public String getDish(){
+        return service.getDish();
     }
 
     //region Als keukenmedewerker wil ik inkomende orders kunnen inzien en accepteren/weigeren

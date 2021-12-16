@@ -8,6 +8,8 @@ import nl.hu.bep3.dish.domain.Dish;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 @Component
 public class QueueReceiver {
   private final DishApplicationService dishApplicationService;
@@ -15,11 +17,6 @@ public class QueueReceiver {
   public QueueReceiver(
       DishApplicationService dishApplicationService, IngredientRepository ingredientRepository) {
     this.dishApplicationService = dishApplicationService;
-  }
-
-  @RabbitListener(queues = "dishIn")
-  public void receive(final String message) {
-    System.out.println(" [x] Received '" + message + "'");
   }
 
   @RabbitListener(queues = "bep.dish.requests")
@@ -31,10 +28,10 @@ public class QueueReceiver {
     return message;
   }
 
-  @RabbitListener(queues = "bep.dish.ingredient")
-  public String getIngredient(final Long id) {
-    final String message =
-        DishApplication.GSON.toJson(dishApplicationService.getIngredientById(id));
-    return message;
-  }
+//  @RabbitListener(queues = "bep.dish.ingredient")
+//  public String getIngredient(final Long id) {
+//    final String message =
+//        DishApplication.GSON.toJson(dishApplicationService.getIngredientById(id));
+//    return message;
+//  }
 }

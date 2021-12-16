@@ -37,4 +37,6 @@ public class DishApplicationService {
                     () -> new IngredientNotFoundException("No ingredient found with id: " + id));
     return new IngredientDto(ingredient);
   }
+
+
 }

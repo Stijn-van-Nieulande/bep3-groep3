@@ -16,8 +16,10 @@ public class DishOutDto {
     this.id = dish.getId();
     this.name = dish.getName();
     this.price = dish.getPrice();
-    for (IngredientAmount ingredientAmount : dish.getIngredients()) {
-      ingredients.add(new IngredientAmountOutDto(ingredientAmount));
+    if (dish.getIngredients() != null) {
+      for (IngredientAmount ingredientAmount : dish.getIngredients()) {
+        ingredients.add(new IngredientAmountOutDto(ingredientAmount));
+      }
     }
   }
 }

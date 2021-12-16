@@ -10,6 +10,7 @@ import nl.hu.bep3.kitchen.domain.OrderStatus;
 import nl.hu.bep3.kitchen.domain.Stock;
 import nl.hu.bep3.kitchen.domain.exceptions.KitchenNotFoundException;
 import nl.hu.bep3.kitchen.domain.exceptions.orderNotFoundException;
+import nl.hu.bep3.kitchen.rabbitmqMessages.QueueSender;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,9 +19,11 @@ import java.util.List;
 @Service
 public class KitchenService {
     final KitchenRepository kitchenRepository;
+    final QueueSender queueSender;
 
-    public KitchenService(KitchenRepository kitchenRepository) {
+    public KitchenService(KitchenRepository kitchenRepository, QueueSender queueSender) {
         this.kitchenRepository = kitchenRepository;
+        this.queueSender = queueSender;
     }
 
     public ArrayList<OrderDto> getAllOrders(Long kitchenId) {
@@ -76,5 +79,9 @@ public class KitchenService {
         }
         return stockDto;
         //TODO: get ingredient names/allergies via dish
+    }
+
+    public String getDish(){
+        return queueSender.getDish(1L);
     }
 }
