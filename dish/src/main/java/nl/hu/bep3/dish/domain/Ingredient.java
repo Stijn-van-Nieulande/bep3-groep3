@@ -25,7 +25,9 @@ public class Ingredient {
 
   public Ingredient(String name, List<FoodAllergy> allergies) {
     this.name = name;
-    this.allergies = allergies;
+    if (allergies != null) {
+      this.allergies = allergies;
+    }
   }
 
   public Long getId() {

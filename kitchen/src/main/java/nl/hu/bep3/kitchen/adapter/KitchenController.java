@@ -9,13 +9,12 @@ Als keukenmedewerker wil ik inkomende orders kunnen inzien en accepteren/weigere
 */
 
 import com.rabbitmq.client.Return;
+import nl.hu.bep3.kitchen.adapter.data.IngredientDto;
 import nl.hu.bep3.kitchen.adapter.data.OrderDto;
 import nl.hu.bep3.kitchen.adapter.data.StockDto;
 import nl.hu.bep3.kitchen.application.KitchenService;
 import nl.hu.bep3.kitchen.domain.OrderStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -72,11 +71,20 @@ public class KitchenController {
     //endregion
 
     //region Als keukenmedewerker/owner wil ik de opslag in kunnen zien
-    public Response showStock(Long kitchenId) {
+    @GetMapping("/stock/{id}")
+    public Response showStock(@RequestParam Long kitchenId) {
         StockDto stockDto = service.getStock(kitchenId);
         return Response
                 .status(Response.Status.OK)
                 .entity(stockDto)
+                .build();
+    }
+
+    @PatchMapping("/stock/{id}")
+    public Response addToStock(@RequestParam Long kitchenId, @RequestBody IngredientDto ingredientDto){
+        return Response
+                .status(Response.Status.OK)
+                .entity("hurb")
                 .build();
     }
     //endregion

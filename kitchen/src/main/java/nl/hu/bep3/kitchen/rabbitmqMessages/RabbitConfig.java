@@ -10,23 +10,13 @@ import org.springframework.context.annotation.Profile;
 public class RabbitConfig {
 
     @Bean
-    public DirectExchange directExchange(){
+    public DirectExchange directDishExchange(){
         return new DirectExchange("bep.dish");
     }
 
     @Bean
-    public FanoutExchange fanout() {
-        return new FanoutExchange("kitchen.fanout");
-    }
-
-    @Profile("receiver")
-    private static class ReceiverConfig {
-
-
-        @Bean
-        public QueueReceiver receiver() {
-            return new QueueReceiver();
-        }
+    public DirectExchange directIngredientExchange(){
+        return new DirectExchange("bep.ingredient");
     }
 
 }

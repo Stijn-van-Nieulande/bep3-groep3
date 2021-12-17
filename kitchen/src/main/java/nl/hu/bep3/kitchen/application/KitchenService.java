@@ -82,6 +82,7 @@ public class KitchenService {
     }
 
     public String getDish(){
-        return queueSender.getDish(1L);
+        queueSender.getIngredient(1L);
+        return queueSender.getDish(2L);
     }
 }
