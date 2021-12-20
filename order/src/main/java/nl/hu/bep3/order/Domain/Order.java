@@ -20,9 +20,30 @@ public class Order {
     private Review review;
 
 
-    public void CreatePaymentOrder(){
-        Payment newPayment = new Payment(false, calcTotPrice());
+    public Order(String adres, Customer customer, Payment payment, boolean deliver, String paymentMethod, List<DishOrder> dishOrders, String customerMessage) {
+        this.adres = adres;
+        this.customer = customer;
+        this.payment = payment;
+        this.deliver = deliver;
+        this.paymentMethod = paymentMethod;
+        this.dishOrders = dishOrders;
+        this.customerMessage = customerMessage;
     }
+
+
+
+    //customer roept dit aan
+    public void placeOrder(List<DishOrder> dishOrders, boolean deliver, String message){
+        this.dishOrders = dishOrders;
+        this.deliver = deliver;
+        this.customerMessage = message;
+
+        this.status = Status.ACCEPTED;
+    }
+
+//    public void CreatePaymentOrder(){
+//        Payment newPayment = new Payment(false, calcTotPrice());
+//    }
 
     public float calcTotPrice(){
         float totPrice = 0;
@@ -35,57 +56,22 @@ public class Order {
         return totPrice;
     }
 
-    //customer roept dit aan
-    public void placeOrder(List<DishOrder> dishOrders, boolean deliver, String message){
-        this.dishOrders = dishOrders;
-        this.deliver = deliver;
-        this.customerMessage = message;
-
-        this.status = Status.ACCEPTED;
-    }
-    
-
-    public void setStatusPrepairing(){
-        status = Status.PREPAIRING;
-    }
-
-    //keuken kan deze aanroepen als de order bereid is
-    public void orderIsPrepaired(){
-        if (deliver){
-            status = Status.DELIVERING;
-        }
-        else {
-            status = Status.READYFORPICKUP;
-
+    public void setStatus(String status){
+        switch (status) {
+            case "accepted" -> this.status = Status.ACCEPTED;
+            case "prepairing" -> this.status = Status.PREPAIRING;
+            case "prepaired" -> this.status = Status.PREPAIRED;
+            case "ready for pickup" -> this.status = Status.READYFORPICKUP;
+            case "delivering" -> this.status = Status.DELIVERING;
+            case "finished" -> this.status = Status.FINISHED;
+            case "canceled" -> this.status = Status.CANCELED;
+            case "pending" -> this.status = Status.PENDING;
+            default -> {
+            }
         }
     }
-
-    public void setStatusDelivering(){
-        status = Status.DELIVERING;
-    }
-
-    public void setStatusReadyForPickup(){
-        status = Status.READYFORPICKUP;
-    }
-
-    public void setStatusFinished(){
-        status = Status.FINISHED;
-    }
-
-    public void setStatusCanceled(){
-        status = Status.CANCELED;
-    }
-
 
     public void setReview(String message, int rating){
         this.review = new Review(message, rating);
     }
-
-    public void setOrderInHistory(){
-        customer.addOrderToHistory(this);
-    }
-
-
-
-
 }
