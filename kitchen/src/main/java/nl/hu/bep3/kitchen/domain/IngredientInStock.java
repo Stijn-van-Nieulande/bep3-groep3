@@ -1,5 +1,6 @@
 package nl.hu.bep3.kitchen.domain;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -7,13 +8,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class IngredientInStock {
     @Id
 //    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private ObjectId id;
 
     private int amount;
-    private Long ingredientId;
+    private ObjectId ingredientId;
     private AmountUnit amountUnit;
 
-    public long getId() {
+    public ObjectId getId() {
         return id;
     }
 
@@ -21,7 +22,7 @@ public class IngredientInStock {
         return amount;
     }
 
-    public Long getIngredientId() {
+    public ObjectId getIngredientId() {
         return ingredientId;
     }
 

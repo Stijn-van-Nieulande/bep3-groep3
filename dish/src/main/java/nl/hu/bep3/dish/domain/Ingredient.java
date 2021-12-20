@@ -5,13 +5,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 @Document
 public class Ingredient {
   @Id
 //  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
+  private UUID id;
 
   private String name;
 
@@ -24,13 +25,14 @@ public class Ingredient {
   public Ingredient() {}
 
   public Ingredient(String name, List<FoodAllergy> allergies) {
+    this.id = UUID.randomUUID();
     this.name = name;
     if (allergies != null) {
       this.allergies = allergies;
     }
   }
 
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 

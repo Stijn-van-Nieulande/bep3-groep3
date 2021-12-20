@@ -1,5 +1,6 @@
 package nl.hu.bep3.kitchen.domain;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -9,20 +10,19 @@ import java.util.List;
 public class Stock {
     //TODO: check if this works
     @Id
-//    @Column(name = "child_id", unique = true, nullable = false)
-    private Long id;
+    private ObjectId id;
 
-//    @MapsId
-//    @OneToOne
-//    @JoinColumn(name = "child_id")
     private Kitchen kitchen;
 
     private int capacity;
 
-//    @OneToMany
     private List<IngredientInStock> ingredientInStock;
 
     public Stock(){}
+
+    public Stock(int capacity){
+        this.capacity = capacity;
+    }
 
     public int getCapacity() {
         return capacity;
@@ -32,5 +32,7 @@ public class Stock {
         return ingredientInStock;
     }
 
-
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
 }

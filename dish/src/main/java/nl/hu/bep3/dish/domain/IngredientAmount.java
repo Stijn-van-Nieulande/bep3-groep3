@@ -3,11 +3,13 @@ package nl.hu.bep3.dish.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.UUID;
+
 @Document
 public class IngredientAmount {
   @Id
 //  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
+  private UUID id;
   private float amount;
   private AmountUnit amountUnit;
 
@@ -19,6 +21,7 @@ public class IngredientAmount {
   }
 
   public IngredientAmount(float amount, AmountUnit amountUnit, Ingredient ingredient) {
+    this.id = UUID.randomUUID();
     this.amount = amount;
     this.amountUnit = amountUnit;
     this.ingredient = ingredient;

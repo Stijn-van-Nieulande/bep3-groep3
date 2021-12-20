@@ -6,12 +6,13 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 @Document
 public class Dish {
   @Id
 //  @GeneratedValue(strategy = GenerationType.AUTO)
-  private Long id;
+  private UUID id;
 
   private String name;
   private double price;
@@ -27,12 +28,13 @@ public class Dish {
   public Dish() {}
 
   public Dish(String name, double price, List<IngredientAmount> ingredients) {
+    this.id = UUID.randomUUID();
     this.name = name;
     this.price = price;
     this.ingredients = ingredients;
   }
 
-  public Long getId() {
+  public UUID getId() {
     return id;
   }
 
