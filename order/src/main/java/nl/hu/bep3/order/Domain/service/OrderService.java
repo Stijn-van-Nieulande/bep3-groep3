@@ -1,6 +1,6 @@
-package nl.hu.bep3.order.Domain.service;
+package nl.hu.bep3.order.domain.service;
 
-import nl.hu.bep3.order.Domain.Order;
+import nl.hu.bep3.order.domain.Order;
 
 import java.util.UUID;
 

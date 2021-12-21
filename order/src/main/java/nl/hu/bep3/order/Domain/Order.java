@@ -1,6 +1,8 @@
-package nl.hu.bep3.order.Domain;
+package nl.hu.bep3.order.domain;
 
-import nl.hu.bep3.order.Domain.ValueObjects.DishOrder;
+import nl.hu.bep3.order.Aplication.response.ReviewResponseDTO;
+import nl.hu.bep3.order.domain.ValueObjects.DishOrder;
+import nl.hu.bep3.order.domain.ValueObjects.DishOrder;
 
 import java.util.Date;
 import java.util.List;
@@ -20,14 +22,13 @@ public class Order {
     private Review review;
 
 
-    public Order(String adres, Customer customer, Payment payment, boolean deliver, String paymentMethod, List<DishOrder> dishOrders, String customerMessage) {
+    public Order(String adres, Customer customer, Payment payment, boolean deliver, String paymentMethod, List<DishOrder> dishOrders) {
         this.adres = adres;
         this.customer = customer;
         this.payment = payment;
         this.deliver = deliver;
         this.paymentMethod = paymentMethod;
         this.dishOrders = dishOrders;
-        this.customerMessage = customerMessage;
     }
 
 
@@ -71,7 +72,8 @@ public class Order {
         }
     }
 
-    public void setReview(String message, int rating){
-        this.review = new Review(message, rating);
+    public ReviewResponseDTO setReview(String message, int rating){
+        ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO(message, rating);
+        this.review = reviewResponseDTO;
     }
 }

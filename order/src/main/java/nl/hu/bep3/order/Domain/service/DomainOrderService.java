@@ -1,27 +1,49 @@
-package nl.hu.bep3.order.Domain.service;
+package nl.hu.bep3.order.domain.service;
 
+import nl.hu.bep3.order.Aplication.request.OrderRequestDTO;
+import nl.hu.bep3.order.domain.Payment;
+import nl.hu.bep3.order.domain.ValueObjects.DishOrder;
+import nl.hu.bep3.order.domain.repository.OrderRepository;
 import nl.hu.bep3.order.infrastructure.repository.mango.SpringDataMongoOrderRepository;
 import nl.hu.bep3.order.Aplication.request.ReviewRequestDTO;
-import nl.hu.bep3.order.Domain.Order;
-import nl.hu.bep3.order.Domain.exeption.OrderNotFound;
+import nl.hu.bep3.order.domain.Order;
+import nl.hu.bep3.order.domain.exeption.OrderNotFound;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
-@Transactional
-public class DomainOrderService {
-    private SpringDataMongoOrderRepository springDataMongoOrderRepository;
+import java.util.List;
+import java.util.UUID;
+
+
+public class DomainOrderService implements OrderService {
+    private OrderRepository orderRepository;
     private Order order;
 
-    public DomainOrderService(SpringDataMongoOrderRepository springDataMongoOrderRepository) {
-        this.springDataMongoOrderRepository = springDataMongoOrderRepository;
+    @Override
+    public DomainOrderService(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
     }
 
-    public Order placeNewOrder(){
-        Order order = new Order();
+    @Override
+    public Order placeNewOrder(OrderRequestDTO orderRequestDTO){
+        String adres = orderRequestDTO.getAdres();
+        Customer customer = orderRequestDTO.getCustomer();
+        Payment payment = orderRequestDTO.getPayment();
+        boolean deliver = orderRequestDTO.isDeliver();
+        String paymentMethod = orderRequestDTO.getPaymentMethod();
+        List<DishOrder> dishOrderList = orderRequestDTO.getDishOrders();
+
+
+        Order order = new Order(adres, customer, payment, deliver, paymentMethod, dishOrderList);
         return order;
     }
 
+    @Override
+    public Order placeOrder() {
+        return null;
+    }
+
+    @Override
     public boolean setStatus(Long id, String status){
         try {
             order = getOrderById(id);
@@ -32,11 +54,23 @@ public class DomainOrderService {
         }
     }
 
+    @Override
+    public void completeOrder(UUID id) {
+
+    }
+
+    @Override
+    public void deleteProduct(UUID id, UUID productId) {
+
+    }
+
+    @Override
     public Order getOrderById(Long orderId) {
-        return this.springDataMongoOrderRepository.findById(orderId)
+        return this.orderRepository.findById(orderId)
                 .orElseThrow(() -> new OrderNotFound(orderId));
     }
 
+    @Override
     public ReviewRequestDTO setReview(Long id, ReviewRequestDTO reviewRequestDTO){
         order = getOrderById(id);
         return order.setReview(reviewRequestDTO.message, reviewRequestDTO.rating);

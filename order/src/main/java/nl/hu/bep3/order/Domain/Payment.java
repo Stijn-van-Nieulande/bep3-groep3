@@ -1,4 +1,4 @@
-package nl.hu.bep3.order.Domain;
+package nl.hu.bep3.order.domain;
 
 public class Payment {
     private Long paymentId;

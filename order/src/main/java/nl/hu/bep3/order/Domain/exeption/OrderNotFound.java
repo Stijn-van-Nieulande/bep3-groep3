@@ -1,4 +1,4 @@
-package nl.hu.bep3.order.Domain.exeption;
+package nl.hu.bep3.order.domain.exeption;
 
 public class OrderNotFound extends RuntimeException {
     public OrderNotFound(Long id) {
