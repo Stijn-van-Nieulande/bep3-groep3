@@ -23,7 +23,7 @@
     <dependency>
       <artifactId>springdoc-openapi-data-rest</artifactId>
       <groupId>org.springdoc</groupId>
-      <version>1.5.2</version>
+      <version>1.6.1</version>
     </dependency>
   </dependencies>
   <description>Add support for swagger</description>
