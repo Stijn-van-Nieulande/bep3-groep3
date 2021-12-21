@@ -5,6 +5,7 @@ import nl.hu.bep3.management.application.request.CreateEmployeeRequest;
 import nl.hu.bep3.management.application.response.CreateEmployeeResponse;
 import nl.hu.bep3.management.domain.Employee;
 import nl.hu.bep3.management.domain.service.EmployeeService;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class EmployeeController {
   }
 
   @GetMapping()
-  public Page<Employee> getCourseAssignments(final Pageable pageable) {
+  public Page<Employee> getCourseAssignments(@ParameterObject final Pageable pageable) {
     return this.employeeService.findAllPaginated(pageable);
   }
 
