@@ -8,6 +8,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface CustomerRepository {
+  Optional<Customer> findByPhoneNumberOrEmail(String phoneNumber, String email);
+
   Optional<Customer> findById(UUID id);
 
   Page<Customer> findAllPaginated(Pageable pageable);

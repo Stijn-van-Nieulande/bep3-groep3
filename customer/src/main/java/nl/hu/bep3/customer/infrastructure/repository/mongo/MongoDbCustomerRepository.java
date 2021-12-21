@@ -22,7 +22,12 @@ public class MongoDbCustomerRepository implements CustomerRepository {
         this.customerRepository = customerRepository;
     }
 
-    @Override
+  @Override
+  public Optional<Customer> findByPhoneNumberOrEmail(String phoneNumber, String email) {
+    return Optional.empty();
+  }
+
+  @Override
     public Optional<Customer> findById(UUID id) {
         return this.customerRepository.findById(id);
     }
