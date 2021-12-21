@@ -8,14 +8,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Dish {
-  @Id
+    public float getPrice;
+    @Id
 //  @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
 
   private String name;
   private double price;
 
-//  @OneToMany
+  //  @OneToMany
 //  @JoinTable(
 //          name = "ingredient_amounts_in_dish",
 //          joinColumns = @JoinColumn( name="dish_id"),

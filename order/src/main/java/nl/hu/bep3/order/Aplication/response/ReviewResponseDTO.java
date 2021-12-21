@@ -1,7 +1,10 @@
 package nl.hu.bep3.order.Aplication.response;
 
+import nl.hu.bep3.order.domain.Review;
+import java.util.UUID;
+
 public class ReviewResponseDTO {
-    private Long id;
+    private UUID id;
     public int rating;
     public String message;
 
@@ -10,11 +13,17 @@ public class ReviewResponseDTO {
     this.message = message;
   }
 
-  public Long getId() {
+  public ReviewResponseDTO(Review review) {
+    this.id = review.getReviewId();
+    this.rating = review.getRating();
+    this.message = review.getReviewMessage();
+  }
+
+  public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

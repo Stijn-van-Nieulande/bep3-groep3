@@ -1,8 +1,8 @@
 package nl.hu.bep3.order.domain;
 
+import nl.hu.bep3.customer.domain.Customer;
 import nl.hu.bep3.order.Aplication.response.ReviewResponseDTO;
-import nl.hu.bep3.order.domain.ValueObjects.DishOrder;
-import nl.hu.bep3.order.domain.ValueObjects.DishOrder;
+import nl.hu.bep3.order.domain.valueobjects.DishOrder;
 
 import java.util.Date;
 import java.util.List;
@@ -74,6 +74,7 @@ public class Order {
 
     public ReviewResponseDTO setReview(String message, int rating){
         ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO(rating, message);
-        this.review = reviewResponseDTO;
+        this.review = new Review(message, rating);
+        return reviewResponseDTO;
     }
 }

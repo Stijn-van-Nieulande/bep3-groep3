@@ -1,11 +1,11 @@
 package nl.hu.bep3.order.Aplication.request;
 
+import nl.hu.bep3.customer.domain.Customer;
 import nl.hu.bep3.order.domain.Payment;
 import nl.hu.bep3.order.domain.Review;
 import nl.hu.bep3.order.domain.Status;
-import nl.hu.bep3.order.domain.ValueObjects.DishOrder;
+import nl.hu.bep3.order.domain.valueobjects.DishOrder;
 
-import java.util.Date;
 import java.util.List;
 
 public class OrderRequestDTO {

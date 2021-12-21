@@ -64,6 +64,12 @@
         <version>0.1.0</version>
         <scope>compile</scope>
       </dependency>
+      <dependency>
+        <groupId>nl.hu.bep3</groupId>
+        <artifactId>dish</artifactId>
+        <version>0.1.0</version>
+        <scope>compile</scope>
+      </dependency>
     </dependencies>
 
     <build>

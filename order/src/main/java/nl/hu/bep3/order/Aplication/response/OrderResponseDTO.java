@@ -1,13 +1,10 @@
 package nl.hu.bep3.order.Aplication.response;
 
 import nl.hu.bep3.customer.domain.Customer;
-import nl.hu.bep3.order.Domain.Payment;
-import nl.hu.bep3.order.Domain.Review;
-import nl.hu.bep3.order.Domain.Status;
-import nl.hu.bep3.order.Domain.ValueObjects.DishOrder;
 import nl.hu.bep3.order.domain.Payment;
 import nl.hu.bep3.order.domain.Review;
 import nl.hu.bep3.order.domain.Status;
+import nl.hu.bep3.order.domain.valueobjects.DishOrder;
 
 import java.util.List;
 import java.util.UUID;

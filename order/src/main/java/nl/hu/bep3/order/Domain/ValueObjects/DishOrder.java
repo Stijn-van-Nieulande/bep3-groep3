@@ -1,4 +1,6 @@
-package nl.hu.bep3.order.domain.ValueObjects;
+package nl.hu.bep3.order.domain.valueobjects;
+
+import nl.hu.bep3.dish.domain.Dish;
 
 public class DishOrder {
     private Long prodictId;
