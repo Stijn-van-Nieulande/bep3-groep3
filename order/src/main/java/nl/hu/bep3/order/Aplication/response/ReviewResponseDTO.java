@@ -5,7 +5,12 @@ public class ReviewResponseDTO {
     public int rating;
     public String message;
 
-    public Long getId() {
+  public ReviewResponseDTO(int rating, String message) {
+    this.rating = rating;
+    this.message = message;
+  }
+
+  public Long getId() {
         return id;
     }
 

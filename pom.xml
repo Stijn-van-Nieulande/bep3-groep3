@@ -16,6 +16,13 @@
     <module>management</module>
     <module>lib-swagger-data-provider</module>
   </modules>
+  <dependencies>
+    <dependency>
+      <artifactId>lib-swagger-data-provider</artifactId>
+      <groupId>nl.hu.bep3</groupId>
+      <version>0.1.0</version>
+    </dependency>
+  </dependencies>
   <packaging>pom</packaging>
 
   <version>0.1.0</version>

@@ -73,7 +73,7 @@ public class Order {
     }
 
     public ReviewResponseDTO setReview(String message, int rating){
-        ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO(message, rating);
+        ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO(rating, message);
         this.review = reviewResponseDTO;
     }
 }

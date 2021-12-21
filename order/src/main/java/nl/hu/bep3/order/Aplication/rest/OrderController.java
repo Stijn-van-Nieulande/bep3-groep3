@@ -2,10 +2,12 @@ package nl.hu.bep3.order.Aplication.rest;
 
 import nl.hu.bep3.order.Aplication.request.OrderRequestDTO;
 import nl.hu.bep3.order.Aplication.request.ReviewRequestDTO;
+import nl.hu.bep3.order.Aplication.response.ReviewResponseDTO;
 import nl.hu.bep3.order.domain.service.DomainOrderService;
 import nl.hu.bep3.order.domain.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/order")
@@ -22,18 +24,18 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    public boolean setStatus(@PathVariable Long id, @RequestBody String status) {
+    public boolean setStatus(@PathVariable UUID id, @RequestBody String status) {
         return this.orderService.setStatus(id, status);
     }
 
     @PutMapping("/{id}")
-    public ReviewRequestDTO setReview(@PathVariable Long id, @RequestBody ReviewRequestDTO reviewRequestDTO) { //kan dit? dto meegeven meteen?
+    public ReviewResponseDTO setReview(@PathVariable UUID id, @RequestBody ReviewRequestDTO reviewRequestDTO) { //kan dit? dto meegeven meteen?
         return this.orderService.setReview(id, reviewRequestDTO);
     }
 
     @DeleteMapping("/{id}")
-    public HttpStatus deleteOrder(@PathVariable Long id) { //kan dit? dto meegeven meteen?
-        return this.orderService.deleteOrder(id);
+    public HttpStatus deleteOrder(@PathVariable UUID id) { //kan dit? dto meegeven meteen?
+        this.orderService.deleteOrder(id);
         return HttpStatus.OK;
     }
 
