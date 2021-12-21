@@ -27,7 +27,10 @@ public class SwaggerDataProviderConfig {
     return new WebMvcConfigurer() {
       @Override
       public void addCorsMappings(final CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins(SwaggerDataProviderConfig.this.swaggerEndpoint);
+        registry
+            .addMapping("/**")
+            .allowedMethods("GET", "POST", "DELETE", "PATCH", "PUT", "OPTIONS")
+            .allowedOrigins(SwaggerDataProviderConfig.this.swaggerEndpoint);
       }
     };
   }
