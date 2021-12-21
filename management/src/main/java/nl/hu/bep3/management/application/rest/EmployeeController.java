@@ -28,7 +28,7 @@ public class EmployeeController {
   }
 
   @GetMapping()
-  public Page<Employee> getCourseAssignments(@ParameterObject final Pageable pageable) {
+  public Page<Employee> findAllPaginated(@ParameterObject final Pageable pageable) {
     return this.employeeService.findAllPaginated(pageable);
   }
 
