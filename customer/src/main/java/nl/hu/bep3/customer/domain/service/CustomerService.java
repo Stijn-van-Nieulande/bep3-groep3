@@ -1,20 +1,19 @@
 package nl.hu.bep3.customer.domain.service;
 
+import java.util.Optional;
+import java.util.UUID;
 import nl.hu.bep3.customer.domain.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.util.Optional;
-import java.util.UUID;
-
 public interface CustomerService {
-    Customer createCustomer(Customer customer);
+  Customer createCustomer(Customer customer);
 
-    Page<Customer> findAllPaginated(Pageable pageable);
+  Page<Customer> findAllPaginated(Pageable pageable);
 
-    Optional<Customer> findCustomer(UUID id);
+  Optional<Customer> findCustomer(UUID id);
 
-    Customer updateCustomer(Customer customer);
+  Customer updateCustomer(Customer customer);
 
-    void deleteCustomer(UUID id);
+  void deleteCustomer(UUID id);
 }

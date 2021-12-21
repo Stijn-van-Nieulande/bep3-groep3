@@ -1,6 +1,9 @@
 package nl.hu.bep3.customer.application.request;
 
-public class CreateCustomerRequest {
+import java.util.UUID;
+
+public class UpdateCustomerRequest {
+  public UUID id;
   public String firstName;
   public String lastName;
   public String address;

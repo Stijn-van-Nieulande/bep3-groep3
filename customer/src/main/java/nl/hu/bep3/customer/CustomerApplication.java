@@ -7,10 +7,8 @@ import org.springframework.context.annotation.Import;
 
 @SpringBootApplication(scanBasePackages = "nl.hu.bep3.customer")
 @Import(SwaggerDataProviderConfig.class)
-public class CustomerApplication
-{
-    public static void main(final String[] args)
-    {
-        SpringApplication.run(CustomerApplication.class, args);
-    }
+public class CustomerApplication {
+  public static void main(final String[] args) {
+    SpringApplication.run(CustomerApplication.class, args);
+  }
 }
