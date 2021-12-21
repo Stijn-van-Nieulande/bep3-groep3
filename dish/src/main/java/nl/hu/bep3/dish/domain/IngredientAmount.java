@@ -1,9 +1,8 @@
 package nl.hu.bep3.dish.domain;
 
+import java.util.UUID;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.UUID;
 
 @Document
 public class IngredientAmount {

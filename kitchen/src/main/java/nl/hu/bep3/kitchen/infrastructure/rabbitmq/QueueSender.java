@@ -1,12 +1,11 @@
 package nl.hu.bep3.kitchen.infrastructure.rabbitmq;
 
-import org.bson.types.ObjectId;
+import java.util.List;
+import java.util.UUID;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public class QueueSender {
@@ -31,21 +30,21 @@ public class QueueSender {
         this.menuExchange = menuExchange;
     }
 
-    public String getDish(final ObjectId id){
+    public String getDish(final UUID id){
         System.out.println("Request dish with id: " + id);
         String message = (String) dishTemplate.convertSendAndReceive(dishExchange.getName(), "dish", id);
         System.out.println("Response: " + message);
         return message;
     }
 
-    public String getIngredient(final ObjectId id){
+    public String getIngredient(final UUID id){
         System.out.println("Request ingredient with id: " + id);
         String message = (String) ingredientTemplate.convertSendAndReceive(ingredientExchange.getName(), "ingredient", id);
         System.out.println("Response: " + message);
         return message;
     }
 
-    public String getMenu(List<ObjectId> menu) {
+    public String getMenu(List<UUID> menu) {
         System.out.println("Request menu");
         String message = (String) menuTemplate.convertSendAndReceive(menuExchange.getName(), "ingredient", menu);
         System.out.println("Response: " + message);

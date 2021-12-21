@@ -1,14 +1,13 @@
 package nl.hu.bep3.dish.infrastructure.repository;
 
-import nl.hu.bep3.dish.domain.Dish;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import nl.hu.bep3.dish.domain.Ingredient;
 import nl.hu.bep3.dish.domain.repository.IngredientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
-import java.util.UUID;
 
 @Component
 @Primary
@@ -27,5 +26,10 @@ public class MongoDbIngredientRepository implements IngredientRepository {
     @Override
     public Ingredient save(final Ingredient ingredient) {
         return springDataMongoIngredientRepository.save(ingredient);
+    }
+
+    @Override
+  public List<Ingredient> findAll(){
+      return springDataMongoIngredientRepository.findAll();
     }
 }

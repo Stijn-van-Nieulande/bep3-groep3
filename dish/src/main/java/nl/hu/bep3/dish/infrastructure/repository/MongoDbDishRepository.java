@@ -1,15 +1,12 @@
 package nl.hu.bep3.dish.infrastructure.repository;
 
-import nl.hu.bep3.dish.domain.Dish;
-import nl.hu.bep3.dish.domain.repository.DishRepository;
-import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Primary;
-import org.springframework.stereotype.Component;
-
 import java.util.Optional;
 import java.util.UUID;
+import nl.hu.bep3.dish.domain.Dish;
+import nl.hu.bep3.dish.domain.repository.DishRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
 
 @Component
 @Primary

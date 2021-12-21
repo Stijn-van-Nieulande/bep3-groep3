@@ -1,10 +1,12 @@
 package nl.hu.bep3.kitchen.domain.service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import nl.hu.bep3.kitchen.application.request.KitchenDto;
 import nl.hu.bep3.kitchen.application.response.IngredientDto;
 import nl.hu.bep3.kitchen.application.response.OrderDto;
 import nl.hu.bep3.kitchen.application.response.StockDto;
-import nl.hu.bep3.kitchen.application.request.KitchenDto;
-import nl.hu.bep3.kitchen.domain.repository.KitchenRepository;
 import nl.hu.bep3.kitchen.domain.IngredientInStock;
 import nl.hu.bep3.kitchen.domain.Kitchen;
 import nl.hu.bep3.kitchen.domain.OrderStatus;
@@ -12,13 +14,9 @@ import nl.hu.bep3.kitchen.domain.Stock;
 import nl.hu.bep3.kitchen.domain.exceptions.InvalidKitchenException;
 import nl.hu.bep3.kitchen.domain.exceptions.KitchenNotFoundException;
 import nl.hu.bep3.kitchen.domain.exceptions.OrderNotFoundException;
+import nl.hu.bep3.kitchen.domain.repository.KitchenRepository;
 import nl.hu.bep3.kitchen.infrastructure.rabbitmq.QueueSender;
-
-import org.bson.types.ObjectId;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class DomainKitchenService implements KitchenService{
@@ -31,11 +29,11 @@ public class DomainKitchenService implements KitchenService{
     }
 
     @Override
-    public ArrayList<OrderDto> getAllOrders(ObjectId kitchenId) {
+    public ArrayList<OrderDto> getAllOrders(UUID kitchenId) {
         ArrayList<OrderDto> orders = new ArrayList<>();
 
         Kitchen kitchen = kitchenRepository.findById(kitchenId).orElseThrow(() -> new KitchenNotFoundException(kitchenId));
-        List<ObjectId> orderIds = kitchen.getAllOrderIds();
+        List<UUID> orderIds = kitchen.getAllOrderIds();
 
         //uit order context data halen
 
@@ -43,7 +41,7 @@ public class DomainKitchenService implements KitchenService{
     }
 
     @Override
-    public OrderDto acceptOrder(ObjectId orderId, ObjectId kitchenId){
+    public OrderDto acceptOrder(UUID orderId, UUID kitchenId){
         Kitchen kitchen = kitchenRepository.findById(kitchenId).orElseThrow(() -> new KitchenNotFoundException(kitchenId));
         kitchen.acceptOrder(orderId);
         kitchenRepository.save(kitchen);
@@ -52,7 +50,7 @@ public class DomainKitchenService implements KitchenService{
     }
 
     @Override
-    public void rejectOrder(ObjectId orderId, ObjectId kitchenId){
+    public void rejectOrder(UUID orderId, UUID kitchenId){
         Kitchen kitchen = kitchenRepository.findById(kitchenId).orElseThrow(() -> new KitchenNotFoundException(kitchenId));
         kitchen.removePendingOrder(orderId);
         kitchenRepository.save(kitchen);
@@ -60,7 +58,7 @@ public class DomainKitchenService implements KitchenService{
     }
 
     @Override
-    public void setStatus(ObjectId orderId, ObjectId kitchenId, OrderStatus status) {
+    public void setStatus(UUID orderId, UUID kitchenId, OrderStatus status) {
         Kitchen kitchen = kitchenRepository.findById(kitchenId).orElseThrow(() -> new KitchenNotFoundException(kitchenId));
         if(kitchen.getOrdersInProcess().contains(orderId)) {
             //TODO: send status to Order context
@@ -70,7 +68,7 @@ public class DomainKitchenService implements KitchenService{
     }
 
     @Override
-    public StockDto getStock(ObjectId kitchenId){
+    public StockDto getStock(UUID kitchenId){
         Kitchen kitchen = kitchenRepository.findById(kitchenId).orElseThrow(() -> new KitchenNotFoundException(kitchenId));
         Stock stock = kitchen.getStock();
         StockDto stockDto = new StockDto();
@@ -102,7 +100,7 @@ public class DomainKitchenService implements KitchenService{
     }
 
     @Override
-    public Kitchen updateKitchen(KitchenDto kitchenDto, ObjectId kitchenId) {
+    public Kitchen updateKitchen(KitchenDto kitchenDto, UUID kitchenId) {
         Kitchen kitchen = kitchenRepository.findById(kitchenId).orElseThrow(() -> new KitchenNotFoundException(kitchenId));
         kitchen.setRestaurantName(kitchenDto.restaurantName);
         kitchen.setAddress(kitchenDto.address);
@@ -111,7 +109,7 @@ public class DomainKitchenService implements KitchenService{
     }
 
     @Override
-    public void getMenu(ObjectId kitchenId) {
+    public void getMenu(UUID kitchenId) {
         Kitchen kitchen = kitchenRepository.findById(kitchenId).orElseThrow(() -> new KitchenNotFoundException(kitchenId));
         //return queueSender.getMenu(kitchen.getMenu());
     }

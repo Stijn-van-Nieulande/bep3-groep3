@@ -1,20 +1,20 @@
 package nl.hu.bep3.kitchen.domain;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.UUID;
 
 @Document
 public class IngredientInStock {
     @Id
 //    @GeneratedValue(strategy = GenerationType.AUTO)
-    private ObjectId id;
+    private UUID id;
 
     private int amount;
-    private ObjectId ingredientId;
+    private UUID ingredientId;
     private AmountUnit amountUnit;
 
-    public ObjectId getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -22,7 +22,7 @@ public class IngredientInStock {
         return amount;
     }
 
-    public ObjectId getIngredientId() {
+    public UUID getIngredientId() {
         return ingredientId;
     }
 

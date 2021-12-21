@@ -1,7 +1,5 @@
 package nl.hu.bep3.dish.application.request;
 
-import nl.hu.bep3.dish.application.response.IngredientAmountOutDto;
-
 import java.util.ArrayList;
 import java.util.List;
 

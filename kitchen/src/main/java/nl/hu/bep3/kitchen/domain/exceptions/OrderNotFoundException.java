@@ -1,6 +1,6 @@
 package nl.hu.bep3.kitchen.domain.exceptions;
 
-import org.bson.types.ObjectId;
+import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -10,7 +10,7 @@ public class OrderNotFoundException extends RuntimeException{
         super(message);
     }
 
-    public OrderNotFoundException(final ObjectId pendingOrder){
+    public OrderNotFoundException(final UUID pendingOrder){
         super(String.format("Order with id \"%s\" doesnt exist.", pendingOrder.toString()));
     }
 }

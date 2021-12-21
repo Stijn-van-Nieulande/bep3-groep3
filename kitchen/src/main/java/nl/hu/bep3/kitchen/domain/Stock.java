@@ -1,16 +1,15 @@
 package nl.hu.bep3.kitchen.domain;
 
-import org.bson.types.ObjectId;
+import java.util.List;
+import java.util.UUID;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-
-import java.util.List;
 
 @Document
 public class Stock {
     //TODO: check if this works
     @Id
-    private ObjectId id;
+    private UUID id;
 
     private Kitchen kitchen;
 

@@ -21,6 +21,11 @@
     </properties>
 
     <dependencies>
+      <dependency>
+        <artifactId>lib-swagger-data-provider</artifactId>
+        <groupId>nl.hu.bep3</groupId>
+        <version>0.1.0</version>
+      </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>

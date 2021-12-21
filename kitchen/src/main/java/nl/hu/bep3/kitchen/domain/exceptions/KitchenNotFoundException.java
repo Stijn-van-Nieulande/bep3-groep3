@@ -1,6 +1,6 @@
 package nl.hu.bep3.kitchen.domain.exceptions;
 
-import org.bson.types.ObjectId;
+import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -10,7 +10,7 @@ public class KitchenNotFoundException extends RuntimeException {
         super(message);
     }
 
-    public KitchenNotFoundException(final ObjectId kitchenId){
+    public KitchenNotFoundException(final UUID kitchenId){
         super(String.format("Kitchen with id \"%s\" doesnt exist.", kitchenId.toString()));
     }
 }

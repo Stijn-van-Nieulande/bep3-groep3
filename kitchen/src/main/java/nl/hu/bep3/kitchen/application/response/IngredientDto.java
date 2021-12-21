@@ -1,10 +1,9 @@
 package nl.hu.bep3.kitchen.application.response;
 
-import nl.hu.bep3.kitchen.domain.AmountUnit;
-import nl.hu.bep3.kitchen.domain.FoodAllergy;
-
 import java.util.ArrayList;
 import java.util.List;
+import nl.hu.bep3.kitchen.domain.AmountUnit;
+import nl.hu.bep3.kitchen.domain.FoodAllergy;
 
 public class IngredientDto {
     public int amount;

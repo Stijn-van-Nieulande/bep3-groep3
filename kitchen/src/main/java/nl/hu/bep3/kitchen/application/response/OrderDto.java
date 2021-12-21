@@ -1,8 +1,8 @@
 package nl.hu.bep3.kitchen.application.response;
 
-import org.bson.types.ObjectId;
+import java.util.UUID;
 
 public class OrderDto {
-    public ObjectId id;
+    public UUID id;
     public int capacity;
 }

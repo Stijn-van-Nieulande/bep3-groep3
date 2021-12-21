@@ -1,10 +1,8 @@
 package nl.hu.bep3.dish.domain.Exceptions;
 
-import org.bson.types.ObjectId;
+import java.util.UUID;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
-
-import java.util.UUID;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class IngredientNotFoundException extends RuntimeException {

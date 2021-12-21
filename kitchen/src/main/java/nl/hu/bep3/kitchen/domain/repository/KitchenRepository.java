@@ -1,12 +1,11 @@
 package nl.hu.bep3.kitchen.domain.repository;
 
-import nl.hu.bep3.kitchen.domain.Kitchen;
-import org.bson.types.ObjectId;
-
 import java.util.Optional;
+import java.util.UUID;
+import nl.hu.bep3.kitchen.domain.Kitchen;
 
 public interface KitchenRepository {
-    Optional<Kitchen> findById(ObjectId id);
+    Optional<Kitchen> findById(UUID id);
 
     Kitchen save(Kitchen kitchen);
 

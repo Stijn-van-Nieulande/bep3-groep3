@@ -1,27 +1,25 @@
 package nl.hu.bep3.dish.infrastructure.RabbitMessages;
 
+import java.util.ArrayList;
+import java.util.UUID;
 import nl.hu.bep3.dish.DishApplication;
-import nl.hu.bep3.dish.infrastructure.repository.SpringDataMongoIngredientRepository;
 import nl.hu.bep3.dish.application.response.DishOutDto;
 import nl.hu.bep3.dish.application.response.IngredientAmountOutDto;
-import nl.hu.bep3.dish.domain.service.DomainDishApplicationService;
 import nl.hu.bep3.dish.domain.AmountUnit;
 import nl.hu.bep3.dish.domain.Dish;
 import nl.hu.bep3.dish.domain.Ingredient;
 import nl.hu.bep3.dish.domain.IngredientAmount;
+import nl.hu.bep3.dish.domain.service.DishService;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.UUID;
-
 @Component
 public class QueueReceiver {
-  private final DomainDishApplicationService domainDishApplicationService;
+  private final DishService dishService;
 
   public QueueReceiver(
-          DomainDishApplicationService domainDishApplicationService, SpringDataMongoIngredientRepository ingredientRepository) {
-    this.domainDishApplicationService = domainDishApplicationService;
+      DishService dishService) {
+    this.dishService = dishService;
   }
 
   @RabbitListener(queues = "bep.dish.dish")

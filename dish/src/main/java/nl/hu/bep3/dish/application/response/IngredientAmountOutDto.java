@@ -1,9 +1,8 @@
 package nl.hu.bep3.dish.application.response;
 
+import java.util.List;
 import nl.hu.bep3.dish.domain.FoodAllergy;
 import nl.hu.bep3.dish.domain.IngredientAmount;
-
-import java.util.List;
 
 public class IngredientAmountOutDto {
   public String ingredientName;

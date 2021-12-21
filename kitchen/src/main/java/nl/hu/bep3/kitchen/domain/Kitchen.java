@@ -1,18 +1,17 @@
 package nl.hu.bep3.kitchen.domain;
 
-import nl.hu.bep3.kitchen.domain.exceptions.OrderNotFoundException;
-import org.bson.types.ObjectId;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
+import nl.hu.bep3.kitchen.domain.exceptions.OrderNotFoundException;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Kitchen {
     @Id
-    private ObjectId id;
+    private UUID id;
 
     private String restaurantName;
     private String address;
@@ -24,15 +23,15 @@ public class Kitchen {
 
 //    @ElementCollection
 //    @CollectionTable(name = "kitchen_menu")
-    private List<ObjectId> menu = new ArrayList<>();
+    private List<UUID> menu = new ArrayList<>();
 
 //    @ElementCollection
 //    @CollectionTable(name = "pending_orders")
-    private List<ObjectId> pendingOrders = new ArrayList<>();
+    private List<UUID> pendingOrders = new ArrayList<>();
 
 //    @ElementCollection
 //    @CollectionTable(name = "orders")
-    private List<ObjectId> ordersInProcess = new ArrayList<>();
+    private List<UUID> ordersInProcess = new ArrayList<>();
 
     public Kitchen(){ }
 
@@ -46,8 +45,8 @@ public class Kitchen {
         this.stock = stock;
     }
 
-    public List<ObjectId> getAllOrderIds() {
-        List<ObjectId> orders = new ArrayList<>();
+    public List<UUID> getAllOrderIds() {
+        List<UUID> orders = new ArrayList<>();
 
         orders.addAll(pendingOrders);
         orders.addAll(ordersInProcess);
@@ -55,7 +54,7 @@ public class Kitchen {
         return orders;
     }
 
-    public void acceptOrder(ObjectId pendingOrder) {
+    public void acceptOrder(UUID pendingOrder) {
         if (this.pendingOrders.contains(pendingOrder)) {
             this.pendingOrders.remove(pendingOrder);
             this.ordersInProcess.add(pendingOrder);
@@ -64,7 +63,7 @@ public class Kitchen {
         }
     }
 
-    public void removePendingOrder(ObjectId pendingOrder) {
+    public void removePendingOrder(UUID pendingOrder) {
         if (this.pendingOrders.contains(pendingOrder)) {
             this.pendingOrders.remove(pendingOrder);
         }
@@ -75,15 +74,15 @@ public class Kitchen {
         return stock;
     }
 
-    public List<ObjectId> getOrdersInProcess() {
+    public List<UUID> getOrdersInProcess() {
         return ordersInProcess;
     }
 
-    public List<ObjectId> getMenu() {
+    public List<UUID> getMenu() {
         return menu;
     }
 
-    public Boolean addToMenu(ObjectId dish) {
+    public Boolean addToMenu(UUID dish) {
         if (!menu.contains(dish)) {
             return this.menu.add(dish);
         }

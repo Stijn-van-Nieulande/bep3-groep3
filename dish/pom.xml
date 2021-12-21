@@ -22,6 +22,11 @@
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+      <dependency>
+        <artifactId>lib-swagger-data-provider</artifactId>
+        <groupId>nl.hu.bep3</groupId>
+        <version>0.1.0</version>
+      </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>

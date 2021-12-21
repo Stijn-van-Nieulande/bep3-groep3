@@ -1,27 +1,28 @@
 package nl.hu.bep3.dish.application.rest;
 
-import nl.hu.bep3.dish.application.request.IngredientInDto;
-import nl.hu.bep3.dish.application.response.IngredientOutDto;
+import java.util.UUID;
 import nl.hu.bep3.dish.application.request.DishInDto;
 import nl.hu.bep3.dish.application.response.DishOutDto;
-import nl.hu.bep3.dish.domain.Dish;
-import nl.hu.bep3.dish.domain.service.DishApplicationService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import nl.hu.bep3.dish.domain.service.DishService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/dish")
 public class DishController {
-  private final DishApplicationService dishService;
+  private final DishService dishService;
 
-  public DishController(DishApplicationService dishService) {
+  public DishController(DishService dishService) {
     this.dishService = dishService;
   }
 
-  @GetMapping()
-  public DishOutDto getDishById(@RequestParam Long id) {
+  //region dish Crud functions
+  @GetMapping("/{id}")
+  public DishOutDto getDishById(@PathVariable("id") UUID id) {
     return dishService.getDishById(id);
   }
 
@@ -42,19 +43,15 @@ public class DishController {
 //      }
 //    }
 //  }
-  @PostMapping()
+
+
+  @PostMapping(consumes = "application/json")
   public DishOutDto createDish(@RequestBody DishInDto dishInDto){
     return dishService.createDish(dishInDto);
   }
 
-  @PostMapping("/ingredient")
-  public ResponseEntity<IngredientOutDto> createIngredient(@RequestBody IngredientInDto ingredientInDto){
-    try {
-      IngredientOutDto i = dishService.createIngredient(ingredientInDto);
-      return new ResponseEntity(i, HttpStatus.OK);
-    }catch (Exception exception){
-      return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-  }
+  //endregion
+
+
 
 }

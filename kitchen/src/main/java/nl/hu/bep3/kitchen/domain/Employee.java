@@ -1,14 +1,14 @@
 package nl.hu.bep3.kitchen.domain;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.UUID;
 
 @Document
 public class Employee {
     @Id
 //    @GeneratedValue(strategy = GenerationType.AUTO)
-    private ObjectId id;
+    private UUID id;
 
     private String firstName;
     private String lastName;
