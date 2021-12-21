@@ -1,5 +1,6 @@
 package nl.hu.bep3.order.Aplication.response;
 
+import nl.hu.bep3.customer.domain.Customer;
 import nl.hu.bep3.order.Domain.Payment;
 import nl.hu.bep3.order.Domain.Review;
 import nl.hu.bep3.order.Domain.Status;
