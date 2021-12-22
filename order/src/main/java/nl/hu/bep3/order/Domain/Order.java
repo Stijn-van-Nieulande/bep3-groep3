@@ -19,6 +19,7 @@ public class Order {
   private String paymentMethod;
   private List<DishOrder> dishOrders;
   private float deliverCosts = 2.50F;
+  private float minAmountNoDeliverCosts = 25;
   private String customerMessage;
   private Review review;
 
@@ -42,18 +43,13 @@ public class Order {
 
     this.status = Status.ACCEPTED;
   }
-
-//    public void CreatePaymentOrder(){
-//        Payment newPayment = new Payment(false, calcTotPrice());
-//    }
-
-
+  
   public float calcTotPrice() {
     float totPrice = 0;
     for (DishOrder dishOrder : dishOrders) {
       totPrice = dishOrder.calcPriceDishOrder();
     }
-    if (deliver == true) {
+    if (deliver == true || totPrice < minAmountNoDeliverCosts) {
       totPrice = +deliverCosts;
     }
     return totPrice;
