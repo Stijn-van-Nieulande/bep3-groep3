@@ -1,7 +1,6 @@
 package nl.hu.bep3.customer.application.response;
 
 import nl.hu.bep3.customer.domain.Customer;
-import java.util.UUID;
 
 public class CustomerResponse {
   public Customer customer;

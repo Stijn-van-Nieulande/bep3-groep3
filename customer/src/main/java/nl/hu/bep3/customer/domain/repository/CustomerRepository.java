@@ -1,11 +1,10 @@
 package nl.hu.bep3.customer.domain.repository;
 
+import java.util.Optional;
+import java.util.UUID;
 import nl.hu.bep3.customer.domain.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.Optional;
-import java.util.UUID;
 
 public interface CustomerRepository {
   Optional<Customer> findByPhoneNumberOrEmail(String phoneNumber, String email);

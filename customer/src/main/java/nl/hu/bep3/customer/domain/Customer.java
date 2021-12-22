@@ -1,11 +1,9 @@
 package nl.hu.bep3.customer.domain;
 
+import java.util.UUID;
 import nl.hu.bep3.customer.infrastructure.repository.Persistable;
 
-import java.util.UUID;
-
-public class Customer implements Persistable<UUID>
-{
+public class Customer implements Persistable<UUID> {
   private UUID id;
   private String firstName;
   private String lastName;
@@ -92,6 +90,4 @@ public class Customer implements Persistable<UUID>
   public void setPhoneNumber(String phoneNumber) {
     this.phoneNumber = phoneNumber;
   }
-
-
 }
