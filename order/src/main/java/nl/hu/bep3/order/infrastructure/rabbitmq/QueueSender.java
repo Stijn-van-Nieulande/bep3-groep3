@@ -2,6 +2,8 @@ package nl.hu.bep3.order.infrastructure.rabbitmq;
 
 import java.util.List;
 
+import nl.hu.bep3.customer.domain.Customer;
+import nl.hu.bep3.order.OrderApplication;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,12 +23,12 @@ public class QueueSender {
     this.customerExchange = customerExchange;
   }
 
-  public String getCustomer(final UUID id) {
+  public Customer getCustomer(final UUID id) {
     System.out.println("Request Customer with id: " + id);
     String message = (String) customerTemplate.convertSendAndReceive(customerExchange.getName(),
         "customer", id);
     System.out.println("Response: " + message);
-    return message;
+    return OrderApplication.GSON.fromJson(message, Customer.class);
   }
 }
 

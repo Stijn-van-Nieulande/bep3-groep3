@@ -1,21 +1,21 @@
 package nl.hu.bep3.order.domain;
 
 import nl.hu.bep3.customer.domain.Customer;
+import nl.hu.bep3.order.infrastructure.repository.Persistable;
 import nl.hu.bep3.order.Aplication.response.ReviewResponseDTO;
 import nl.hu.bep3.order.domain.valueobjects.DishOrder;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
-public class Order {
+public class Order implements Persistable<UUID> {
 
-  private Long orderId;
+  private UUID id;
   private Date orderDate;
   private Status status;
   private Customer customer;
-  private Payment payment;
   private boolean deliver; //pickup/deliver
-  private String paymentMethod;
   private List<DishOrder> dishOrders;
   private float deliverCosts = 2.50F;
   private float minAmountNoDeliverCosts = 25;
@@ -23,24 +23,14 @@ public class Order {
   private Review review;
 
 
-  public Order(Customer customer, Payment payment, boolean deliver,
-      String paymentMethod, List<DishOrder> dishOrders, String message) {
+  public Order(Customer customer, boolean deliver, List<DishOrder> dishOrders,
+      String customerMessage) {
     this.customer = customer;
-    this.payment = payment;
     this.deliver = deliver;
-    this.customerMessage = message;
-    this.paymentMethod = paymentMethod;
+    this.customerMessage = customerMessage;
     this.dishOrders = dishOrders;
     this.status = Status.PENDING;
   }
-
-  //customer roept dit aan
-//  public void placeOrder(List<DishOrder> dishOrders, boolean deliver, String message) {
-//    this.dishOrders = dishOrders;
-//    this.deliver = deliver;
-//    this.customerMessage = message;
-//    this.status = Status.PENDING;
-//  }
 
   public float calcTotPrice() {
     float totPrice = 0;
@@ -76,5 +66,51 @@ public class Order {
 
   public Status getStatus() {
     return status;
+  }
+
+  public UUID getId() {
+    return id;
+  }
+
+  public Date getOrderDate() {
+    return orderDate;
+  }
+
+  public Customer getCustomer() {
+    return customer;
+  }
+
+  public boolean isDeliver() {
+    return deliver;
+  }
+
+  public List<DishOrder> getDishOrders() {
+    return dishOrders;
+  }
+
+  public float getDeliverCosts() {
+    return deliverCosts;
+  }
+
+  public float getMinAmountNoDeliverCosts() {
+    return minAmountNoDeliverCosts;
+  }
+
+  public String getCustomerMessage() {
+    return customerMessage;
+  }
+
+  public Review getReview() {
+    return review;
+  }
+
+  @Override
+  public void setId(UUID id) {
+    this.id = id;
+  }
+
+  @Override
+  public boolean isNew() {
+    return this.id == null;
   }
 }

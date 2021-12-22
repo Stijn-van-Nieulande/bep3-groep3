@@ -1,4 +1,4 @@
-package nl.hu.bep3.order.infrastructure.repository.mango;
+package nl.hu.bep3.order.infrastructure.repository.mongo;
 
 import nl.hu.bep3.order.domain.Order;
 import nl.hu.bep3.order.domain.repository.OrderRepository;
@@ -37,7 +37,6 @@ public class MongoOrderRepository implements OrderRepository {
 
   @Override
   public List<Order> findOrdersFromCustomer(UUID customerId) {
-    //TODO  dingen
-    return null;
+    return orderRepository.findOrderByCustomerId(customerId);
   }
 }

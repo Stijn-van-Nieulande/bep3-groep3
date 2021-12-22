@@ -2,6 +2,7 @@ package nl.hu.bep3.order.domain.service;
 
 import nl.hu.bep3.order.Aplication.request.OrderRequestDTO;
 import nl.hu.bep3.order.Aplication.request.ReviewRequestDTO;
+import nl.hu.bep3.order.Aplication.response.OrderResponseDTO;
 import nl.hu.bep3.order.Aplication.response.ReviewResponseDTO;
 import nl.hu.bep3.order.domain.Order;
 import org.springframework.http.HttpStatus;
@@ -11,7 +12,7 @@ import java.util.UUID;
 
 public interface OrderService {
 
-  Order placeNewOrder(OrderRequestDTO orderRequestDTO);
+  OrderResponseDTO placeNewOrder(OrderRequestDTO orderRequestDTO);
 
   void setStatus(UUID id, String status);
 
@@ -25,7 +26,7 @@ public interface OrderService {
 
   void deleteOrder(UUID id);
 
-  List<Order> getOrdersFromCustomer(UUID customerId);
+  List<OrderResponseDTO> getOrdersFromCustomer(UUID customerId);
 
   Float getAmount(UUID id);
 }

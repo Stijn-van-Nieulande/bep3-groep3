@@ -1,6 +1,6 @@
 package nl.hu.bep3.order.domain;
 
-import nl.hu.bep3.customer.infrastructure.repository.Persistable;
+import nl.hu.bep3.order.infrastructure.repository.Persistable;
 import java.util.UUID;
 
 

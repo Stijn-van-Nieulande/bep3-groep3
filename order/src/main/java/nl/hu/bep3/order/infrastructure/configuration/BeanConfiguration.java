@@ -1,5 +1,6 @@
 package nl.hu.bep3.order.infrastructure.configuration;
 
+import nl.hu.bep3.order.infrastructure.rabbitmq.QueueSender;
 import nl.hu.bep3.order.domain.repository.OrderRepository;
 import nl.hu.bep3.order.domain.service.DomainOrderService;
 import nl.hu.bep3.order.OrderApplication;
@@ -13,7 +14,7 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfiguration {
 
   @Bean
-  OrderService orderService(final OrderRepository orderRepository) {
-    return new DomainOrderService(orderRepository);
+  OrderService orderService(final OrderRepository orderRepository, QueueSender queueSender) {
+    return new DomainOrderService(orderRepository, queueSender);
   }
 }

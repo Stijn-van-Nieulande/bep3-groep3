@@ -2,6 +2,7 @@ package nl.hu.bep3.order.Aplication.rest;
 
 import nl.hu.bep3.order.Aplication.request.OrderRequestDTO;
 import nl.hu.bep3.order.Aplication.request.ReviewRequestDTO;
+import nl.hu.bep3.order.Aplication.response.OrderResponseDTO;
 import nl.hu.bep3.order.Aplication.response.ReviewResponseDTO;
 import nl.hu.bep3.order.domain.Status;
 import nl.hu.bep3.order.domain.service.DomainOrderService;
@@ -26,7 +27,7 @@ public class OrderController {
 
   //Als customer wil ik mijn gekozen gerechten kunnen bestellen
   @PostMapping("/makeOrder")
-  public Order placeOrder(@RequestBody OrderRequestDTO orderRequestDTO) {
+  public OrderResponseDTO placeOrder(@RequestBody OrderRequestDTO orderRequestDTO) {
     return this.orderService.placeNewOrder(orderRequestDTO);
   }
 
@@ -57,13 +58,13 @@ public class OrderController {
   }
 
   //Als customer wil ik mijn orders in kunnen zien.
-  @GetMapping("/orders")
-  public List<Order> getOrdersFromCustomer(@PathVariable UUID customerId) {
+  @GetMapping("/{customerId}")
+  public List<OrderResponseDTO> getOrdersFromCustomer(@PathVariable UUID customerId) {
     return this.orderService.getOrdersFromCustomer(customerId);
   }
 
   //Als order customer Wil ik dat het juiste bedrag wordt berekend
-  @GetMapping("/amount")
+  @GetMapping("/amount/{id}")
   public Float getAmount(@PathVariable UUID id) {
     return this.orderService.getAmount(id);
   }
