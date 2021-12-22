@@ -14,13 +14,15 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(basePackageClasses = DishApplication.class)
 public class BeanConfiguration {
-    @Bean
-    IngredientService ingredientService(final IngredientRepository ingredientRepository){
-      return new DomainIngredientService(ingredientRepository);
-    }
 
-    @Bean
-    DishService dishService(final DishRepository dishRepository, final IngredientService ingredientService) {
-        return new DomainDishService(dishRepository, ingredientService);
-    }
+  @Bean
+  IngredientService ingredientService(final IngredientRepository ingredientRepository) {
+    return new DomainIngredientService(ingredientRepository);
+  }
+
+  @Bean
+  DishService dishService(final DishRepository dishRepository,
+      final IngredientService ingredientService) {
+    return new DomainDishService(dishRepository, ingredientService);
+  }
 }

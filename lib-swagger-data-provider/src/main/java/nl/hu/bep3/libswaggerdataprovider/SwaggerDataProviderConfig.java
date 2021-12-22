@@ -10,6 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Component
 public class SwaggerDataProviderConfig {
+
   static {
     SpringDocUtils.getConfig()
         .replaceParameterObjectWithClass(

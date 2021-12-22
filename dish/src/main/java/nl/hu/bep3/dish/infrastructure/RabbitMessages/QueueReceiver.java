@@ -5,6 +5,7 @@ import java.util.UUID;
 import nl.hu.bep3.dish.DishApplication;
 import nl.hu.bep3.dish.application.response.DishOutDto;
 import nl.hu.bep3.dish.application.response.IngredientAmountOutDto;
+import nl.hu.bep3.dish.application.response.MenuDto;
 import nl.hu.bep3.dish.domain.AmountUnit;
 import nl.hu.bep3.dish.domain.Dish;
 import nl.hu.bep3.dish.domain.Ingredient;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class QueueReceiver {
+
   private final DishService dishService;
 
   public QueueReceiver(
@@ -25,20 +27,20 @@ public class QueueReceiver {
   @RabbitListener(queues = "bep.dish.dish")
   public String getDish(final UUID id) {
     System.out.println("dish: " + id);
+    //TODO: return actual database item
     DishOutDto dish = new DishOutDto(new Dish("kaasplank", 1, null));
     //final String message = DishApplication.GSON.toJson(dishApplicationService.getDishById(id));
-    final String message = DishApplication.GSON.toJson(dish);
-    return message;
+    return DishApplication.GSON.toJson(dish);
   }
 
   @RabbitListener(queues = "bep.dish.ingredient")
   public String getIngredient(final UUID id) {
     //final String message =
-     //   DishApplication.GSON.toJson(dishApplicationService.getIngredientById(id));
+    //   DishApplication.GSON.toJson(dishApplicationService.getIngredientById(id));
     System.out.println("ingredient: " + id);
-    IngredientAmountOutDto ingredient = new IngredientAmountOutDto(new IngredientAmount(10f, AmountUnit.KILOGRAM, new Ingredient("potato", null)));
-    final String message = DishApplication.GSON.toJson(ingredient);
-    return message;
+    IngredientAmountOutDto ingredient = new IngredientAmountOutDto(
+        new IngredientAmount(10f, AmountUnit.KILOGRAM, new Ingredient("potato", null)));
+    return DishApplication.GSON.toJson(ingredient);
   }
 
   @RabbitListener(queues = "bep.dish.menu")
@@ -46,9 +48,10 @@ public class QueueReceiver {
     System.out.println("menu");
     ArrayList<DishOutDto> dishes = new ArrayList<>();
     for (UUID id : dishIds) {
-      //findbyid
+      dishes.add(new DishOutDto(dishService.getDishById(id)));
     }
-    final String message = DishApplication.GSON.toJson(dishes);
-    return message;
+    MenuDto menuDto = new MenuDto();
+    menuDto.menu = dishes;
+    return DishApplication.GSON.toJson(menuDto);
   }
 }

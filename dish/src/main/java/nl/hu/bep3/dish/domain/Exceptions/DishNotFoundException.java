@@ -6,11 +6,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.NOT_FOUND)
 public class DishNotFoundException extends RuntimeException {
+
   public DishNotFoundException(String message) {
     super(message);
   }
 
-  public DishNotFoundException(final UUID id){
+  public DishNotFoundException(final UUID id) {
     super(String.format("Dish with id \"%s\" doesnt exist.", id.toString()));
   }
 }

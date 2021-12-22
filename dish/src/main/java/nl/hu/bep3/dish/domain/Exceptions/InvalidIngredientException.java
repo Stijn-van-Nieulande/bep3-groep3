@@ -1,13 +1,12 @@
-package nl.hu.bep3.kitchen.domain.exceptions;
+package nl.hu.bep3.dish.domain.Exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class InvalidKitchenException extends RuntimeException {
+public class InvalidIngredientException extends RuntimeException {
 
-  public InvalidKitchenException(final String message) {
+  public InvalidIngredientException(String message) {
     super(message);
   }
-
 }

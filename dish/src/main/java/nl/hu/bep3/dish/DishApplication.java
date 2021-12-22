@@ -8,12 +8,11 @@ import org.springframework.context.annotation.Import;
 
 @SpringBootApplication(scanBasePackages = "nl.hu.bep3.dish")
 @Import(SwaggerDataProviderConfig.class)
-public class DishApplication
-{
-    public static final Gson GSON = new Gson();
+public class DishApplication {
 
-    public static void main(final String[] args)
-    {
-        SpringApplication.run(DishApplication.class, args);
-    }
+  public static final Gson GSON = new Gson();
+
+  public static void main(final String[] args) {
+    SpringApplication.run(DishApplication.class, args);
+  }
 }

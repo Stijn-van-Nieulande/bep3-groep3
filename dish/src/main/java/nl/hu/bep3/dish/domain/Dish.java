@@ -8,8 +8,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class Dish {
-    public float getPrice;
-    @Id
+
+  @Id
 //  @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
 
@@ -24,7 +24,8 @@ public class Dish {
 //  )
   private List<IngredientAmount> ingredients = new ArrayList<IngredientAmount>();
 
-  public Dish() {}
+  public Dish() {
+  }
 
   public Dish(String name, double price, List<IngredientAmount> ingredients) {
     this.id = UUID.randomUUID();

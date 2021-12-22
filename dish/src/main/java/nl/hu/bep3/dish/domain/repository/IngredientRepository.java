@@ -6,9 +6,14 @@ import java.util.UUID;
 import nl.hu.bep3.dish.domain.Ingredient;
 
 public interface IngredientRepository {
-    Optional<Ingredient> findById(UUID id);
 
-    Ingredient save(Ingredient ingredient);
+  Optional<Ingredient> findById(UUID id);
 
-    List<Ingredient> findAll();
+  Ingredient save(Ingredient ingredient);
+
+  List<Ingredient> findAll();
+
+  Optional<Ingredient> findFirstByName(final String name);
+
+  void delete(Ingredient ingredient);
 }
