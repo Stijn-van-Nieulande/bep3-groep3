@@ -6,33 +6,20 @@ import java.util.Objects;
 import java.util.UUID;
 import nl.hu.bep3.kitchen.domain.exceptions.OrderNotFoundException;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.domain.Persistable;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
-public class Kitchen {
-
-  @Id
+public class Kitchen implements Persistable<UUID> {
   private UUID id;
 
   private String restaurantName;
   private String address;
-
-  //    @OneToOne
   private Storage storage;
 
-//    private List<Employee> employees;
-
-  //    @ElementCollection
-//    @CollectionTable(name = "kitchen_menu")
-  private List<UUID> menu = new ArrayList<>();
-
-  //    @ElementCollection
-//    @CollectionTable(name = "pending_orders")
-  private List<UUID> pendingOrders = new ArrayList<>();
-
-  //    @ElementCollection
-//    @CollectionTable(name = "orders")
-  private List<UUID> ordersInProcess = new ArrayList<>();
+  private ArrayList<UUID> menu = new ArrayList<>();
+  private ArrayList<UUID> pendingOrders = new ArrayList<>();
+  private ArrayList<UUID> ordersInProcess = new ArrayList<>();
 
   public Kitchen() {
   }
@@ -73,8 +60,14 @@ public class Kitchen {
     throw new OrderNotFoundException(pendingOrder);
   }
 
+  @Override
   public UUID getId() {
     return id;
+  }
+
+  @Override
+  public boolean isNew() {
+    return false;
   }
 
   public Storage getStock() {

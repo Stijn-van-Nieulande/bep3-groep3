@@ -14,6 +14,4 @@ public interface DishService {
   Dish updateDish(UUID id, DishInDto dishInDto);
 
   void deleteDish(UUID id);
-
-  List<Dish> getAllIngredients();
 }

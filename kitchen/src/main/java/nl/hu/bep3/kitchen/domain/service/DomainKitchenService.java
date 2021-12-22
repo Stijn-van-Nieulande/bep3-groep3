@@ -100,16 +100,17 @@ public class DomainKitchenService implements KitchenService {
     StockDtoOut stockDtoOut = new StockDtoOut();
     stockDtoOut.kitchen = kitchenId;
     stockDtoOut.capacity = storage.getCapacity();
-    List<ProductDto> ingredients = new ArrayList<>();
+    List<IngredientOutDto> ingredients = new ArrayList<>();
     for (ProductInStock ingredient : storage.getIngredientInStock()) {
-      //dishIngredient dishIngredient = sender.getIngredient(ingredient.getId());
-      ProductDto productDto = new ProductDto();
-      productDto.amount = ingredient.getAmount();
-      productDto.amountUnit = ingredient.getAmountUnit();
+      ingredients.add(proxy.getIngredientById(ingredient.getId()).getBody());
+//      ProductDto productDto = new ProductDto();
+//      productDto.amount = ingredient.getAmount();
+//      productDto.amountUnit = ingredient.getAmountUnit();
       //productDto.ingredientName = dishIngredient.getName;
       //productDto.allergies = dishIngredient.allergies;
-      ingredients.add(productDto);
+//      ingredients.add(productDto);
     }
+    stockDtoOut.ingredientList = ingredients;
     return stockDtoOut;
     //TODO: get ingredient names/allergies via dish
   }
@@ -145,6 +146,65 @@ public class DomainKitchenService implements KitchenService {
   }
 
   @Override
+  public Kitchen addProduct(UUID kitchenId, ProductDtoIn dto) {
+    Kitchen kitchen = kitchenRepository.findById(kitchenId)
+        .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
+    IngredientInDto ingredientInDto = new IngredientInDto();
+    ingredientInDto.name = dto.name;
+    ingredientInDto.allergies = dto.allergies;
+
+    ResponseEntity<IngredientOutDto> p = proxy.createIngredient(ingredientInDto);
+    IngredientOutDto ingredient = p.getBody();
+    if (ingredient == null){
+      throw new NullPointerException("returned ingredient cannot be null");
+    }
+    ProductInStock product = new ProductInStock(ingredient.id, dto.amount, dto.amountUnit);
+
+    kitchen.getStock().getIngredientInStock().add(product);
+
+    return kitchenRepository.save(kitchen);
+  }
+
+  @Override
+  public Kitchen updateProduct(UUID kitchenId, UUID ingredientId,
+      ProductDtoIn productDto) {
+    Kitchen kitchen = kitchenRepository.findById(kitchenId)
+        .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
+    IngredientInDto ingredientInDto = new IngredientInDto();
+    ingredientInDto.name = productDto.name;
+    ingredientInDto.allergies = productDto.allergies;
+
+    List<ProductInStock> productsInStocks = kitchen.getStock().getIngredientInStock();
+    for(ProductInStock product : productsInStocks){
+      if (product.getId().equals(ingredientId)) {
+        System.out.println("yes " + product);
+        ResponseEntity<IngredientOutDto> p = proxy.updateIngredient(ingredientId, ingredientInDto);
+        product.setAmount(productDto.amount);
+      }
+    }
+
+    return kitchenRepository.save(kitchen);
+  }
+
+  @Override
+  public Kitchen deleteProduct(UUID kitchenId, UUID ingredientId) {
+    Kitchen kitchen = kitchenRepository.findById(kitchenId)
+        .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
+
+    List<ProductInStock> productsInStocks = kitchen.getStock().getIngredientInStock();
+    for(ProductInStock product : productsInStocks){
+      if (product.getId().equals(ingredientId)) {
+        System.out.println("yes " + product);
+        proxy.deleteIngredient(ingredientId);
+        kitchen.getStock().getIngredientInStock().remove(product);
+        break;
+      }
+    }
+
+    return kitchenRepository.save(kitchen);
+  }
+
+  @Override
   public MenuDto getMenu(UUID kitchenId) {
     Kitchen kitchen = kitchenRepository.findById(kitchenId)
         .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
@@ -156,35 +216,32 @@ public class DomainKitchenService implements KitchenService {
   }
 
   @Override
-  public DishOutDto addDishToMenu(UUID kitchenId, DishInDto dto) {
-    if (kitchenRepository.findById(kitchenId).isEmpty()) {
-      throw new InvalidKitchenException("given kitchen does not exist");
-    }
-
-    return queueSender.addDish(kitchenId, dto);
-  }
-
-  @Override
-  public ResponseEntity<IngredientOutDto> addProduct(UUID kitchenId, ProductDtoIn dto) {
+  public DishOutDto addDishToMenu(UUID kitchenId, DishInDto dishInDto){
     Kitchen kitchen = kitchenRepository.findById(kitchenId)
         .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
-    IngredientInDto ingredientInDto = new IngredientInDto();
-    ingredientInDto.name = dto.name;
 
-    ResponseEntity<IngredientOutDto> p = proxy.createIngredient(ingredientInDto);
-    ProductInStock product = new ProductInStock(p.getBody().id, dto.amount);
-
-    return p;
+    DishOutDto response = proxy.createDish(dishInDto).getBody();
+    kitchen.addToMenu(response.id);
+    kitchenRepository.save(kitchen);
+    return response;
   }
 
   @Override
-  public ResponseEntity<IngredientOutDto> updateProduct(UUID kitchenId, UUID ingredientId,
-      IngredientInDto productDto) {
-    return null;
-  }
+  public MenuDto deleteDish(UUID kitchenId, UUID dishId){
+    Kitchen kitchen = kitchenRepository.findById(kitchenId)
+        .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
 
-  @Override
-  public ResponseEntity<IngredientOutDto> deleteProduct(UUID kitchenId, UUID ingredientId) {
-    return null;
+    List<UUID> dishes = kitchen.getMenu();
+    for(UUID dish : dishes){
+      if (dish.equals(dishId)) {
+        System.out.println("yes " + dish);
+        proxy.deleteDish(dishId);
+        kitchen.getMenu().remove(dishId);
+        break;
+      }
+    }
+    kitchenRepository.save(kitchen);
+
+    return getMenu(kitchenId);
   }
 }

@@ -5,8 +5,11 @@ import javax.ws.rs.core.Response;
 import nl.hu.bep3.dish.application.request.DishInDto;
 import nl.hu.bep3.dish.application.response.DishOutDto;
 import nl.hu.bep3.dish.application.response.MenuDto;
+import nl.hu.bep3.kitchen.domain.exceptions.KitchenNotFoundException;
 import nl.hu.bep3.kitchen.domain.service.DomainKitchenService;
 import nl.hu.bep3.kitchen.domain.service.KitchenService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,13 +39,12 @@ public class MenuController {
   }
 
   @DeleteMapping("/{kitchenId}/{DishId}")
-  public Response getMenu(@PathVariable("kitchenId") UUID kitchenId,
+  public ResponseEntity<MenuDto> getMenu(@PathVariable("kitchenId") UUID kitchenId,
       @PathVariable("DishId") UUID DishId) {
-
-    System.out.println(kitchenId + " - " + DishId);
-    return Response
-        .status(Response.Status.OK)
-        .entity("hurb")
-        .build();
+    try {
+      return new ResponseEntity(service.deleteDish(kitchenId, DishId), HttpStatus.OK);
+    }catch (KitchenNotFoundException exception){
+      return new ResponseEntity(exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
   }
 }

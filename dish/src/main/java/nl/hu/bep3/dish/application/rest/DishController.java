@@ -6,6 +6,7 @@ import nl.hu.bep3.dish.application.request.DishInDto;
 import nl.hu.bep3.dish.application.response.DishOutDto;
 import nl.hu.bep3.dish.domain.Dish;
 import nl.hu.bep3.dish.domain.Exceptions.DishNotFoundException;
+import nl.hu.bep3.dish.domain.Exceptions.InvalidIngredientException;
 import nl.hu.bep3.dish.domain.service.DishService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,16 +47,6 @@ public class DishController {
 //    }
 //  }
 
-  @GetMapping()
-  public ResponseEntity<DishOutDto> getAllIngredients() {
-    try {
-      List<Dish> dishes = dishService.getAllIngredients();
-      return new ResponseEntity(dishes, HttpStatus.OK);
-    } catch (Exception exception) {
-      return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
-    }
-  }
-
   //region dish Crud functions
   @GetMapping("/{id}")
   public ResponseEntity<DishOutDto> getDishById(@PathVariable("id") UUID id) {
@@ -74,7 +65,7 @@ public class DishController {
     try {
       DishOutDto dish = new DishOutDto(dishService.createDish(dishInDto));
       return new ResponseEntity(dish, HttpStatus.OK);
-    } catch (Exception exception) {
+    } catch (InvalidIngredientException exception) {
       return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
