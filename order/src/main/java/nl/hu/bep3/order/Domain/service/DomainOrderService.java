@@ -42,13 +42,11 @@ public class DomainOrderService implements OrderService {
     String paymentMethod = orderRequestDTO.getPaymentMethod();
     List<DishOrder> dishOrderList = orderRequestDTO.getDishOrders();
 
-    Order order = new Order(adres, customer, payment, deliver, paymentMethod, dishOrderList);
-    return order;
+    return new Order(adres, customer, payment, deliver, paymentMethod, dishOrderList);
   }
 
   @Override
   public void completeOrder(UUID id) {
-
   }
 
   @Override
@@ -71,5 +69,15 @@ public class DomainOrderService implements OrderService {
   @Override
   public void deleteOrder(UUID id) {
     this.orderRepository.deleteById(id);
+  }
+
+  public List<Order> getOrdersFromCustomer(UUID customerId) {
+    return orderRepository.findOrdersFromCustomer(customerId);
+  }
+
+  public Float getAmount(UUID id) {
+    order = this.orderRepository.findById(id).orElseThrow(() -> new OrderNotFound(id));
+    return order.calcTotPrice();
+
   }
 }
