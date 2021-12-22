@@ -6,13 +6,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 public class IngredientAmount {
+
   @Id
 //  @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
   private float amount;
   private AmountUnit amountUnit;
 
-//  @ManyToOne
+  //  @ManyToOne
 //  @JoinColumn(name = "ingredient_id")
   private Ingredient ingredient;
 

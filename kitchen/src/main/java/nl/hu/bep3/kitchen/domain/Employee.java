@@ -1,18 +1,19 @@
 package nl.hu.bep3.kitchen.domain;
 
+import java.util.UUID;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import java.util.UUID;
 
 @Document
 public class Employee {
-    @Id
+
+  @Id
 //    @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+  private UUID id;
 
-    private String firstName;
-    private String lastName;
-    private double salaris;
+  private String firstName;
+  private String lastName;
+  private double salaris;
 
-    private EmployeeRole role;
+  private EmployeeRole role;
 }
