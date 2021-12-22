@@ -7,19 +7,24 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
 
-    @Bean
-    public DirectExchange directDishExchange(){
-        return new DirectExchange("bep.dish");
-    }
+  @Bean
+  public DirectExchange directDishAddExchange() {
+    return new DirectExchange("Bep.dish.add");
+  }
 
-    @Bean
-    public DirectExchange directIngredientExchange(){
-        return new DirectExchange("bep.ingredient");
-    }
+  @Bean
+  public DirectExchange directDishExchange() {
+    return new DirectExchange("bep.dish");
+  }
 
-    @Bean
-    public DirectExchange directMenuExchange(){
-        return new DirectExchange("bep.menu");
-    }
+  @Bean
+  public DirectExchange directIngredientExchange() {
+    return new DirectExchange("bep.ingredient");
+  }
+
+  @Bean
+  public DirectExchange directMenuExchange() {
+    return new DirectExchange("bep.menu");
+  }
 
 }

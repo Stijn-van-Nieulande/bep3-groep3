@@ -5,6 +5,7 @@ import nl.hu.bep3.dish.domain.FoodAllergy;
 import nl.hu.bep3.dish.domain.IngredientAmount;
 
 public class IngredientAmountOutDto {
+
   public String ingredientName;
   public List<FoodAllergy> allergies;
   public double amount;
@@ -17,5 +18,8 @@ public class IngredientAmountOutDto {
     this.unit =
         ingredientAmount.getAmountUnit().toString()
             + ingredientAmount.getAmountUnit().getAbbreviation();
+  }
+
+  public IngredientAmountOutDto() {
   }
 }

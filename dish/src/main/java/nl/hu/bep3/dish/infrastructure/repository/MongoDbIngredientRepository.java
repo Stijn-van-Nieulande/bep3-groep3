@@ -12,24 +12,37 @@ import org.springframework.stereotype.Component;
 @Component
 @Primary
 public class MongoDbIngredientRepository implements IngredientRepository {
-    private final SpringDataMongoIngredientRepository springDataMongoIngredientRepository;
 
-    @Autowired
-    public MongoDbIngredientRepository(final SpringDataMongoIngredientRepository springDataMongoIngredientRepository) {
-        this.springDataMongoIngredientRepository = springDataMongoIngredientRepository;
-    }
-    @Override
-    public Optional<Ingredient> findById(final UUID id) {
-        return springDataMongoIngredientRepository.findById(id);
-    }
+  private final SpringDataMongoIngredientRepository springDataMongoIngredientRepository;
 
-    @Override
-    public Ingredient save(final Ingredient ingredient) {
-        return springDataMongoIngredientRepository.save(ingredient);
-    }
+  @Autowired
+  public MongoDbIngredientRepository(
+      final SpringDataMongoIngredientRepository springDataMongoIngredientRepository) {
+    this.springDataMongoIngredientRepository = springDataMongoIngredientRepository;
+  }
 
-    @Override
-  public List<Ingredient> findAll(){
-      return springDataMongoIngredientRepository.findAll();
-    }
+  @Override
+  public Optional<Ingredient> findById(final UUID id) {
+    return springDataMongoIngredientRepository.findById(id);
+  }
+
+  @Override
+  public Ingredient save(final Ingredient ingredient) {
+    return springDataMongoIngredientRepository.save(ingredient);
+  }
+
+  @Override
+  public List<Ingredient> findAll() {
+    return springDataMongoIngredientRepository.findAll();
+  }
+
+  @Override
+  public Optional<Ingredient> findFirstByName(final String name) {
+    return springDataMongoIngredientRepository.findFirstByName(name);
+  }
+
+  @Override
+  public void delete(final Ingredient ingredient) {
+    springDataMongoIngredientRepository.delete(ingredient);
+  }
 }

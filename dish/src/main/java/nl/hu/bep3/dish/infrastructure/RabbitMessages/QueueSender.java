@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class QueueSender {
+
   private final RabbitTemplate template;
   private final Queue queue;
 
