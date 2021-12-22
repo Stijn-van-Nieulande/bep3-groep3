@@ -11,7 +11,6 @@ public class Order {
 
   private Long orderId;
   private Date orderDate;
-  private String adres;
   private Status status;
   private Customer customer;
   private Payment payment;
@@ -24,26 +23,25 @@ public class Order {
   private Review review;
 
 
-  public Order(String adres, Customer customer, Payment payment, boolean deliver,
-      String paymentMethod, List<DishOrder> dishOrders) {
-    this.adres = adres;
+  public Order(Customer customer, Payment payment, boolean deliver,
+      String paymentMethod, List<DishOrder> dishOrders, String message) {
     this.customer = customer;
     this.payment = payment;
     this.deliver = deliver;
+    this.customerMessage = message;
     this.paymentMethod = paymentMethod;
     this.dishOrders = dishOrders;
+    this.status = Status.PENDING;
   }
-
 
   //customer roept dit aan
-  public void placeOrder(List<DishOrder> dishOrders, boolean deliver, String message) {
-    this.dishOrders = dishOrders;
-    this.deliver = deliver;
-    this.customerMessage = message;
+//  public void placeOrder(List<DishOrder> dishOrders, boolean deliver, String message) {
+//    this.dishOrders = dishOrders;
+//    this.deliver = deliver;
+//    this.customerMessage = message;
+//    this.status = Status.PENDING;
+//  }
 
-    this.status = Status.ACCEPTED;
-  }
-  
   public float calcTotPrice() {
     float totPrice = 0;
     for (DishOrder dishOrder : dishOrders) {

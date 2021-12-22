@@ -35,14 +35,14 @@ public class DomainOrderService implements OrderService {
 
   @Override
   public Order placeNewOrder(OrderRequestDTO orderRequestDTO) {
-    String adres = orderRequestDTO.getAdres();
     Customer customer = orderRequestDTO.getCustomer();
     Payment payment = orderRequestDTO.getPayment();
     boolean deliver = orderRequestDTO.isDeliver();
     String paymentMethod = orderRequestDTO.getPaymentMethod();
     List<DishOrder> dishOrderList = orderRequestDTO.getDishOrders();
+    String message = orderRequestDTO.getMessage();
 
-    return new Order(adres, customer, payment, deliver, paymentMethod, dishOrderList);
+    return new Order(customer, payment, deliver, paymentMethod, dishOrderList, message);
   }
 
   @Override
