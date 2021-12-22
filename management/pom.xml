@@ -33,6 +33,12 @@
       <artifactId>spring-cloud-starter-openfeign</artifactId>
       <groupId>org.springframework.cloud</groupId>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/io.github.openfeign/feign-okhttp -->
+    <dependency>
+      <groupId>io.github.openfeign</groupId>
+      <artifactId>feign-okhttp</artifactId>
+      <version>11.7</version>
+    </dependency>
     <!-- https://mvnrepository.com/artifact/com.github.tomakehurst/wiremock -->
     <dependency>
       <artifactId>wiremock</artifactId>
