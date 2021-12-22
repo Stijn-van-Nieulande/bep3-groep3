@@ -6,14 +6,14 @@ import java.util.UUID;
 
 public class Review implements Persistable<UUID> {
 
-    private UUID reviewId;
-    private String reviewMessage;
-    private int rating;
+  private UUID reviewId;
+  private String reviewMessage;
+  private int rating;
 
-    public Review(String reviewMessage, int rating) {
-        this.reviewMessage = reviewMessage;
-        this.rating = rating;
-    }
+  public Review(String reviewMessage, int rating) {
+    this.reviewMessage = reviewMessage;
+    this.rating = rating;
+  }
 
   public UUID getReviewId() {
     return reviewId;
@@ -29,7 +29,12 @@ public class Review implements Persistable<UUID> {
 
   @Override
   public void setId(UUID uuid) {
-      this.reviewId = uuid;
+    this.reviewId = uuid;
+  }
+
+  @Override
+  public UUID getId() {
+    return reviewId;
   }
 
   @Override

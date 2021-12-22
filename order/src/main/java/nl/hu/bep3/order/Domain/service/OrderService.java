@@ -6,6 +6,7 @@ import nl.hu.bep3.order.Aplication.response.ReviewResponseDTO;
 import nl.hu.bep3.order.domain.Order;
 import org.springframework.http.HttpStatus;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface OrderService {
@@ -23,4 +24,8 @@ public interface OrderService {
   ReviewResponseDTO setReview(UUID id, ReviewRequestDTO reviewRequestDTO);
 
   void deleteOrder(UUID id);
+
+  List<Order> getOrdersFromCustomer(UUID customerId);
+
+  Float getAmount(UUID id);
 }

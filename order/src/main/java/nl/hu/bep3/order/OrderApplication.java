@@ -9,17 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication(scanBasePackages = "nl.hu.bep3.order")
 @Import(SwaggerDataProviderConfig.class)
-@RestController
-public class OrderApplication
-{
-    public static void main(final String[] args)
-    {
-        SpringApplication.run(OrderApplication.class, args);
-    }
+public class OrderApplication {
 
-    @GetMapping("/")
-    public String home()
-    {
-        return "Hello from order";
-    }
+  public static void main(final String[] args) {
+    SpringApplication.run(OrderApplication.class, args);
+  }
+
+  
 }
