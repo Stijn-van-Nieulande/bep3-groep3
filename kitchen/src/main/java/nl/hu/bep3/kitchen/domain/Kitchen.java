@@ -5,13 +5,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import nl.hu.bep3.kitchen.domain.exceptions.OrderNotFoundException;
-import org.springframework.data.domain.Persistable;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-public class Kitchen implements Persistable<UUID> {
+@Document
+public class Kitchen {
 
-  private final ArrayList<UUID> menu = new ArrayList<>();
-  private final ArrayList<UUID> pendingOrders = new ArrayList<>();
-  private final ArrayList<UUID> ordersInProcess = new ArrayList<>();
+  private ArrayList<UUID> menu = new ArrayList<>();
+  private ArrayList<UUID> pendingOrders = new ArrayList<>();
+  private ArrayList<UUID> ordersInProcess = new ArrayList<>();
   private UUID id;
   private String restaurantName;
   private String address;
@@ -39,6 +40,10 @@ public class Kitchen implements Persistable<UUID> {
     return orders;
   }
 
+  public UUID getId() {
+    return this.id;
+  }
+
   public Boolean addPendingOrder(final UUID orderId) {
     return this.pendingOrders.add(orderId);
   }
@@ -62,16 +67,6 @@ public class Kitchen implements Persistable<UUID> {
       System.out.println("remove error");
       throw new OrderNotFoundException(pendingOrder);
     }
-  }
-
-  @Override
-  public UUID getId() {
-    return this.id;
-  }
-
-  @Override
-  public boolean isNew() {
-    return false;
   }
 
   public Storage getStorage() {

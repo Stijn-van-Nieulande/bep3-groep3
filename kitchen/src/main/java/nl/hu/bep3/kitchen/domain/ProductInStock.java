@@ -3,10 +3,10 @@ package nl.hu.bep3.kitchen.domain;
 import java.util.Objects;
 import java.util.UUID;
 import nl.hu.bep3.dish.domain.AmountUnit;
-import org.springframework.data.domain.Persistable;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-public class ProductInStock implements Persistable<UUID> {
+@Document
+public class ProductInStock {
 
   private UUID id;
 
@@ -21,16 +21,6 @@ public class ProductInStock implements Persistable<UUID> {
 
   public ProductInStock() {}
 
-  @Override
-  public UUID getId() {
-    return this.id;
-  }
-
-  @Override
-  public boolean isNew() {
-    return false;
-  }
-
   public float getAmount() {
     return this.amount;
   }
@@ -41,6 +31,10 @@ public class ProductInStock implements Persistable<UUID> {
 
   public AmountUnit getAmountUnit() {
     return this.amountUnit;
+  }
+
+  public UUID getId() {
+    return this.id;
   }
 
   @Override
