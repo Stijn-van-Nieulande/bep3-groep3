@@ -1,6 +1,7 @@
 package nl.hu.bep3.order.infrastructure.configuration;
 
 import nl.hu.bep3.order.OrderApplication;
+import nl.hu.bep3.order.domain.repository.DishOrderRepository;
 import nl.hu.bep3.order.domain.repository.OrderRepository;
 import nl.hu.bep3.order.domain.repository.ReviewRepository;
 import nl.hu.bep3.order.domain.service.DomainOrderService;
@@ -20,7 +21,9 @@ public class BeanConfiguration {
       final OrderRepository orderRepository,
       final ReviewRepository reviewRepository,
       final QueueSender queueSender,
-      final DishServiceProxy dishServiceProxy) {
-    return new DomainOrderService(orderRepository, reviewRepository, queueSender, dishServiceProxy);
+      final DishServiceProxy dishServiceProxy,
+      final DishOrderRepository dishOrderRepository) {
+    return new DomainOrderService(
+        orderRepository, reviewRepository, queueSender, dishServiceProxy, dishOrderRepository);
   }
 }

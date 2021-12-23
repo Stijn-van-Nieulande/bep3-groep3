@@ -14,6 +14,7 @@ import nl.hu.bep3.order.application.response.ReviewResponseDto;
 import nl.hu.bep3.order.domain.Order;
 import nl.hu.bep3.order.domain.Review;
 import nl.hu.bep3.order.domain.exception.OrderNotFound;
+import nl.hu.bep3.order.domain.repository.DishOrderRepository;
 import nl.hu.bep3.order.domain.repository.OrderRepository;
 import nl.hu.bep3.order.domain.repository.ReviewRepository;
 import nl.hu.bep3.order.domain.valueobjects.DishOrder;
@@ -28,16 +29,19 @@ public class DomainOrderService implements OrderService {
   private final ReviewRepository reviewRepository;
   private final QueueSender queueSender;
   private final DishServiceProxy dishProxy;
+  private final DishOrderRepository dishOrderRepository;
 
   public DomainOrderService(
       final OrderRepository orderRepository,
       final ReviewRepository reviewRepository,
       final QueueSender queueSender,
-      final DishServiceProxy dishProxy) {
+      final DishServiceProxy dishProxy,
+      final DishOrderRepository dishOrderRepository) {
     this.queueSender = queueSender;
     this.orderRepository = orderRepository;
     this.reviewRepository = reviewRepository;
     this.dishProxy = dishProxy;
+    this.dishOrderRepository = dishOrderRepository;
   }
 
   @Override
@@ -49,8 +53,6 @@ public class DomainOrderService implements OrderService {
 
   @Override
   public OrderResponseDto placeNewOrder(final OrderRequestDto orderRequestDto) {
-    System.out.println("place new order in domein order service");
-
     final Customer customer = this.queueSender.getCustomer(orderRequestDto.customerId);
     if (customer == null) {
       throw new CustomerNotFoundException(orderRequestDto.customerId);
@@ -65,14 +67,13 @@ public class DomainOrderService implements OrderService {
     for (final DishOrderDto dishOrderDto : dishOrderDtoList) {
       final DishOutDto dishData = this.dishProxy.getDishById(dishOrderDto.dishId);
       dishOrderList.add(
-          new DishOrder(dishOrderDto.amountOfDish, dishOrderDto.dishId, dishData.price));
+          this.dishOrderRepository.save(
+              new DishOrder(dishOrderDto.amountOfDish, dishOrderDto.dishId, dishData.price)));
     }
 
     final Order order =
         this.orderRepository.save(
             new Order(customer, deliver, dishOrderList, customerMessage, kitchenId));
-
-    System.out.println(order);
 
     this.queueSender.sendOrder(order);
 
@@ -114,7 +115,7 @@ public class DomainOrderService implements OrderService {
 
   public List<OrderResponseDto> getOrdersFromCustomer(final UUID customerId) {
     final List<Order> orderList = this.orderRepository.findOrdersFromCustomer(customerId);
-    final List<OrderResponseDto> responseList = new ArrayList<OrderResponseDto>();
+    final List<OrderResponseDto> responseList = new ArrayList<>();
 
     for (final Order order : orderList) {
       responseList.add(new OrderResponseDto(order));

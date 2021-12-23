@@ -49,7 +49,6 @@ public class Order implements Persistable<UUID> {
   }
 
   public void setStatus(final String status) {
-    System.out.println(status.toLowerCase());
     switch (status.toLowerCase()) {
       case "accepted" -> this.status = Status.ACCEPTED;
       case "prepairing" -> this.status = Status.PREPAIRING;
