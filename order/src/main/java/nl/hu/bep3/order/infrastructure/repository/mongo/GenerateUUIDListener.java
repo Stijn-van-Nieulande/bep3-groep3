@@ -1,11 +1,10 @@
 package nl.hu.bep3.order.infrastructure.repository.mongo;
 
+import java.util.UUID;
 import nl.hu.bep3.order.infrastructure.repository.Persistable;
 import org.springframework.data.mongodb.core.mapping.event.AbstractMongoEventListener;
 import org.springframework.data.mongodb.core.mapping.event.BeforeConvertEvent;
 import org.springframework.stereotype.Component;
-
-import java.util.UUID;
 
 @Component
 public class GenerateUUIDListener extends AbstractMongoEventListener<Persistable<UUID>> {

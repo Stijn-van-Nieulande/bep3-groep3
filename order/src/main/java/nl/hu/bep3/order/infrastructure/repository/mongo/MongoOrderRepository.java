@@ -1,13 +1,12 @@
 package nl.hu.bep3.order.infrastructure.repository.mongo;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import nl.hu.bep3.order.domain.Order;
 import nl.hu.bep3.order.domain.repository.OrderRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Component
 @Primary

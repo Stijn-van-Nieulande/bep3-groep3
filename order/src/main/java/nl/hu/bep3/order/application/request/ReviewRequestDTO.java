@@ -1,4 +1,4 @@
-package nl.hu.bep3.order.Aplication.request;
+package nl.hu.bep3.order.application.request;
 
 public class ReviewRequestDTO {
 

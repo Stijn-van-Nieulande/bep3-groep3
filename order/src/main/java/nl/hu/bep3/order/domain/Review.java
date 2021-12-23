@@ -1,8 +1,7 @@
 package nl.hu.bep3.order.domain;
 
-import nl.hu.bep3.order.infrastructure.repository.Persistable;
 import java.util.UUID;
-
+import nl.hu.bep3.order.infrastructure.repository.Persistable;
 
 public class Review implements Persistable<UUID> {
 
@@ -28,13 +27,13 @@ public class Review implements Persistable<UUID> {
   }
 
   @Override
-  public void setId(UUID uuid) {
-    this.reviewId = uuid;
+  public UUID getId() {
+    return reviewId;
   }
 
   @Override
-  public UUID getId() {
-    return reviewId;
+  public void setId(UUID uuid) {
+    this.reviewId = uuid;
   }
 
   @Override

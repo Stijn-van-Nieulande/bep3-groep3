@@ -1,20 +1,19 @@
-package nl.hu.bep3.order.Aplication.response;
+package nl.hu.bep3.order.application.response;
 
+import java.util.List;
+import java.util.UUID;
 import nl.hu.bep3.customer.domain.Customer;
 import nl.hu.bep3.order.domain.Order;
 import nl.hu.bep3.order.domain.Review;
 import nl.hu.bep3.order.domain.Status;
 import nl.hu.bep3.order.domain.valueobjects.DishOrder;
 
-import java.util.List;
-import java.util.UUID;
-
 public class OrderResponseDTO {
 
   public UUID id;
   public Status status;
   public Customer customer;
-  public boolean deliver; //pickup/deliver
+  public boolean deliver; // pickup/deliver
   public List<DishOrder> dishOrders;
   public float deliverCosts = 2.50F;
   public String customerMessage;

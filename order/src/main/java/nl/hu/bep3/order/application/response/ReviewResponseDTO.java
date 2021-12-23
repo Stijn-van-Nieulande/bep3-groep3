@@ -1,7 +1,7 @@
-package nl.hu.bep3.order.Aplication.response;
+package nl.hu.bep3.order.application.response;
 
-import nl.hu.bep3.order.domain.Review;
 import java.util.UUID;
+import nl.hu.bep3.order.domain.Review;
 
 public class ReviewResponseDTO {
 
@@ -20,5 +20,3 @@ public class ReviewResponseDTO {
     this.reviewMessage = review.getReviewMessage();
   }
 }
-
-

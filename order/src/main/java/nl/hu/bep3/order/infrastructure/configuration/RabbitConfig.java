@@ -11,6 +11,4 @@ public class RabbitConfig {
   public DirectExchange directCustomerExchange() {
     return new DirectExchange("bep.customer");
   }
-
-
 }

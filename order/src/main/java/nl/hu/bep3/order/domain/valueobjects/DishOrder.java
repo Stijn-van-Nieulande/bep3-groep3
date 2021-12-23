@@ -1,9 +1,8 @@
 package nl.hu.bep3.order.domain.valueobjects;
 
-import nl.hu.bep3.order.infrastructure.repository.Persistable;
-import nl.hu.bep3.dish.domain.Dish;
 import java.util.UUID;
-
+import nl.hu.bep3.dish.domain.Dish;
+import nl.hu.bep3.order.infrastructure.repository.Persistable;
 
 public class DishOrder implements Persistable<UUID> {
 
@@ -17,19 +16,19 @@ public class DishOrder implements Persistable<UUID> {
   }
 
   public float calcPriceDishOrder() {
-    //return dish.getPrice * amount;
-    //FIXME aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    // return dish.getPrice * amount;
+    // FIXME aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
     return 0.0f;
-  }
-
-  @Override
-  public void setId(UUID id) {
-    this.id = id;
   }
 
   @Override
   public UUID getId() {
     return id;
+  }
+
+  @Override
+  public void setId(UUID id) {
+    this.id = id;
   }
 
   @Override

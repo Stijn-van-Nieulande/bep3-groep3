@@ -1,13 +1,12 @@
 package nl.hu.bep3.order.domain;
 
-import nl.hu.bep3.customer.domain.Customer;
-import nl.hu.bep3.order.infrastructure.repository.Persistable;
-import nl.hu.bep3.order.Aplication.response.ReviewResponseDTO;
-import nl.hu.bep3.order.domain.valueobjects.DishOrder;
-
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+import nl.hu.bep3.customer.domain.Customer;
+import nl.hu.bep3.order.application.response.ReviewResponseDTO;
+import nl.hu.bep3.order.domain.valueobjects.DishOrder;
+import nl.hu.bep3.order.infrastructure.repository.Persistable;
 
 public class Order implements Persistable<UUID> {
 
@@ -21,7 +20,6 @@ public class Order implements Persistable<UUID> {
   private float minAmountNoDeliverCosts = 25;
   private String customerMessage;
   private Review review;
-
 
   public Order(Customer customer, boolean deliver, List<DishOrder> dishOrders,
       String customerMessage) {
@@ -43,6 +41,16 @@ public class Order implements Persistable<UUID> {
     return totPrice;
   }
 
+  public ReviewResponseDTO setReview(String message, int rating) {
+    ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO(rating, message);
+    this.review = new Review(message, rating);
+    return reviewResponseDTO;
+  }
+
+  public Status getStatus() {
+    return status;
+  }
+
   public void setStatus(String status) {
     switch (status) {
       case "accepted" -> this.status = Status.ACCEPTED;
@@ -58,18 +66,13 @@ public class Order implements Persistable<UUID> {
     }
   }
 
-  public ReviewResponseDTO setReview(String message, int rating) {
-    ReviewResponseDTO reviewResponseDTO = new ReviewResponseDTO(rating, message);
-    this.review = new Review(message, rating);
-    return reviewResponseDTO;
-  }
-
-  public Status getStatus() {
-    return status;
-  }
-
   public UUID getId() {
     return id;
+  }
+
+  @Override
+  public void setId(UUID id) {
+    this.id = id;
   }
 
   public Date getOrderDate() {
@@ -102,11 +105,6 @@ public class Order implements Persistable<UUID> {
 
   public Review getReview() {
     return review;
-  }
-
-  @Override
-  public void setId(UUID id) {
-    this.id = id;
   }
 
   @Override
