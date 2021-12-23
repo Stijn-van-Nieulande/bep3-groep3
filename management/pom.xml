@@ -1,124 +1,147 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.5.2</version>
-    <relativePath/> <!-- lookup parent from repository -->
-  </parent>
-  <groupId>nl.hu.bep3</groupId>
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>management</artifactId>
-  <version>0.1.0</version>
+  <build>
+    <plugins>
+      <plugin>
+        <artifactId>spring-boot-maven-plugin</artifactId>
+        <groupId>org.springframework.boot</groupId>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <artifactId>spring-boot-starter-actuator</artifactId>
+      <groupId>org.springframework.boot</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <groupId>org.springframework.boot</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <groupId>org.springframework.boot</groupId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <artifactId>spring-boot-starter-data-mongodb</artifactId>
+      <groupId>org.springframework.boot</groupId>
+    </dependency>
+    <dependency>
+      <artifactId>spring-cloud-starter-openfeign</artifactId>
+      <groupId>org.springframework.cloud</groupId>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/io.github.openfeign/feign-okhttp -->
+    <dependency>
+      <artifactId>feign-okhttp</artifactId>
+      <groupId>io.github.openfeign</groupId>
+      <version>11.7</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.github.tomakehurst/wiremock -->
+    <dependency>
+      <artifactId>wiremock</artifactId>
+      <groupId>com.github.tomakehurst</groupId>
+      <scope>test</scope>
+      <version>2.27.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter -->
+    <dependency>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <groupId>org.mockito</groupId>
+      <scope>test</scope>
+      <version>4.1.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.cookingfox/guava-preconditions -->
+    <dependency>
+      <artifactId>guava-preconditions</artifactId>
+      <groupId>com.cookingfox</groupId>
+      <version>0.1.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains</groupId>
+      <artifactId>annotations</artifactId>
+      <version>23.0.0</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <artifactId>lib-swagger-data-provider</artifactId>
+      <groupId>nl.hu.bep3</groupId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <artifactId>kitchen</artifactId>
+      <groupId>nl.hu.bep3</groupId>
+      <version>${project.version}</version>
+    </dependency>
+  </dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <groupId>org.springframework.cloud</groupId>
+        <scope>import</scope>
+        <type>pom</type>
+        <version>2020.0.4</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+  <groupId>nl.hu.bep3</groupId>
+  <modelVersion>4.0.0</modelVersion>
+
   <name>management</name>
+
+  <parent>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <groupId>org.springframework.boot</groupId>
+    <relativePath/>
+    <version>2.5.2</version> <!-- lookup parent from repository -->
+  </parent>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>spring-snapshots</id>
+      <name>Spring Snapshots</name>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <url>https://repo.spring.io/snapshot</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>spring-milestones</id>
+      <name>Spring Milestones</name>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <url>https://repo.spring.io/milestone</url>
+    </pluginRepository>
+  </pluginRepositories>
 
   <properties>
     <java.version>17</java.version>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
   </properties>
+  <repositories>
+    <repository>
+      <id>spring-snapshots</id>
+      <name>Spring Snapshots</name>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <url>https://repo.spring.io/snapshot</url>
+    </repository>
+    <repository>
+      <id>spring-milestones</id>
+      <name>Spring Milestones</name>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <url>https://repo.spring.io/milestone</url>
+    </repository>
+  </repositories>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.cloud</groupId>-->
-        <!--            <artifactId>spring-cloud-starter-openfeign</artifactId>-->
-        <!--            <version>3.1.0</version>-->
-        <!--        </dependency>-->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>nl.hu.bep3</groupId>
-            <artifactId>kitchen</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-    </dependencies>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>2020.0.4</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-    <repositories>
-        <repository>
-            <id>spring-snapshots</id>
-            <name>Spring Snapshots</name>
-            <url>https://repo.spring.io/snapshot</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>spring-snapshots</id>
-            <name>Spring Snapshots</name>
-            <url>https://repo.spring.io/snapshot</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </pluginRepository>
-        <pluginRepository>
-            <id>spring-milestones</id>
-            <name>Spring Milestones</name>
-            <url>https://repo.spring.io/milestone</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>16</source>
-                    <target>16</target>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+  <version>0.1.0</version>
 </project>

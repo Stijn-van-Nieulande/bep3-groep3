@@ -1,12 +1,13 @@
 package nl.hu.bep3.management.infrastracture.repository.mongo;
 
+import java.util.Optional;
+import java.util.UUID;
 import nl.hu.bep3.management.domain.Employee;
 import nl.hu.bep3.management.domain.repository.EmployeeRepository;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-
-import java.util.Optional;
-import java.util.UUID;
 
 @Component
 @Primary
@@ -18,12 +19,22 @@ public class MongoEmployeeRepository implements EmployeeRepository {
   }
 
   @Override
-  public Optional<Employee> findById(UUID id) {
-    return Optional.empty();
+  public Optional<Employee> findById(final UUID id) {
+    return this.repository.findById(id);
   }
 
   @Override
-  public UUID save(Employee employee) {
-    return this.repository.save(employee).getId();
+  public Page<Employee> findAllPaginated(final Pageable pageable) {
+    return this.repository.findAll(pageable);
+  }
+
+  @Override
+  public Employee save(final Employee employee) {
+    return this.repository.save(employee);
+  }
+
+  @Override
+  public void deleteById(final UUID id) {
+    this.repository.deleteById(id);
   }
 }
