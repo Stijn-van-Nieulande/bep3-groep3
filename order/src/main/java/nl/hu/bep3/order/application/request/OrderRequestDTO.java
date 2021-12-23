@@ -13,4 +13,5 @@ public class OrderRequestDTO {
   public List<DishOrder> dishOrders;
   public float deliverCosts = 2.50F;
   public String customerMessage;
+  public UUID kitchenId;
 }

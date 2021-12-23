@@ -18,6 +18,7 @@ public class OrderResponseDTO {
   public float deliverCosts = 2.50F;
   public String customerMessage;
   public Review review;
+  public UUID kitchenID;
 
   public OrderResponseDTO(Order order) {
     this.id = order.getId();
@@ -28,5 +29,6 @@ public class OrderResponseDTO {
     this.deliverCosts = order.getDeliverCosts();
     this.customerMessage = order.getCustomerMessage();
     this.review = order.getReview();
+    this.kitchenID = order.getKitchenId();
   }
 }

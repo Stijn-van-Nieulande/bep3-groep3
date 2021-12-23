@@ -20,14 +20,16 @@ public class Order implements Persistable<UUID> {
   private float minAmountNoDeliverCosts = 25;
   private String customerMessage;
   private Review review;
+  private UUID kitchenId;
 
   public Order(Customer customer, boolean deliver, List<DishOrder> dishOrders,
-      String customerMessage) {
+      String customerMessage, UUID kitchenId) {
     this.customer = customer;
     this.deliver = deliver;
     this.customerMessage = customerMessage;
     this.dishOrders = dishOrders;
     this.status = Status.PENDING;
+    this.kitchenId = kitchenId;
   }
 
   public float calcTotPrice() {
@@ -105,6 +107,50 @@ public class Order implements Persistable<UUID> {
 
   public Review getReview() {
     return review;
+  }
+
+  public void setOrderDate(Date orderDate) {
+    this.orderDate = orderDate;
+  }
+
+  public void setStatus(Status status) {
+    this.status = status;
+  }
+
+  public void setCustomer(Customer customer) {
+    this.customer = customer;
+  }
+
+  public void setDeliver(boolean deliver) {
+    this.deliver = deliver;
+  }
+
+  public void setDishOrders(List<DishOrder> dishOrders) {
+    this.dishOrders = dishOrders;
+  }
+
+  public void setDeliverCosts(float deliverCosts) {
+    this.deliverCosts = deliverCosts;
+  }
+
+  public void setMinAmountNoDeliverCosts(float minAmountNoDeliverCosts) {
+    this.minAmountNoDeliverCosts = minAmountNoDeliverCosts;
+  }
+
+  public void setCustomerMessage(String customerMessage) {
+    this.customerMessage = customerMessage;
+  }
+
+  public void setReview(Review review) {
+    this.review = review;
+  }
+
+  public UUID getKitchenId() {
+    return kitchenId;
+  }
+
+  public void setKitchenId(UUID kitchenId) {
+    this.kitchenId = kitchenId;
   }
 
   @Override

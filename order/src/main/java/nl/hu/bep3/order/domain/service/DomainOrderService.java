@@ -38,9 +38,11 @@ public class DomainOrderService implements OrderService {
     boolean deliver = orderRequestDTO.deliver;
     List<DishOrder> dishOrderList = orderRequestDTO.dishOrders;
     String customerMessage = orderRequestDTO.customerMessage;
+    UUID kitchenId = orderRequestDTO.kitchenId;
 
     Order order =
-        this.orderRepository.save(new Order(customer, deliver, dishOrderList, customerMessage));
+        this.orderRepository.save(
+            new Order(customer, deliver, dishOrderList, customerMessage, kitchenId));
 
     return new OrderResponseDTO(order);
   }
