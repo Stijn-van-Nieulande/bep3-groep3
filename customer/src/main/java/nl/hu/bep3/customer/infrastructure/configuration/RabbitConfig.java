@@ -17,14 +17,14 @@ public class RabbitConfig {
   }
 
   @Bean
-  public DirectExchange directcustomerExchange() {
+  public DirectExchange directCustomerExchange() {
     return new DirectExchange("bep.customer");
   }
 
-
   @Bean
-  public Binding customerBinding(@Qualifier("directcustomerExchange") DirectExchange exchange,
-      @Qualifier("customerOutQueue") Queue queue) {
+  public Binding customerBinding(
+      @Qualifier("directCustomerExchange") final DirectExchange exchange,
+      @Qualifier("customerOutQueue") final Queue queue) {
     return BindingBuilder.bind(queue).to(exchange).with("customer");
   }
 }

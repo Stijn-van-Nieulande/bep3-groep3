@@ -74,4 +74,13 @@ public interface EmployeeService {
    * @throws IllegalArgumentException when some arguments do not meet the requirements.
    */
   Employee changeEmployeeSalaris(@NotNull UUID id, double salaris);
+
+  /**
+   * Check if their already exists an employee with the provided name.
+   *
+   * @param firstName The first name of the employee.
+   * @param lastname The last name of the employee.
+   * @return True if the employee exists.
+   */
+  boolean doesExist(String firstName, String lastname);
 }

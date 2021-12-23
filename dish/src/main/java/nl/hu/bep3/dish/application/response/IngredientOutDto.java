@@ -11,12 +11,11 @@ public class IngredientOutDto {
   public String name;
   public List<FoodAllergy> allergies;
 
-  public IngredientOutDto(Ingredient ingredient) {
+  public IngredientOutDto(final Ingredient ingredient) {
     this.id = ingredient.getId();
     this.name = ingredient.getName();
     this.allergies = ingredient.getAllergies();
   }
 
-  public IngredientOutDto() {
-  }
+  public IngredientOutDto() {}
 }

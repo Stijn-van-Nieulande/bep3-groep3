@@ -1,10 +1,13 @@
 package nl.hu.bep3.kitchen.infrastructure.rabbitmq;
 
 import nl.hu.bep3.kitchen.KitchenApplication;
-import nl.hu.bep3.kitchen.application.response.OrderResponseDto;
 import nl.hu.bep3.kitchen.domain.service.KitchenService;
+import nl.hu.bep3.order.application.response.OrderResponseToKitchenDTO;
+import org.springframework.amqp.AmqpRejectAndDontRequeueException;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.stereotype.Component;
 
+@Component
 public class QueueReceiver {
 
   private KitchenService kitchenService;
@@ -13,10 +16,15 @@ public class QueueReceiver {
     this.kitchenService = kitchenService;
   }
 
-
   @RabbitListener(queues = "order.addOrder")
   public void addNewOrder(String message) {
-    OrderResponseDto orderResponseDto = KitchenApplication.GSON.fromJson(message, OrderResponseDto.class);
-    kitchenService.addOrder(orderResponseDto, orderResponseDto.id);
+    try {
+      System.out.println("addnewOrder in quereciever van kitchen");
+      OrderResponseToKitchenDTO orderDto =
+          KitchenApplication.GSON.fromJson(message, OrderResponseToKitchenDTO.class);
+      kitchenService.addOrder(orderDto, orderDto.kitchenId);
+    } catch (Exception e) {
+      throw new AmqpRejectAndDontRequeueException(e);
+    }
   }
 }

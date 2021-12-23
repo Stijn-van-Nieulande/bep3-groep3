@@ -28,18 +28,18 @@ public class MenuController {
     this.service = service;
   }
 
-  @GetMapping("/{id}")
-  public MenuDto getMenu(@PathVariable("id") UUID kitchenId) {
+  @GetMapping("/{kitchenId}")
+  public MenuDto getMenu(@PathVariable("kitchenId") UUID kitchenId) {
     return service.getMenu(kitchenId);
   }
 
-  @PostMapping(path = "/{id}", consumes = "application/json")
-  public DishOutDto addMenuItem(@PathVariable("id") UUID kitchenId, @RequestBody DishInDto dtoIn) {
+  @PostMapping(path = "/{kitchenId}", consumes = "application/json")
+  public DishOutDto addMenuItem(@PathVariable("kitchenId") UUID kitchenId, @RequestBody DishInDto dtoIn) {
     return service.addDishToMenu(kitchenId, dtoIn);
   }
 
   @DeleteMapping("/{kitchenId}/{DishId}")
-  public ResponseEntity<MenuDto> getMenu(@PathVariable("kitchenId") UUID kitchenId,
+  public ResponseEntity<MenuDto> deleteMenu(@PathVariable("kitchenId") UUID kitchenId,
       @PathVariable("DishId") UUID DishId) {
     try {
       return new ResponseEntity(service.deleteDish(kitchenId, DishId), HttpStatus.OK);

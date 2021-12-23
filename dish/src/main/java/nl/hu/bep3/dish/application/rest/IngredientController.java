@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.UUID;
 import nl.hu.bep3.dish.application.request.IngredientInDto;
 import nl.hu.bep3.dish.application.response.IngredientOutDto;
-import nl.hu.bep3.dish.domain.Exceptions.IngredientNotFoundException;
+import nl.hu.bep3.dish.domain.exceptions.IngredientNotFoundException;
 import nl.hu.bep3.dish.domain.Ingredient;
 import nl.hu.bep3.dish.domain.service.IngredientService;
 import org.springframework.http.HttpStatus;
@@ -24,62 +24,66 @@ public class IngredientController {
 
   private final IngredientService ingredientService;
 
-  public IngredientController(IngredientService ingredientService) {
+  public IngredientController(final IngredientService ingredientService) {
     this.ingredientService = ingredientService;
   }
 
   @GetMapping()
   public ResponseEntity<IngredientOutDto> getAllIngredients() {
     try {
-      List<Ingredient> i = ingredientService.getAllIngredients();
+      final List<Ingredient> i = this.ingredientService.getAllIngredients();
       return new ResponseEntity(i, HttpStatus.OK);
-    } catch (Exception exception) {
+    } catch (final Exception exception) {
       return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<IngredientOutDto> getIngredientById(@PathVariable UUID id) {
+  @GetMapping("/{ingredientId}")
+  public ResponseEntity<IngredientOutDto> getIngredientById(@PathVariable final UUID ingredientId) {
     try {
-      IngredientOutDto ingredient = new IngredientOutDto(ingredientService.getIngredientById(id));
+      final IngredientOutDto ingredient =
+          new IngredientOutDto(this.ingredientService.getIngredientById(ingredientId));
       return new ResponseEntity(ingredient, HttpStatus.OK);
-    } catch (IngredientNotFoundException exception) {
+    } catch (final IngredientNotFoundException exception) {
       return new ResponseEntity(exception.getMessage(), HttpStatus.NOT_FOUND);
-    } catch (Exception exception) {
+    } catch (final Exception exception) {
       return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
 
   @PostMapping(consumes = "application/json")
   public ResponseEntity<IngredientOutDto> createIngredient(
-      @RequestBody IngredientInDto ingredientInDto) {
+      @RequestBody final IngredientInDto ingredientInDto) {
     try {
-      IngredientOutDto ingredient = new IngredientOutDto(
-          ingredientService.createIngredient(ingredientInDto));
+      final IngredientOutDto ingredient =
+          new IngredientOutDto(this.ingredientService.createIngredient(ingredientInDto));
       return new ResponseEntity(ingredient, HttpStatus.OK);
-    } catch (Exception exception) {
+    } catch (final Exception exception) {
       return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
 
-  @PatchMapping(path = "/{id}", consumes = "application/json")
-  public ResponseEntity<IngredientOutDto> updateIngredient(@PathVariable("id") UUID id,
-      @RequestBody IngredientInDto ingredientInDto) {
+  @PatchMapping(path = "/{ingredientId}", consumes = "application/json")
+  public ResponseEntity<IngredientOutDto> updateIngredient(
+      @PathVariable("ingredientId") final UUID ingredientId,
+      @RequestBody final IngredientInDto ingredientInDto) {
     try {
-      IngredientOutDto ingredient = new IngredientOutDto(
-          ingredientService.updateIngredient(id, ingredientInDto));
+      final IngredientOutDto ingredient =
+          new IngredientOutDto(
+              this.ingredientService.updateIngredient(ingredientId, ingredientInDto));
       return new ResponseEntity(ingredient, HttpStatus.OK);
-    } catch (Exception exception) {
+    } catch (final Exception exception) {
       return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }
 
-  @DeleteMapping("/{id}")
-  public ResponseEntity<Void> deleteIngredient(@PathVariable("id") UUID id) {
+  @DeleteMapping("/{ingredientId}")
+  public ResponseEntity<Void> deleteIngredient(
+      @PathVariable("ingredientId") final UUID ingredientId) {
     try {
-      ingredientService.deleteIngredient(id);
+      this.ingredientService.deleteIngredient(ingredientId);
       return new ResponseEntity(HttpStatus.OK);
-    } catch (Exception exception) {
+    } catch (final Exception exception) {
       return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
   }

@@ -12,8 +12,8 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackageClasses = CustomerApplication.class)
 public class BeanConfiguration {
 
-    @Bean
-    CustomerService customerService(final CustomerRepository customerRepository) {
-        return new DomainCustomerService(customerRepository);
-    }
+  @Bean
+  CustomerService customerService(final CustomerRepository customerRepository) {
+    return new DomainCustomerService(customerRepository);
+  }
 }

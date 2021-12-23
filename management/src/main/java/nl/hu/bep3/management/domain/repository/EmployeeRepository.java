@@ -14,4 +14,6 @@ public interface EmployeeRepository {
   Employee save(Employee employee);
 
   void deleteById(UUID uuid);
+
+  boolean doesExist(String firstName, String lastname);
 }

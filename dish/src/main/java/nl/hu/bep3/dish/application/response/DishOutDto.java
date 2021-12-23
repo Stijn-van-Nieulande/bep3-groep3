@@ -11,19 +11,19 @@ public class DishOutDto {
   public UUID id;
   public String name;
   public double price;
-  public List<IngredientAmountOutDto> ingredients = new ArrayList<IngredientAmountOutDto>();
+  public List<IngredientAmountOutDto> ingredients = new ArrayList<>();
 
-  public DishOutDto(Dish dish) {
+  public DishOutDto(final Dish dish) {
     this.id = dish.getId();
     this.name = dish.getName();
     this.price = dish.getPrice();
+
     if (dish.getIngredients() != null) {
-      for (IngredientAmount ingredientAmount : dish.getIngredients()) {
-        ingredients.add(new IngredientAmountOutDto(ingredientAmount));
+      for (final IngredientAmount ingredientAmount : dish.getIngredients()) {
+        this.ingredients.add(new IngredientAmountOutDto(ingredientAmount));
       }
     }
   }
 
-  public DishOutDto() {
-  }
+  public DishOutDto() {}
 }

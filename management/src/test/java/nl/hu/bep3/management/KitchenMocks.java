@@ -13,7 +13,7 @@ public class KitchenMocks {
     mockService.stubFor(
         WireMock.get(
                 WireMock.urlPathMatching(
-                    "(?i)^\\/stock\\/(?:[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12})$"))
+                    "(?i)^\\/kitchen/stock\\/(?:[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12})$"))
             .willReturn(
                 WireMock.aResponse()
                     .withStatus(HttpStatus.OK.value())
@@ -26,11 +26,24 @@ public class KitchenMocks {
     mockService.stubFor(
         WireMock.patch(
                 WireMock.urlPathMatching(
-                    "(?i)^\\/stock\\/(?:[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12})$"))
+                    "(?i)^\\/kitchen/stock\\/(?:[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12})\\/(?:[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12})$"))
             .willReturn(
                 WireMock.aResponse()
                     .withStatus(HttpStatus.OK.value())
                     .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
                     .withBody(MockUtils.loadPayload("payload/kitchen-patch-stock-response.json"))));
+  }
+
+  public static void setupMockGetKitchenMenuResponse(final WireMockServer mockService)
+      throws IOException {
+    mockService.stubFor(
+        WireMock.get(
+                WireMock.urlPathMatching(
+                    "(?i)^\\/kitchen/menu\\/(?:[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12})$"))
+            .willReturn(
+                WireMock.aResponse()
+                    .withStatus(HttpStatus.OK.value())
+                    .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
+                    .withBody(MockUtils.loadPayload("payload/kitchen-get-menu-response.json"))));
   }
 }

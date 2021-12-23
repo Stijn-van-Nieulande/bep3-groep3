@@ -22,27 +22,27 @@ public class MongoDbCustomerRepository implements CustomerRepository {
   }
 
   @Override
-  public Optional<Customer> findByPhoneNumberOrEmail(String phoneNumber, String email) {
+  public Optional<Customer> findByPhoneNumberOrEmail(final String phoneNumber, final String email) {
     return Optional.empty();
   }
 
   @Override
-  public Optional<Customer> findById(UUID id) {
+  public Optional<Customer> findById(final UUID id) {
     return this.customerRepository.findById(id);
   }
 
   @Override
-  public Page<Customer> findAllPaginated(Pageable pageable) {
+  public Page<Customer> findAllPaginated(final Pageable pageable) {
     return this.customerRepository.findAll(pageable);
   }
 
   @Override
-  public Customer save(Customer customer) {
+  public Customer save(final Customer customer) {
     return this.customerRepository.save(customer);
   }
 
   @Override
-  public void delete(UUID id) {
+  public void delete(final UUID id) {
     this.customerRepository.deleteById(id);
   }
 }

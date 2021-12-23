@@ -73,4 +73,9 @@ public class DomainEmployeeService implements EmployeeService {
 
     return this.employeeRepository.save(employee);
   }
+
+  @Override
+  public boolean doesExist(final String firstName, final String lastname) {
+    return this.employeeRepository.doesExist(firstName, lastname);
+  }
 }

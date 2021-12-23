@@ -9,11 +9,10 @@ import nl.hu.bep3.dish.application.response.MenuDto;
 import nl.hu.bep3.kitchen.application.request.KitchenDtoIn;
 import nl.hu.bep3.kitchen.application.request.ProductDtoIn;
 import nl.hu.bep3.kitchen.application.response.OrderDto;
-import nl.hu.bep3.kitchen.application.response.OrderResponseDto;
 import nl.hu.bep3.kitchen.application.response.StockDtoOut;
 import nl.hu.bep3.kitchen.domain.Kitchen;
-import nl.hu.bep3.kitchen.domain.OrderStatus;
-import org.springframework.http.ResponseEntity;
+import nl.hu.bep3.order.application.response.OrderResponseDTO;
+import nl.hu.bep3.order.application.response.OrderResponseToKitchenDTO;
 
 public interface KitchenService {
 
@@ -21,15 +20,15 @@ public interface KitchenService {
 
   Kitchen updateKitchen(KitchenDtoIn kitchenDtoIn, UUID kitchenId);
 
-  List<OrderDto> getAllOrders(UUID kitchenId);
+  List<OrderResponseDTO> getAllOrders(UUID kitchenId);
 
-  OrderResponseDto addOrder(OrderResponseDto order, UUID kitchenId);
+  OrderDto addOrder(OrderResponseToKitchenDTO order, UUID kitchenId);
 
   OrderDto acceptOrder(UUID orderId, UUID kitchenId);
 
-  void rejectOrder(UUID orderId, UUID kitchenId);
+  OrderDto rejectOrder(UUID orderId, UUID kitchenId);
 
-  void setStatus(UUID orderId, UUID kitchenId, OrderStatus status);
+  OrderDto setStatus(UUID orderId, UUID kitchenId, String status);
 
   StockDtoOut getStock(UUID kitchenId);
 

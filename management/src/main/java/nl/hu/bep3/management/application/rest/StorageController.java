@@ -1,8 +1,9 @@
 package nl.hu.bep3.management.application.rest;
 
 import java.util.UUID;
-import nl.hu.bep3.kitchen.application.response.IngredientDto;
+import nl.hu.bep3.kitchen.application.request.ProductDtoIn;
 import nl.hu.bep3.kitchen.application.response.StockDto;
+import nl.hu.bep3.kitchen.domain.Kitchen;
 import nl.hu.bep3.management.proxy.KitchenServiceProxy;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -25,10 +26,12 @@ public class StorageController {
     return this.kitchenServiceProxy.getStock(kitchenId);
   }
 
-  @PatchMapping("/{kitchenId}")
-  public StockDto updateStock(
+  @PatchMapping("/{kitchenId}/{ingredientId}")
+  public Kitchen updateStock(
       @PathVariable("kitchenId") final UUID kitchenId,
-      @RequestBody final IngredientDto ingredientDto) {
-    return this.kitchenServiceProxy.updateStock(kitchenId, ingredientDto);
+      @PathVariable("ingredientId") UUID ingredientId,
+      @RequestBody final ProductDtoIn productDtoIn) {
+    Kitchen kitchen = this.kitchenServiceProxy.updateStock(kitchenId, ingredientId, productDtoIn);
+    return kitchen;
   }
 }

@@ -6,6 +6,5 @@ public class MenuDto {
 
   public ArrayList<DishOutDto> menu = new ArrayList<>();
 
-  public MenuDto() {
-  }
+  public MenuDto() {}
 }

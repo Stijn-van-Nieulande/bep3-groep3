@@ -46,8 +46,8 @@ public class KitchenController {
     }
   }
 
-  @PatchMapping(path = "/{id}", consumes = "application/json")
-  public ResponseEntity<Kitchen> updateKitchen(@PathVariable("id") UUID kitchenId,
+  @PatchMapping(path = "/{kitchenId}", consumes = "application/json")
+  public ResponseEntity<Kitchen> updateKitchen(@PathVariable("kitchenId") UUID kitchenId,
       @RequestBody KitchenDtoIn kitchenDtoIn) {
     try {
       return new ResponseEntity(service.updateKitchen(kitchenDtoIn, kitchenId), HttpStatus.OK);
@@ -56,8 +56,8 @@ public class KitchenController {
     }
   }
 
-  @DeleteMapping(path = "/{id}")
-  public ResponseEntity deleteKitchen(@PathVariable("id") UUID kitchenId) {
+  @DeleteMapping(path = "/{kitchenId}")
+  public ResponseEntity deleteKitchen(@PathVariable("kitchenId") UUID kitchenId) {
     try {
       service.deleteKitchen(kitchenId);
       return new ResponseEntity(HttpStatus.OK);

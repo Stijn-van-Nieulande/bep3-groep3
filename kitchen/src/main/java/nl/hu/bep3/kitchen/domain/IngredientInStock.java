@@ -1,5 +1,6 @@
 package nl.hu.bep3.kitchen.domain;
 
+import nl.hu.bep3.dish.domain.AmountUnit;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.UUID;

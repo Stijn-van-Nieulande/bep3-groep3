@@ -27,6 +27,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 @RequestMapping("/customers")
 public class CustomerController {
+
   private final CustomerService customerService;
 
   @Autowired
@@ -55,9 +56,10 @@ public class CustomerController {
     return this.customerService.findAllPaginated(pageable);
   }
 
-  @GetMapping(value = "/{id}")
-  public CustomerResponse getCustomer(@PathVariable final UUID id) {
-    Optional<Customer> customer = this.customerService.findCustomer(id);
+  @GetMapping(value = "/{customerId}")
+  public CustomerResponse getCustomer(@PathVariable final UUID customerId) {
+    final Optional<Customer> customer = this.customerService.findCustomer(customerId);
+
     if (customer.isPresent()) {
       return CustomerResponse.of(customer.get());
     } else {
@@ -68,7 +70,7 @@ public class CustomerController {
   @PutMapping()
   public CustomerResponse updateCustomer(
       @RequestBody final UpdateCustomerRequest updateCustomerRequest) {
-    Customer customer =
+    final Customer customer =
         new Customer(
             updateCustomerRequest.id,
             updateCustomerRequest.firstName,
@@ -78,14 +80,14 @@ public class CustomerController {
             updateCustomerRequest.phoneNumber);
     try {
       return CustomerResponse.of(this.customerService.updateCustomer(customer));
-    } catch (CustomerNotFoundException e) {
+    } catch (final CustomerNotFoundException e) {
       throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
   }
 
-  @DeleteMapping(value = "/{id}")
-  public HttpStatus deleteCustomer(@PathVariable final UUID id) {
-    this.customerService.deleteCustomer(id);
+  @DeleteMapping(value = "/{customerId}")
+  public HttpStatus deleteCustomer(@PathVariable final UUID customerId) {
+    this.customerService.deleteCustomer(customerId);
     return HttpStatus.OK;
   }
 }

@@ -39,4 +39,7 @@ public interface DishServiceProxy {
 
   @DeleteMapping("/dish/{id}")
   ResponseEntity<DishOutDto> deleteDish(@PathVariable("id") UUID id);
+
+  @GetMapping("/dish/{id}")
+  ResponseEntity<DishOutDto> getDishById(@PathVariable("id") UUID id);
 }

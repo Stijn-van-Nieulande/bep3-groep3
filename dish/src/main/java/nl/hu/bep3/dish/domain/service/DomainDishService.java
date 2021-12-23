@@ -6,10 +6,10 @@ import java.util.UUID;
 import nl.hu.bep3.dish.application.request.DishInDto;
 import nl.hu.bep3.dish.application.request.IngredientAmountInDto;
 import nl.hu.bep3.dish.domain.Dish;
-import nl.hu.bep3.dish.domain.Exceptions.DishNotFoundException;
-import nl.hu.bep3.dish.domain.Exceptions.InvalidIngredientException;
 import nl.hu.bep3.dish.domain.Ingredient;
 import nl.hu.bep3.dish.domain.IngredientAmount;
+import nl.hu.bep3.dish.domain.exceptions.DishNotFoundException;
+import nl.hu.bep3.dish.domain.exceptions.InvalidIngredientException;
 import nl.hu.bep3.dish.domain.repository.DishRepository;
 import org.springframework.stereotype.Service;
 
@@ -20,49 +20,51 @@ public class DomainDishService implements DishService {
   private final IngredientService ingredientService;
 
   public DomainDishService(
-      DishRepository dishRepository, IngredientService ingredientService) {
+      final DishRepository dishRepository, final IngredientService ingredientService) {
     this.dishRepository = dishRepository;
     this.ingredientService = ingredientService;
   }
 
   @Override
-  public Dish getDishById(UUID id) {
-    return dishRepository.findById(id).orElseThrow(() -> new DishNotFoundException(id));
+  public Dish getDishById(final UUID id) {
+    return this.dishRepository.findById(id).orElseThrow(() -> new DishNotFoundException(id));
   }
 
   @Override
-  public Dish createDish(DishInDto dishInDto) {
-    ArrayList<IngredientAmount> ingredients = new ArrayList<>();
+  public Dish createDish(final DishInDto dishInDto) {
+    final ArrayList<IngredientAmount> ingredients = new ArrayList<>();
     if (dishInDto.ingredients == null || dishInDto.ingredients.isEmpty()) {
       throw new InvalidIngredientException("There where no ingredients in the dish");
     }
-    for (IngredientAmountInDto ingredientAmount : dishInDto.ingredients) {
-      Ingredient ingredient = ingredientService.getIngredientById(ingredientAmount.ingredientId);
+    for (final IngredientAmountInDto ingredientAmount : dishInDto.ingredients) {
+      final Ingredient ingredient =
+          this.ingredientService.getIngredientById(ingredientAmount.ingredientId);
       ingredients.add(
           new IngredientAmount(ingredientAmount.amount, ingredientAmount.amountUnit, ingredient));
     }
-    Dish dish = new Dish(dishInDto.name, dishInDto.price, ingredients);
-    return dishRepository.save(dish);
+    final Dish dish = new Dish(dishInDto.name, dishInDto.price, ingredients);
+    return this.dishRepository.save(dish);
   }
 
   @Override
-  public Dish updateDish(UUID id, DishInDto dishInDto) {
-    Dish dish = dishRepository.findById(id).orElseThrow(() -> new DishNotFoundException(id));
-    List<IngredientAmount> ingredientAmounts = new ArrayList<>();
-    for (IngredientAmountInDto i : dishInDto.ingredients) {
-      Ingredient ingredient = ingredientService.getIngredientById(i.ingredientId);
+  public Dish updateDish(final UUID id, final DishInDto dishInDto) {
+    final Dish dish =
+        this.dishRepository.findById(id).orElseThrow(() -> new DishNotFoundException(id));
+    final List<IngredientAmount> ingredientAmounts = new ArrayList<>();
+    for (final IngredientAmountInDto i : dishInDto.ingredients) {
+      final Ingredient ingredient = this.ingredientService.getIngredientById(i.ingredientId);
       ingredientAmounts.add(new IngredientAmount(i.amount, i.amountUnit, ingredient));
     }
     dish.setIngredients(ingredientAmounts);
     dish.setName(dishInDto.name);
     dish.setPrice(dishInDto.price);
-    return dishRepository.save(dish);
+    return this.dishRepository.save(dish);
   }
 
   @Override
-  public void deleteDish(UUID id) {
-    Dish dish = dishRepository.findById(id).orElseThrow(() -> new DishNotFoundException(id));
-    dishRepository.delete(dish);
+  public void deleteDish(final UUID id) {
+    final Dish dish =
+        this.dishRepository.findById(id).orElseThrow(() -> new DishNotFoundException(id));
+    this.dishRepository.delete(dish);
   }
-
 }

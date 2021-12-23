@@ -36,34 +36,26 @@ public class QueueSender {
   }
 
   public String getDish(final UUID id) {
-    System.out.println("Request dish with id: " + id);
     String message = (String) dishTemplate.convertSendAndReceive(dishExchange.getName(), "dish",
         id);
-    System.out.println("Response: " + message);
     return message;
   }
 
   public String getIngredient(final UUID id) {
-    System.out.println("Request ingredient with id: " + id);
     String message = (String) ingredientTemplate.convertSendAndReceive(ingredientExchange.getName(),
         "ingredient", id);
-    System.out.println("Response: " + message);
     return message;
   }
 
   public MenuDto getMenu(List<UUID> menu) {
-    System.out.println("Request menu");
     String message = (String) menuTemplate.convertSendAndReceive(menuExchange.getName(),
         "ingredient", menu);
-    System.out.println("Response: " + message);
     MenuDto responseMenu = KitchenApplication.GSON.fromJson(message, MenuDto.class);
     return responseMenu;
   }
 
   public DishOutDto addDish(UUID kichenId, DishInDto dto) {
-    System.out.println("Request Addition of dish to kitchen with id: " + kichenId);
     String message = (String) dishTemplate.convertSendAndReceive(dishExchange);
-    System.out.println("Response: " + message);
     return null;
   }
 }

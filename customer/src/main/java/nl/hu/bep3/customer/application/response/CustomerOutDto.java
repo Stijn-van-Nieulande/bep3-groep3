@@ -12,7 +12,7 @@ public class CustomerOutDto {
   public String email;
   public String phoneNumber;
 
-  public CustomerOutDto(Customer customer) {
+  public CustomerOutDto(final Customer customer) {
     this.id = customer.getId();
     this.firstName = customer.getFirstName();
     this.lastName = customer.getLastName();

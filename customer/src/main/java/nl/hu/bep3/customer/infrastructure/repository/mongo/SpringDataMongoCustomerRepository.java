@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SpringDataMongoCustomerRepository extends MongoRepository<Customer, UUID> {
+
   public Optional<Customer> findCustomerByPhoneNumberOrEmail(String phoneNumber, String email);
 }

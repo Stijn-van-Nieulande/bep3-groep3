@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface CustomerRepository {
+
   Optional<Customer> findByPhoneNumberOrEmail(String phoneNumber, String email);
 
   Optional<Customer> findById(UUID id);

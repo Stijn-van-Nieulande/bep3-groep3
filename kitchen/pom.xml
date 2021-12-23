@@ -32,6 +32,11 @@
       <version>${project.version}</version>
     </dependency>
     <dependency>
+      <groupId>nl.hu.bep3</groupId>
+      <artifactId>order</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
       <artifactId>lib-swagger-data-provider</artifactId>
       <groupId>nl.hu.bep3</groupId>
       <version>0.1.0</version>

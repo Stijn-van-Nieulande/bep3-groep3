@@ -3,13 +3,11 @@ package nl.hu.bep3.dish.domain;
 import java.util.Objects;
 import java.util.UUID;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.domain.Persistable;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
-public class IngredientAmount {
+public class IngredientAmount implements Persistable<UUID> {
 
-  @Id
-//  @GeneratedValue(strategy = GenerationType.AUTO)
   private UUID id;
   private float amount;
   private AmountUnit amountUnit;
@@ -27,6 +25,9 @@ public class IngredientAmount {
     this.amountUnit = amountUnit;
     this.ingredient = ingredient;
   }
+
+  @Override
+  public UUID getId() {return this.id;}
 
   public float getAmount() {
     return amount;
@@ -46,6 +47,11 @@ public class IngredientAmount {
 
   public Ingredient getIngredient() {
     return ingredient;
+  }
+
+  @Override
+  public boolean isNew() {
+    return this.id == null;
   }
 
   @Override

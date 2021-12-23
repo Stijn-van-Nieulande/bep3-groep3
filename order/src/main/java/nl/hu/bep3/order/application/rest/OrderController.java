@@ -7,9 +7,13 @@ import nl.hu.bep3.order.application.request.ReviewRequestDTO;
 import nl.hu.bep3.order.application.response.OrderResponseDTO;
 import nl.hu.bep3.order.application.response.ReviewResponseDTO;
 import nl.hu.bep3.order.domain.Order;
+import nl.hu.bep3.order.domain.Review;
 import nl.hu.bep3.order.domain.Status;
 import nl.hu.bep3.order.domain.service.OrderService;
+import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +35,12 @@ public class OrderController {
     this.orderService = orderService;
   }
 
+  @GetMapping("/order/{orderId}")
+  public OrderResponseDTO getOrderById(@PathVariable("orderId") UUID orderId){
+    Order order = this.orderService.getOrderById(orderId);
+    return new OrderResponseDTO(order);
+  }
+
   // Als customer wil ik mijn gekozen gerechten kunnen bestellen
   @PostMapping("/makeOrder")
   public OrderResponseDTO placeOrder(@RequestBody OrderRequestDTO orderRequestDTO) {
@@ -38,33 +48,33 @@ public class OrderController {
   }
 
   // Als customer wil ik de status van mijn order kunnen zien
-  @GetMapping("/status/{id}")
-  public Status getOrderStatus(@PathVariable UUID id) {
-    Order order = this.orderService.getOrderById(id);
+  @GetMapping("/status/{orderId}")
+  public Status getOrderStatus(@PathVariable UUID orderId) {
+    Order order = this.orderService.getOrderById(orderId);
     return order.getStatus();
   }
 
-  @PutMapping("/review")
-  public ReviewResponseDTO getReviews() {
-    return this.orderService.;
+  @GetMapping("/review")
+  public Page<Review> getReviews(@ParameterObject final Pageable pageable) {
+    return this.orderService.getReviewsPaginated(pageable);
   }
 
   // Als customer wil ik een review kunnen doen als mijn order gedelivered/opgehaald is.
   // (0/5 + message)
-  @PutMapping("/review/{id}")
+  @PutMapping("/review/{orderId}")
   public ReviewResponseDTO setReview(
-      @PathVariable UUID id, @RequestBody ReviewRequestDTO reviewRequestDTO) {
-    return this.orderService.setReview(id, reviewRequestDTO);
+      @PathVariable UUID orderId, @RequestBody ReviewRequestDTO reviewRequestDTO) {
+    return this.orderService.setReview(orderId, reviewRequestDTO);
   }
 
-  @PutMapping("/status/{id}")
-  public void setStatus(@PathVariable UUID id, @RequestBody String status) {
-    this.orderService.setStatus(id, status);
+  @PutMapping("/status/{orderId}")
+  public void setStatus(@PathVariable UUID orderId, @RequestBody String status) {
+    this.orderService.setStatus(orderId, status);
   }
 
-  @DeleteMapping("/{id}")
-  public HttpStatus deleteOrder(@PathVariable UUID id) {
-    this.orderService.deleteOrder(id);
+  @DeleteMapping("/{orderId}")
+  public HttpStatus deleteOrder(@PathVariable UUID orderId) {
+    this.orderService.deleteOrder(orderId);
     return HttpStatus.OK;
   }
 
@@ -75,8 +85,14 @@ public class OrderController {
   }
 
   // Als order customer Wil ik dat het juiste bedrag wordt berekend
-  @GetMapping("/amount/{id}")
-  public Float getAmount(@PathVariable UUID id) {
-    return this.orderService.getAmount(id);
+  @GetMapping("/amount/{orderId}")
+  public double getAmount(@PathVariable UUID orderId) {
+    return this.orderService.getAmount(orderId);
   }
+
+//  @PostMapping("/send/{id}")
+//  public void sendOrderToKitchen(@PathVariable UUID id) {
+//    Order order = this.orderService.getOrderById(id);
+//    this.orderService.sendOrder(order);
+//  }
 }

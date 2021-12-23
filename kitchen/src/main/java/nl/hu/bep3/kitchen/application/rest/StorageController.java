@@ -1,7 +1,7 @@
 package nl.hu.bep3.kitchen.application.rest;
 
 import java.util.UUID;
-import nl.hu.bep3.dish.domain.Exceptions.InvalidIngredientException;
+import nl.hu.bep3.dish.domain.exceptions.InvalidIngredientException;
 import nl.hu.bep3.kitchen.application.request.ProductDtoIn;
 import nl.hu.bep3.kitchen.application.response.StockDtoOut;
 import nl.hu.bep3.kitchen.domain.Kitchen;
@@ -30,8 +30,8 @@ public class StorageController {
     this.service = service;
   }
 
-  @GetMapping("/{id}")
-  public ResponseEntity<StockDtoOut> showStorage(@PathVariable("id") UUID kitchenId) {
+  @GetMapping("/{kitchenId}")
+  public ResponseEntity<StockDtoOut> showStorage(@PathVariable("kitchenId") UUID kitchenId) {
     try {
       return new ResponseEntity(service.getStock(kitchenId), HttpStatus.OK);
     } catch (KitchenNotFoundException exception) {
@@ -39,8 +39,8 @@ public class StorageController {
     }
   }
 
-  @PostMapping("/{id}")
-  public ResponseEntity<Kitchen> addProduct(@PathVariable("id") UUID kitchenId, @RequestBody ProductDtoIn productDto) {
+  @PostMapping("/{kitchenId}")
+  public ResponseEntity<Kitchen> addProduct(@PathVariable("kitchenId") UUID kitchenId, @RequestBody ProductDtoIn productDto) {
     try {
       return new ResponseEntity(service.addProduct(kitchenId, productDto), HttpStatus.OK);
     } catch (InvalidIngredientException exception) {
@@ -48,15 +48,15 @@ public class StorageController {
     }
   }
 
-  @PatchMapping(path = "/{id}/{ingredient}", consumes = "application/json")
-  public ResponseEntity<Kitchen> addToStorage(@PathVariable("id") UUID kitchenId,
+  @PatchMapping(path = "/{kitchenId}/{ingredient}", consumes = "application/json")
+  public ResponseEntity<Kitchen> updateStock(@PathVariable("kitchenId") UUID kitchenId,
       @PathVariable("ingredient") UUID ingredientId, @RequestBody ProductDtoIn productDto) {
     System.out.println("help1");
     return new ResponseEntity(service.updateProduct(kitchenId, ingredientId, productDto), HttpStatus.OK);
   }
 
-  @DeleteMapping(path = "/{id}")
-  public ResponseEntity<Kitchen> DeleteFromStorage(@PathVariable("id") UUID kitchenId, @RequestParam UUID ingredientId) {
+  @DeleteMapping(path = "/{kitchenId}")
+  public ResponseEntity<Kitchen> DeleteFromStorage(@PathVariable("kitchenId") UUID kitchenId, @RequestParam UUID ingredientId) {
     try {
       System.out.println("help2");
       return new ResponseEntity(service.deleteProduct(kitchenId, ingredientId), HttpStatus.OK);

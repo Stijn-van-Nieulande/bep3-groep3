@@ -6,4 +6,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SpringDataMongoEmployeeRepository extends MongoRepository<Employee, UUID> {}
+public interface SpringDataMongoEmployeeRepository extends MongoRepository<Employee, UUID> {
+
+  boolean existsByFirstNameAndLastName(String firstName, String lastname);
+}

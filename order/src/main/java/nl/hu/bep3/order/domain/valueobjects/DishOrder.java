@@ -8,17 +8,25 @@ public class DishOrder implements Persistable<UUID> {
 
   private UUID id;
   private int amount;
-  private Dish dish;
+  private UUID dishId;
+  private double price;
 
-  public DishOrder(int amount, Dish dish) {
+  public DishOrder(int amount, UUID dishId, double price) {
     this.amount = amount;
-    this.dish = dish;
+    this.dishId = dishId;
+    this.price = price;
   }
 
-  public float calcPriceDishOrder() {
-    // return dish.getPrice * amount;
-    // FIXME aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-    return 0.0f;
+  public double calcPriceDishOrder() {
+    return price * amount;
+  }
+
+  public UUID getDish(){
+    return dishId;
+  }
+
+  public int getAmount(){
+    return amount;
   }
 
   @Override

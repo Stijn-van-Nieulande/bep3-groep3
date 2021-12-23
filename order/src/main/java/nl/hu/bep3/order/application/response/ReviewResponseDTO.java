@@ -9,10 +9,10 @@ public class ReviewResponseDTO {
   public int rating;
   public String reviewMessage;
 
-  public ReviewResponseDTO(int rating, String reviewMessage) {
-    this.rating = rating;
-    this.reviewMessage = reviewMessage;
-  }
+//  public ReviewResponseDTO(int rating, String reviewMessage) {
+//    this.rating = rating;
+//    this.reviewMessage = reviewMessage;
+//  }
 
   public ReviewResponseDTO(Review review) {
     this.id = review.getReviewId();

@@ -37,4 +37,9 @@ public class MongoEmployeeRepository implements EmployeeRepository {
   public void deleteById(final UUID id) {
     this.repository.deleteById(id);
   }
+
+  @Override
+  public boolean doesExist(final String firstName, final String lastname) {
+    return this.repository.existsByFirstNameAndLastName(firstName, lastname);
+  }
 }

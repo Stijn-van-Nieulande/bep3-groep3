@@ -2,9 +2,11 @@ package nl.hu.bep3.order.infrastructure.configuration;
 
 import nl.hu.bep3.order.OrderApplication;
 import nl.hu.bep3.order.domain.repository.OrderRepository;
+import nl.hu.bep3.order.domain.repository.ReviewRepository;
 import nl.hu.bep3.order.domain.service.DomainOrderService;
 import nl.hu.bep3.order.domain.service.OrderService;
 import nl.hu.bep3.order.infrastructure.rabbitmq.QueueSender;
+import nl.hu.bep3.order.proxy.DishServiceProxy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +16,11 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfiguration {
 
   @Bean
-  OrderService orderService(final OrderRepository orderRepository, QueueSender queueSender) {
-    return new DomainOrderService(orderRepository, queueSender);
+  OrderService orderService(
+      final OrderRepository orderRepository,
+      final ReviewRepository reviewRepository,
+      final QueueSender queueSender,
+      final DishServiceProxy dishServiceProxy) {
+    return new DomainOrderService(orderRepository, reviewRepository, queueSender, dishServiceProxy);
   }
 }

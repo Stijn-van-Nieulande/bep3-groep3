@@ -2,6 +2,7 @@ package nl.hu.bep3.order.domain.service;
 
 import java.util.List;
 import java.util.UUID;
+import nl.hu.bep3.order.application.response.OrderResponseToKitchenDTO;
 import nl.hu.bep3.order.domain.Review;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,10 +18,6 @@ public interface OrderService {
 
   void setStatus(UUID id, String status);
 
-  void completeOrder(UUID id);
-
-  void deleteProduct(UUID id);
-
   Order getOrderById(UUID orderId);
 
   Page<Review> getReviewsPaginated(Pageable pageable);
@@ -31,5 +28,7 @@ public interface OrderService {
 
   List<OrderResponseDTO> getOrdersFromCustomer(UUID customerId);
 
-  Float getAmount(UUID id);
+  double getAmount(UUID id);
+
+  void sendOrder(Order order);
 }

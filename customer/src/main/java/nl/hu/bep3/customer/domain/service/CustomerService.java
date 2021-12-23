@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface CustomerService {
+
   Customer createCustomer(Customer customer);
 
   Page<Customer> findAllPaginated(Pageable pageable);

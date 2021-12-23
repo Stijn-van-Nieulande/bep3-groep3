@@ -1,0 +1,39 @@
+{
+  "content": [
+    {
+      "reviewId": "1c73df76-1809-49e5-a441-0b6ef0122139",
+      "reviewMessage": "Yeet",
+      "rating": 5
+    },
+    {
+      "reviewId": "02e634ae-a3c5-46e6-95bd-19852f95ac3d",
+      "reviewMessage": "Best ever",
+      "rating": 1
+    }
+  ],
+  "pageable": {
+    "sort": {
+      "sorted": false,
+      "unsorted": true,
+      "empty": true
+    },
+    "offset": 0,
+    "pageNumber": 0,
+    "pageSize": 20,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalElements": 2,
+  "totalPages": 1,
+  "size": 20,
+  "number": 0,
+  "sort": {
+    "sorted": false,
+    "unsorted": true,
+    "empty": true
+  },
+  "first": true,
+  "numberOfElements": 2,
+  "empty": false
+}

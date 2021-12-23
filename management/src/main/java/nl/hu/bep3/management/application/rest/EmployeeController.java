@@ -8,6 +8,7 @@ import nl.hu.bep3.management.application.request.PatchEmployeeSalarisRequest;
 import nl.hu.bep3.management.application.response.CreateEmployeeResponse;
 import nl.hu.bep3.management.application.response.PatchEmployeeResponse;
 import nl.hu.bep3.management.domain.Employee;
+import nl.hu.bep3.management.domain.exceptions.EmployeeAlreadyExistsException;
 import nl.hu.bep3.management.domain.service.EmployeeService;
 import org.springdoc.api.annotations.ParameterObject;
 import org.springframework.data.domain.Page;
@@ -42,42 +43,49 @@ public class EmployeeController {
       consumes = MediaType.APPLICATION_JSON_VALUE)
   CreateEmployeeResponse createEmployee(
       @RequestBody final CreateEmployeeRequest createEmployeeRequest) {
-    // TODO: Add duplicate check
-    final Employee employee = this.employeeService.createEmployee(createEmployeeRequest.employee);
+    final String firstName = createEmployeeRequest.firstName;
+    final String lastName = createEmployeeRequest.lastName;
+    if (this.employeeService.doesExist(firstName, lastName)) {
+      throw new EmployeeAlreadyExistsException(firstName, lastName);
+    }
+    final Employee employee =
+        this.employeeService.createEmployee(
+            new Employee(
+                firstName, lastName, createEmployeeRequest.salaris, createEmployeeRequest.role));
     return CreateEmployeeResponse.of(employee);
   }
 
-  @DeleteMapping("/{id}")
-  HttpStatus deleteProduct(@PathVariable final UUID id) {
-    this.employeeService.deleteEmployee(id);
+  @DeleteMapping("/{productId}")
+  HttpStatus deleteProduct(@PathVariable final UUID productId) {
+    this.employeeService.deleteEmployee(productId);
     return HttpStatus.OK;
   }
 
-  @PatchMapping("/{id}")
+  @PatchMapping("/{productId}/patchName")
   PatchEmployeeResponse patchEmployeeName(
-      @PathVariable final UUID id,
+      @PathVariable final UUID productId,
       @RequestBody final PatchEmployeeNameRequest patchEmployeeNameRequest) {
     final Employee employee =
         this.employeeService.changeEmployeeName(
-            id, patchEmployeeNameRequest.firstName, patchEmployeeNameRequest.lastName);
+            productId, patchEmployeeNameRequest.firstName, patchEmployeeNameRequest.lastName);
     return PatchEmployeeResponse.of(employee);
   }
 
-  @PatchMapping("/{id}")
+  @PatchMapping("/{productId}/patchRole")
   PatchEmployeeResponse patchEmployeeRole(
-      @PathVariable final UUID id,
+      @PathVariable final UUID productId,
       @RequestBody final PatchEmployeeRoleRequest patchEmployeeRoleRequest) {
     final Employee employee =
-        this.employeeService.changeEmployeeRole(id, patchEmployeeRoleRequest.role);
+        this.employeeService.changeEmployeeRole(productId, patchEmployeeRoleRequest.role);
     return PatchEmployeeResponse.of(employee);
   }
 
-  @PatchMapping("/{id}")
+  @PatchMapping("/{productId}/patchSalaris")
   PatchEmployeeResponse patchEmployeeSalaris(
-      @PathVariable final UUID id,
+      @PathVariable final UUID productId,
       @RequestBody final PatchEmployeeSalarisRequest patchEmployeeSalarisRequest) {
     final Employee employee =
-        this.employeeService.changeEmployeeSalaris(id, patchEmployeeSalarisRequest.salaris);
+        this.employeeService.changeEmployeeSalaris(productId, patchEmployeeSalarisRequest.salaris);
     return PatchEmployeeResponse.of(employee);
   }
 }

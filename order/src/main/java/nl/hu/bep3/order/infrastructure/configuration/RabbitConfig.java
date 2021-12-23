@@ -1,6 +1,7 @@
 package nl.hu.bep3.order.infrastructure.configuration;
 
 import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,6 +15,11 @@ public class RabbitConfig {
 
   @Bean
   public DirectExchange directOrderExchange() {
-    return new DirectExchange("bep.Order");
+    return new DirectExchange("bep.order");
+  }
+
+  @Bean
+  public Queue orderOutQueue() {
+    return new Queue("order.addOrder", true);
   }
 }

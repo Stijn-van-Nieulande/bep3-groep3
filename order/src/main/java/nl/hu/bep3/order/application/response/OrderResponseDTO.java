@@ -15,10 +15,12 @@ public class OrderResponseDTO {
   public Customer customer;
   public boolean deliver; // pickup/deliver
   public List<DishOrder> dishOrders;
-  public float deliverCosts = 2.50F;
+  public double deliverCosts = 2.50F;
   public String customerMessage;
   public Review review;
   public UUID kitchenID;
+
+  public OrderResponseDTO(){ }
 
   public OrderResponseDTO(Order order) {
     this.id = order.getId();
@@ -31,4 +33,5 @@ public class OrderResponseDTO {
     this.review = order.getReview();
     this.kitchenID = order.getKitchenId();
   }
+
 }

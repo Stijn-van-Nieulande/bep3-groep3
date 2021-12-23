@@ -4,6 +4,7 @@ import java.util.UUID;
 import nl.hu.bep3.customer.infrastructure.repository.Persistable;
 
 public class Customer implements Persistable<UUID> {
+
   private UUID id;
   private String firstName;
   private String lastName;
@@ -14,7 +15,11 @@ public class Customer implements Persistable<UUID> {
   public Customer() {}
 
   public Customer(
-      String firstName, String lastName, String address, String email, String phoneNumber) {
+      final String firstName,
+      final String lastName,
+      final String address,
+      final String email,
+      final String phoneNumber) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.address = address;
@@ -23,12 +28,12 @@ public class Customer implements Persistable<UUID> {
   }
 
   public Customer(
-      UUID id,
-      String firstName,
-      String lastName,
-      String address,
-      String email,
-      String phoneNumber) {
+      final UUID id,
+      final String firstName,
+      final String lastName,
+      final String address,
+      final String email,
+      final String phoneNumber) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
@@ -38,11 +43,11 @@ public class Customer implements Persistable<UUID> {
   }
 
   public UUID getId() {
-    return id;
+    return this.id;
   }
 
   @Override
-  public void setId(UUID id) {
+  public void setId(final UUID id) {
     this.id = id;
   }
 
@@ -52,42 +57,42 @@ public class Customer implements Persistable<UUID> {
   }
 
   public String getFirstName() {
-    return firstName;
+    return this.firstName;
   }
 
-  public void setFirstName(String firstName) {
+  public void setFirstName(final String firstName) {
     this.firstName = firstName;
   }
 
   public String getLastName() {
-    return lastName;
+    return this.lastName;
   }
 
-  public void setLastName(String lastName) {
+  public void setLastName(final String lastName) {
     this.lastName = lastName;
   }
 
   public String getAddress() {
-    return address;
+    return this.address;
   }
 
-  public void setAddress(String address) {
+  public void setAddress(final String address) {
     this.address = address;
   }
 
   public String getEmail() {
-    return email;
+    return this.email;
   }
 
-  public void setEmail(String email) {
+  public void setEmail(final String email) {
     this.email = email;
   }
 
   public String getPhoneNumber() {
-    return phoneNumber;
+    return this.phoneNumber;
   }
 
-  public void setPhoneNumber(String phoneNumber) {
+  public void setPhoneNumber(final String phoneNumber) {
     this.phoneNumber = phoneNumber;
   }
 }

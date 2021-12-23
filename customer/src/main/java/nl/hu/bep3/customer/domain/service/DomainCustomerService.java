@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public class DomainCustomerService implements CustomerService {
+
   private final CustomerRepository customerRepository;
 
   public DomainCustomerService(final CustomerRepository customerRepository) {
@@ -16,7 +17,7 @@ public class DomainCustomerService implements CustomerService {
   }
 
   @Override
-  public Customer createCustomer(Customer customer) {
+  public Customer createCustomer(final Customer customer) {
     if (this.customerRepository
         .findByPhoneNumberOrEmail(customer.getPhoneNumber(), customer.getEmail())
         .isEmpty()) {
@@ -26,27 +27,28 @@ public class DomainCustomerService implements CustomerService {
   }
 
   @Override
-  public Page<Customer> findAllPaginated(Pageable pageable) {
+  public Page<Customer> findAllPaginated(final Pageable pageable) {
     return this.customerRepository.findAllPaginated(pageable);
   }
 
   @Override
-  public Optional<Customer> findCustomer(UUID id) {
+  public Optional<Customer> findCustomer(final UUID id) {
     return this.customerRepository.findById(id);
   }
 
   @Override
-  public Customer updateCustomer(Customer customer) {
-    Optional<Customer> optionalCustomer = this.customerRepository.findById(customer.getId());
+  public Customer updateCustomer(final Customer customer) {
+    final Optional<Customer> optionalCustomer = this.customerRepository.findById(customer.getId());
     if (optionalCustomer.isPresent()) {
       return this.customerRepository.save(customer);
     } else {
+      // FIXME: customer can be null
       throw new CustomerNotFoundException(customer.getId());
     }
   }
 
   @Override
-  public void deleteCustomer(UUID id) {
+  public void deleteCustomer(final UUID id) {
     this.customerRepository.delete(id);
   }
 }

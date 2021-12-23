@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import nl.hu.bep3.kitchen.domain.exceptions.OrderNotFoundException;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.domain.Persistable;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -21,8 +20,7 @@ public class Kitchen implements Persistable<UUID> {
   private ArrayList<UUID> pendingOrders = new ArrayList<>();
   private ArrayList<UUID> ordersInProcess = new ArrayList<>();
 
-  public Kitchen() {
-  }
+  public Kitchen() {}
 
   public Kitchen(String restaurantName, String address, Storage storage) {
     Objects.requireNonNull(restaurantName, "Restaurant name cannot be null!");
@@ -44,7 +42,7 @@ public class Kitchen implements Persistable<UUID> {
     return orders;
   }
 
-  public Boolean addPendingOrder(UUID orderId){
+  public Boolean addPendingOrder(UUID orderId) {
     return pendingOrders.add(orderId);
   }
 
@@ -52,7 +50,9 @@ public class Kitchen implements Persistable<UUID> {
     if (this.pendingOrders.contains(pendingOrder)) {
       this.pendingOrders.remove(pendingOrder);
       this.ordersInProcess.add(pendingOrder);
+      System.out.println("Accepted");
     } else {
+      System.out.println("accept error");
       throw new OrderNotFoundException(pendingOrder);
     }
   }
@@ -60,8 +60,11 @@ public class Kitchen implements Persistable<UUID> {
   public void removePendingOrder(UUID pendingOrder) {
     if (this.pendingOrders.contains(pendingOrder)) {
       this.pendingOrders.remove(pendingOrder);
+      System.out.println("Removed");
+    } else {
+      System.out.println("remove error");
+      throw new OrderNotFoundException(pendingOrder);
     }
-    throw new OrderNotFoundException(pendingOrder);
   }
 
   @Override
@@ -74,7 +77,7 @@ public class Kitchen implements Persistable<UUID> {
     return false;
   }
 
-  public Storage getStock() {
+  public Storage getStorage() {
     return storage;
   }
 
@@ -93,6 +96,10 @@ public class Kitchen implements Persistable<UUID> {
     return false;
   }
 
+  public String getRestaurantName() {
+    return this.restaurantName;
+  }
+
   public void setRestaurantName(String restaurantName) {
     this.restaurantName = restaurantName;
   }
@@ -100,7 +107,6 @@ public class Kitchen implements Persistable<UUID> {
   public void setAddress(String address) {
     this.address = address;
   }
-
 
   @Override
   public boolean equals(Object o) {
@@ -111,10 +117,13 @@ public class Kitchen implements Persistable<UUID> {
       return false;
     }
     Kitchen kitchen = (Kitchen) o;
-    return id.equals(kitchen.id) && restaurantName.equals(kitchen.restaurantName) && address.equals(
-        kitchen.address) && Objects.equals(storage, kitchen.storage) && Objects.equals(menu,
-        kitchen.menu) && Objects.equals(pendingOrders, kitchen.pendingOrders) && Objects.equals(
-        ordersInProcess, kitchen.ordersInProcess);
+    return id.equals(kitchen.id)
+        && restaurantName.equals(kitchen.restaurantName)
+        && address.equals(kitchen.address)
+        && Objects.equals(storage, kitchen.storage)
+        && Objects.equals(menu, kitchen.menu)
+        && Objects.equals(pendingOrders, kitchen.pendingOrders)
+        && Objects.equals(ordersInProcess, kitchen.ordersInProcess);
   }
 
   @Override

@@ -4,31 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.domain.Persistable;
 
-@Document
-public class Dish {
-
-  @Id
-//  @GeneratedValue(strategy = GenerationType.AUTO)
+public class Dish implements Persistable<UUID> {
   private UUID id;
 
   private String name;
   private double price;
 
-  //  @OneToMany
-//  @JoinTable(
-//          name = "ingredient_amounts_in_dish",
-//          joinColumns = @JoinColumn( name="dish_id"),
-//          inverseJoinColumns = @JoinColumn( name="ingredient_amount_id")
-//  )
-  private List<IngredientAmount> ingredients = new ArrayList<IngredientAmount>();
+  private List<IngredientAmount> ingredients = new ArrayList<>();
 
-  public Dish() {
-  }
+  public Dish() {}
 
-  public Dish(String name, double price, List<IngredientAmount> ingredients) {
+  public Dish(final String name, final double price, final List<IngredientAmount> ingredients) {
     this.id = UUID.randomUUID();
     this.name = name;
     this.price = price;
@@ -36,54 +24,63 @@ public class Dish {
   }
 
   public UUID getId() {
-    return id;
+    return this.id;
+  }
+
+  @Override
+  public boolean isNew() {
+    return this.id == null;
   }
 
   public String getName() {
-    return name;
+    return this.name;
   }
 
-  public void setName(String name) {
+  public void setName(final String name) {
     this.name = name;
   }
 
   public double getPrice() {
-    return price;
+    return this.price;
   }
 
-  public void setPrice(double price) {
+  public void setPrice(final double price) {
     this.price = price;
   }
 
   public List<IngredientAmount> getIngredients() {
-    return ingredients;
+    return this.ingredients;
   }
 
-  public void setIngredients(List<IngredientAmount> ingredients) {
+  public void setIngredients(final List<IngredientAmount> ingredients) {
     this.ingredients = ingredients;
   }
 
-  public void addIngredient(IngredientAmount ingredient) {
+  public void addIngredient(final IngredientAmount ingredient) {
     this.ingredients.add(ingredient);
   }
 
-  public boolean removeIngredient(IngredientAmount ingredient) {
-    return ingredients.remove(ingredient);
+  public boolean removeIngredient(final IngredientAmount ingredient) {
+    return this.ingredients.remove(ingredient);
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o)
+  public boolean equals(final Object o) {
+    if (this == o) {
       return true;
-    if (o == null || getClass() != o.getClass())
+    }
+    if (o == null || this.getClass() != o.getClass()) {
       return false;
-    Dish dish = (Dish) o;
-    return Double.compare(dish.price, price) == 0 && id.equals(dish.id) && name.equals(dish.name)
-        && Objects.equals(ingredients, dish.ingredients);
+    }
+    final Dish dish = (Dish) o;
+    return Double.compare(dish.price, this.price) == 0
+        && this.id.equals(dish.id)
+        && this.name.equals(dish.name)
+        && Objects.equals(this.ingredients, dish.ingredients);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, price, ingredients);
+    return Objects.hash(this.id, this.name, this.price, this.ingredients);
   }
 }

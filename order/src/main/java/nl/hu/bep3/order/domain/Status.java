@@ -8,5 +8,7 @@ public enum Status {
   DELIVERING,
   READYFORPICKUP,
   FINISHED,
-  CANCELED
+  CANCELLED
 }
+
+

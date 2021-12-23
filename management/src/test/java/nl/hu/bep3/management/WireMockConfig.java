@@ -12,4 +12,9 @@ public class WireMockConfig {
   public WireMockServer mockKitchenService() {
     return new WireMockServer(9561);
   }
+
+  @Bean(initMethod = "start", destroyMethod = "stop")
+  public WireMockServer mockOrderService() {
+    return new WireMockServer(9562);
+  }
 }
