@@ -1,14 +1,12 @@
 package nl.hu.bep3.order.domain.service;
 
-import nl.hu.bep3.order.Aplication.request.OrderRequestDTO;
-import nl.hu.bep3.order.Aplication.request.ReviewRequestDTO;
-import nl.hu.bep3.order.Aplication.response.OrderResponseDTO;
-import nl.hu.bep3.order.Aplication.response.ReviewResponseDTO;
-import nl.hu.bep3.order.domain.Order;
-import org.springframework.http.HttpStatus;
-
 import java.util.List;
 import java.util.UUID;
+import nl.hu.bep3.order.application.request.OrderRequestDTO;
+import nl.hu.bep3.order.application.request.ReviewRequestDTO;
+import nl.hu.bep3.order.application.response.OrderResponseDTO;
+import nl.hu.bep3.order.application.response.ReviewResponseDTO;
+import nl.hu.bep3.order.domain.Order;
 
 public interface OrderService {
 

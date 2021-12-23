@@ -1,20 +1,18 @@
 package nl.hu.bep3.order.domain.service;
 
-import nl.hu.bep3.customer.domain.Customer;
-import nl.hu.bep3.order.Aplication.response.OrderResponseDTO;
-import nl.hu.bep3.order.infrastructure.rabbitmq.QueueSender;
-import nl.hu.bep3.order.Aplication.request.OrderRequestDTO;
-import nl.hu.bep3.order.Aplication.response.ReviewResponseDTO;
-import nl.hu.bep3.order.domain.valueobjects.DishOrder;
-import nl.hu.bep3.order.domain.repository.OrderRepository;
-import nl.hu.bep3.order.Aplication.request.ReviewRequestDTO;
-import nl.hu.bep3.order.domain.Order;
-import nl.hu.bep3.order.domain.exeption.OrderNotFound;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
+import nl.hu.bep3.customer.domain.Customer;
+import nl.hu.bep3.order.application.request.OrderRequestDTO;
+import nl.hu.bep3.order.application.request.ReviewRequestDTO;
+import nl.hu.bep3.order.application.response.OrderResponseDTO;
+import nl.hu.bep3.order.application.response.ReviewResponseDTO;
+import nl.hu.bep3.order.domain.Order;
+import nl.hu.bep3.order.domain.exception.OrderNotFound;
+import nl.hu.bep3.order.domain.repository.OrderRepository;
+import nl.hu.bep3.order.domain.valueobjects.DishOrder;
+import nl.hu.bep3.order.infrastructure.rabbitmq.QueueSender;
 
 public class DomainOrderService implements OrderService {
 
@@ -41,25 +39,25 @@ public class DomainOrderService implements OrderService {
     List<DishOrder> dishOrderList = orderRequestDTO.dishOrders;
     String customerMessage = orderRequestDTO.customerMessage;
 
-    Order order = this.orderRepository.save(
-        new Order(customer, deliver, dishOrderList, customerMessage));
+    Order order =
+        this.orderRepository.save(new Order(customer, deliver, dishOrderList, customerMessage));
 
     return new OrderResponseDTO(order);
   }
 
   @Override
   public void completeOrder(UUID id) {
+    // TODO: Implement me
   }
 
   @Override
   public void deleteProduct(UUID id) {
-
+    // TODO: Implement me
   }
 
   @Override
   public Order getOrderById(UUID orderId) {
-    return this.orderRepository.findById(orderId)
-        .orElseThrow(() -> new OrderNotFound(orderId));
+    return this.orderRepository.findById(orderId).orElseThrow(() -> new OrderNotFound(orderId));
   }
 
   @Override
@@ -87,6 +85,5 @@ public class DomainOrderService implements OrderService {
   public Float getAmount(UUID id) {
     order = this.orderRepository.findById(id).orElseThrow(() -> new OrderNotFound(id));
     return order.calcTotPrice();
-
   }
 }

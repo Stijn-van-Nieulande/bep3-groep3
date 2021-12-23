@@ -1,10 +1,9 @@
 package nl.hu.bep3.order.domain.repository;
 
-import nl.hu.bep3.order.domain.Order;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import nl.hu.bep3.order.domain.Order;
 
 public interface OrderRepository {
 
