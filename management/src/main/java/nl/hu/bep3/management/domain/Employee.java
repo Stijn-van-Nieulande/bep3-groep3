@@ -1,5 +1,6 @@
 package nl.hu.bep3.management.domain;
 
+import com.cookingfox.guava_preconditions.Preconditions;
 import java.util.Objects;
 import java.util.UUID;
 import nl.hu.bep3.management.infrastracture.repository.Persistable;
@@ -56,7 +57,18 @@ public class Employee implements Persistable<UUID> {
     return this.firstName;
   }
 
+  /**
+   * Update the employee first name.
+   *
+   * @param firstName The new first name.
+   * @throws NullPointerException when some arguments require a non-null value and a null value is
+   *      provided.
+   * @throws IllegalArgumentException when some arguments do not meet the requirements.
+   */
   public void setFirstName(final String firstName) {
+    Preconditions.checkNotNull(firstName, "The employee first name cannot be empty.");
+    Preconditions.checkArgument(!firstName.isBlank(), "The employee first name cannot be empty.");
+
     this.firstName = firstName;
   }
 
@@ -64,7 +76,18 @@ public class Employee implements Persistable<UUID> {
     return this.lastName;
   }
 
+  /**
+   * Update the employee last name.
+   *
+   * @param lastName The new last name.
+   * @throws NullPointerException when some arguments require a non-null value and a null value is
+   *      provided.
+   * @throws IllegalArgumentException when some arguments do not meet the requirements.
+   */
   public void setLastName(final String lastName) {
+    Preconditions.checkNotNull(lastName, "The employee last name cannot be empty.");
+    Preconditions.checkArgument(!lastName.isBlank(), "The employee last name cannot be empty.");
+
     this.lastName = lastName;
   }
 
@@ -81,6 +104,8 @@ public class Employee implements Persistable<UUID> {
   }
 
   public void setRole(final Role role) {
+    Preconditions.checkNotNull(role, "The employee role cannot be empty.");
+
     this.role = role;
   }
 

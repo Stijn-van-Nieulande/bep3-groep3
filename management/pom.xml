@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <artifactId>management</artifactId>
   <build>
     <plugins>
@@ -35,8 +35,8 @@
     </dependency>
     <!-- https://mvnrepository.com/artifact/io.github.openfeign/feign-okhttp -->
     <dependency>
-      <groupId>io.github.openfeign</groupId>
       <artifactId>feign-okhttp</artifactId>
+      <groupId>io.github.openfeign</groupId>
       <version>11.7</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/com.github.tomakehurst/wiremock -->
@@ -45,6 +45,25 @@
       <groupId>com.github.tomakehurst</groupId>
       <scope>test</scope>
       <version>2.27.2</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter -->
+    <dependency>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <groupId>org.mockito</groupId>
+      <scope>test</scope>
+      <version>4.1.0</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/com.cookingfox/guava-preconditions -->
+    <dependency>
+      <artifactId>guava-preconditions</artifactId>
+      <groupId>com.cookingfox</groupId>
+      <version>0.1.5</version>
+    </dependency>
+    <dependency>
+      <groupId>org.jetbrains</groupId>
+      <artifactId>annotations</artifactId>
+      <version>23.0.0</version>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>
