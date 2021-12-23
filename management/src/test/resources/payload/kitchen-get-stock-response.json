@@ -1,0 +1,14 @@
+{
+  "kitchen": "0498E5DC-CDF5-4F85-BBF5-2A39360638BF",
+  "capacity": 200,
+  "ingredientList": [
+    {
+      "amount": 100,
+      "amountUnit": "GRAM",
+      "ingredientName": "Kaas",
+      "allergies": [
+        "MILK"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": "0498E5DC-CDF5-4F85-BBF5-2A39360638BF",
+  "restaurantName": "The burned burger",
+  "address": "UnknownStreet",
+  "stock": {
+    "capacity": 200,
+    "productInStock": [
+      {
+        "id": "4f78d871-f3b0-47aa-9fe0-aecadd05474d",
+        "amount": 200,
+        "amountUnit": "GRAM"
+      }
+    ]
+  },
+  "menu": [
+    "9827e558-974f-4945-85be-bdb588075047"
+  ],
+  "pendingOrders": [],
+  "ordersInProcess": []
+}

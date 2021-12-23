@@ -1,0 +1,19 @@
+{
+  "menu": [
+    {
+      "id": "0498E5DC-CDF5-4F85-BBF5-2A39360638BF",
+      "name": "Kaasplank",
+      "price": 10.0,
+      "ingredients": [
+        {
+          "ingredientName": "Kaas",
+          "allergies": [
+            "MILK"
+          ],
+          "amount": 100,
+          "unit": "GRAM"
+        }
+      ]
+    }
+  ]
+}
