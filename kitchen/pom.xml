@@ -23,6 +23,11 @@
   <dependencies>
     <dependency>
       <groupId>nl.hu.bep3</groupId>
+      <artifactId>order</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>nl.hu.bep3</groupId>
       <artifactId>dish</artifactId>
       <version>${project.version}</version>
     </dependency>

@@ -2,6 +2,7 @@ package nl.hu.bep3.kitchen.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.domain.Persistable;
@@ -38,5 +39,21 @@ public class Storage {
 
   public boolean isNew() {
     return false;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    Storage storage = (Storage) o;
+    return capacity == storage.capacity && Objects.equals(kitchen, storage.kitchen)
+        && Objects.equals(productInStock, storage.productInStock);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(kitchen, capacity, productInStock);
   }
 }

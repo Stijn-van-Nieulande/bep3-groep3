@@ -4,5 +4,5 @@ import java.util.UUID;
 
 public class OrderDto {
   public UUID id;
-  public int capacity;
+
 }

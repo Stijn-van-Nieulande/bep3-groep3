@@ -1,5 +1,6 @@
 package nl.hu.bep3.dish.domain;
 
+import java.util.Objects;
 import java.util.UUID;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -45,5 +46,21 @@ public class IngredientAmount {
 
   public Ingredient getIngredient() {
     return ingredient;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    IngredientAmount that = (IngredientAmount) o;
+    return Float.compare(that.amount, amount) == 0 && id.equals(that.id)
+        && amountUnit == that.amountUnit && Objects.equals(ingredient, that.ingredient);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, amount, amountUnit, ingredient);
   }
 }

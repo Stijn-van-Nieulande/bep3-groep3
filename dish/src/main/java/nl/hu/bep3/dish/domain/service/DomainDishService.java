@@ -35,7 +35,6 @@ public class DomainDishService implements DishService {
     ArrayList<IngredientAmount> ingredients = new ArrayList<>();
     if (dishInDto.ingredients == null || dishInDto.ingredients.isEmpty()) {
       throw new InvalidIngredientException("There where no ingredients in the dish");
-      //TODO: throw exception
     }
     for (IngredientAmountInDto ingredientAmount : dishInDto.ingredients) {
       Ingredient ingredient = ingredientService.getIngredientById(ingredientAmount.ingredientId);

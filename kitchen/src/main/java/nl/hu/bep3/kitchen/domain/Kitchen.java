@@ -44,6 +44,10 @@ public class Kitchen implements Persistable<UUID> {
     return orders;
   }
 
+  public Boolean addPendingOrder(UUID orderId){
+    return pendingOrders.add(orderId);
+  }
+
   public void acceptOrder(UUID pendingOrder) {
     if (this.pendingOrders.contains(pendingOrder)) {
       this.pendingOrders.remove(pendingOrder);
