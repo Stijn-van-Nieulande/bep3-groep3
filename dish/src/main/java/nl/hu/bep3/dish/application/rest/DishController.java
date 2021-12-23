@@ -69,7 +69,7 @@ public class DishController {
     try {
       this.dishService.deleteDish(dishId);
     } catch (final DishNotFoundException exception) {
-      throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage(), );
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
     } catch (final Exception exception) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
     }

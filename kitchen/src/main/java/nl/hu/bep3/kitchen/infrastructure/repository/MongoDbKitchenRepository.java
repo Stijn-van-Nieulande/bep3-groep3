@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Primary
-public class MongoDbKitchenRepository implements
-    nl.hu.bep3.kitchen.domain.repository.KitchenRepository {
+public class MongoDbKitchenRepository
+    implements nl.hu.bep3.kitchen.domain.repository.KitchenRepository {
 
   private final SpringDataMongoKitchenRepository springDataMongoKitchenRepository;
 
@@ -23,26 +23,26 @@ public class MongoDbKitchenRepository implements
 
   @Override
   public Optional<Kitchen> findById(final UUID id) {
-    return springDataMongoKitchenRepository.findById(id);
+    return this.springDataMongoKitchenRepository.findById(id);
   }
 
   @Override
   public Kitchen save(final Kitchen kitchen) {
-    return springDataMongoKitchenRepository.save(kitchen);
+    return this.springDataMongoKitchenRepository.save(kitchen);
   }
 
   @Override
   public void delete(final Kitchen kitchen) {
-    springDataMongoKitchenRepository.delete(kitchen);
+    this.springDataMongoKitchenRepository.delete(kitchen);
   }
 
   @Override
-  public Optional<Kitchen> findFirstByAddress(String address) {
-    return springDataMongoKitchenRepository.findFirstByAddress(address);
+  public Optional<Kitchen> findFirstByAddress(final String address) {
+    return this.springDataMongoKitchenRepository.findFirstByAddress(address);
   }
 
   @Override
   public List<Kitchen> findAll() {
-    return springDataMongoKitchenRepository.findAll();
+    return this.springDataMongoKitchenRepository.findAll();
   }
 }

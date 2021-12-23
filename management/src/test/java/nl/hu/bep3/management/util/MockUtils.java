@@ -6,6 +6,7 @@ import static org.springframework.util.StreamUtils.copyToString;
 import java.io.IOException;
 
 public final class MockUtils {
+
   private MockUtils() {
     throw new UnsupportedOperationException("This class cannot be instantiated");
   }

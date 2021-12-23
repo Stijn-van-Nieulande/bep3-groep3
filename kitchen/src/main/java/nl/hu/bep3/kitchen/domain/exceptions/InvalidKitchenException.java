@@ -9,5 +9,4 @@ public class InvalidKitchenException extends RuntimeException {
   public InvalidKitchenException(final String message) {
     super(message);
   }
-
 }

@@ -7,6 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface EmployeeRepository {
+
   Optional<Employee> findById(UUID id);
 
   Page<Employee> findAllPaginated(Pageable pageable);

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 public class KitchenMocks {
+
   public static void setupMockGetKitchenStockResponse(final WireMockServer mockService)
       throws IOException {
     mockService.stubFor(

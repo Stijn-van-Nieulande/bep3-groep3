@@ -9,7 +9,9 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitConfig {
 
   @Bean
-  public Queue orderQueue() {return new Queue("order.addOrder"); }
+  public Queue orderQueue() {
+    return new Queue("order.addOrder");
+  }
 
   @Bean
   public DirectExchange directDishAddExchange() {
@@ -30,5 +32,4 @@ public class RabbitConfig {
   public DirectExchange directMenuExchange() {
     return new DirectExchange("bep.menu");
   }
-
 }

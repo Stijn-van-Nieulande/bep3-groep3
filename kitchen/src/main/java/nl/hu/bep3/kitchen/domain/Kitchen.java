@@ -6,23 +6,20 @@ import java.util.Objects;
 import java.util.UUID;
 import nl.hu.bep3.kitchen.domain.exceptions.OrderNotFoundException;
 import org.springframework.data.domain.Persistable;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
 public class Kitchen implements Persistable<UUID> {
-  private UUID id;
 
+  private final ArrayList<UUID> menu = new ArrayList<>();
+  private final ArrayList<UUID> pendingOrders = new ArrayList<>();
+  private final ArrayList<UUID> ordersInProcess = new ArrayList<>();
+  private UUID id;
   private String restaurantName;
   private String address;
   private Storage storage;
 
-  private ArrayList<UUID> menu = new ArrayList<>();
-  private ArrayList<UUID> pendingOrders = new ArrayList<>();
-  private ArrayList<UUID> ordersInProcess = new ArrayList<>();
-
   public Kitchen() {}
 
-  public Kitchen(String restaurantName, String address, Storage storage) {
+  public Kitchen(final String restaurantName, final String address, final Storage storage) {
     Objects.requireNonNull(restaurantName, "Restaurant name cannot be null!");
     Objects.requireNonNull(address, "Address cannot be null!");
     Objects.requireNonNull(storage, "stock cannot be null!");
@@ -34,19 +31,19 @@ public class Kitchen implements Persistable<UUID> {
   }
 
   public List<UUID> getAllOrderIds() {
-    List<UUID> orders = new ArrayList<>();
+    final List<UUID> orders = new ArrayList<>();
 
-    orders.addAll(pendingOrders);
-    orders.addAll(ordersInProcess);
+    orders.addAll(this.pendingOrders);
+    orders.addAll(this.ordersInProcess);
 
     return orders;
   }
 
-  public Boolean addPendingOrder(UUID orderId) {
-    return pendingOrders.add(orderId);
+  public Boolean addPendingOrder(final UUID orderId) {
+    return this.pendingOrders.add(orderId);
   }
 
-  public void acceptOrder(UUID pendingOrder) {
+  public void acceptOrder(final UUID pendingOrder) {
     if (this.pendingOrders.contains(pendingOrder)) {
       this.pendingOrders.remove(pendingOrder);
       this.ordersInProcess.add(pendingOrder);
@@ -57,7 +54,7 @@ public class Kitchen implements Persistable<UUID> {
     }
   }
 
-  public void removePendingOrder(UUID pendingOrder) {
+  public void removePendingOrder(final UUID pendingOrder) {
     if (this.pendingOrders.contains(pendingOrder)) {
       this.pendingOrders.remove(pendingOrder);
       System.out.println("Removed");
@@ -69,7 +66,7 @@ public class Kitchen implements Persistable<UUID> {
 
   @Override
   public UUID getId() {
-    return id;
+    return this.id;
   }
 
   @Override
@@ -78,19 +75,19 @@ public class Kitchen implements Persistable<UUID> {
   }
 
   public Storage getStorage() {
-    return storage;
+    return this.storage;
   }
 
   public List<UUID> getOrdersInProcess() {
-    return ordersInProcess;
+    return this.ordersInProcess;
   }
 
   public List<UUID> getMenu() {
-    return menu;
+    return this.menu;
   }
 
-  public Boolean addToMenu(UUID dish) {
-    if (!menu.contains(dish)) {
+  public Boolean addToMenu(final UUID dish) {
+    if (!this.menu.contains(dish)) {
       return this.menu.add(dish);
     }
     return false;
@@ -100,34 +97,41 @@ public class Kitchen implements Persistable<UUID> {
     return this.restaurantName;
   }
 
-  public void setRestaurantName(String restaurantName) {
+  public void setRestaurantName(final String restaurantName) {
     this.restaurantName = restaurantName;
   }
 
-  public void setAddress(String address) {
+  public void setAddress(final String address) {
     this.address = address;
   }
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(final Object o) {
     if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass()) {
+    if (o == null || this.getClass() != o.getClass()) {
       return false;
     }
-    Kitchen kitchen = (Kitchen) o;
-    return id.equals(kitchen.id)
-        && restaurantName.equals(kitchen.restaurantName)
-        && address.equals(kitchen.address)
-        && Objects.equals(storage, kitchen.storage)
-        && Objects.equals(menu, kitchen.menu)
-        && Objects.equals(pendingOrders, kitchen.pendingOrders)
-        && Objects.equals(ordersInProcess, kitchen.ordersInProcess);
+    final Kitchen kitchen = (Kitchen) o;
+    return this.id.equals(kitchen.id)
+        && this.restaurantName.equals(kitchen.restaurantName)
+        && this.address.equals(kitchen.address)
+        && Objects.equals(this.storage, kitchen.storage)
+        && Objects.equals(this.menu, kitchen.menu)
+        && Objects.equals(this.pendingOrders, kitchen.pendingOrders)
+        && Objects.equals(this.ordersInProcess, kitchen.ordersInProcess);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, restaurantName, address, storage, menu, pendingOrders, ordersInProcess);
+    return Objects.hash(
+        this.id,
+        this.restaurantName,
+        this.address,
+        this.storage,
+        this.menu,
+        this.pendingOrders,
+        this.ordersInProcess);
   }
 }

@@ -4,33 +4,29 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.domain.Persistable;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
 public class Storage {
+
   private Kitchen kitchen;
   private int capacity;
-  private List<ProductInStock> productInStock= new ArrayList<>();
+  private List<ProductInStock> productInStock = new ArrayList<>();
 
-  public Storage() {
-  }
+  public Storage() {}
 
-  public Storage(int capacity) {
+  public Storage(final int capacity) {
     this.capacity = capacity;
   }
 
   public int getCapacity() {
-    return capacity;
+    return this.capacity;
+  }
+
+  public void setCapacity(final int capacity) {
+    this.capacity = capacity;
   }
 
   public List<ProductInStock> getIngredientInStock() {
-    return productInStock;
-  }
-
-  public void setCapacity(int capacity) {
-    this.capacity = capacity;
+    return this.productInStock;
   }
 
   public UUID getId() {
@@ -42,18 +38,21 @@ public class Storage {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o)
+  public boolean equals(final Object o) {
+    if (this == o) {
       return true;
-    if (o == null || getClass() != o.getClass())
+    }
+    if (o == null || this.getClass() != o.getClass()) {
       return false;
-    Storage storage = (Storage) o;
-    return capacity == storage.capacity && Objects.equals(kitchen, storage.kitchen)
-        && Objects.equals(productInStock, storage.productInStock);
+    }
+    final Storage storage = (Storage) o;
+    return this.capacity == storage.capacity
+        && Objects.equals(this.kitchen, storage.kitchen)
+        && Objects.equals(this.productInStock, storage.productInStock);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(kitchen, capacity, productInStock);
+    return Objects.hash(this.kitchen, this.capacity, this.productInStock);
   }
 }

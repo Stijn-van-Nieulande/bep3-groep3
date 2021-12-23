@@ -4,6 +4,7 @@ import java.util.UUID;
 
 /** Exception thrown when an employee is not found. */
 public class EmployeeNotFoundException extends RuntimeException {
+
   public EmployeeNotFoundException(final String message) {
     super(message);
   }

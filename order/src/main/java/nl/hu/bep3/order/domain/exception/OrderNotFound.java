@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class OrderNotFound extends RuntimeException {
 
-  public OrderNotFound(UUID id) {
+  public OrderNotFound(final UUID id) {
     super("Could not find order by id " + id);
   }
 }

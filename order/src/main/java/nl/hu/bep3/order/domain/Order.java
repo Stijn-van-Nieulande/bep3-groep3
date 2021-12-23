@@ -1,10 +1,9 @@
 package nl.hu.bep3.order.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 import nl.hu.bep3.customer.domain.Customer;
-import nl.hu.bep3.order.application.response.ReviewResponseDTO;
 import nl.hu.bep3.order.domain.exception.StatusInvalidException;
 import nl.hu.bep3.order.domain.valueobjects.DishOrder;
 import nl.hu.bep3.order.infrastructure.repository.Persistable;
@@ -12,7 +11,7 @@ import nl.hu.bep3.order.infrastructure.repository.Persistable;
 public class Order implements Persistable<UUID> {
 
   private UUID id;
-  private Date orderDate;
+  private LocalDate orderDate;
   private Status status;
   private Customer customer;
   private boolean deliver; //pickup/deliver
@@ -23,36 +22,33 @@ public class Order implements Persistable<UUID> {
   private Review review;
   private UUID kitchenId;
 
-  public Order(Customer customer, boolean deliver, List<DishOrder> dishOrders,
-      String customerMessage, UUID kitchenId) {
+  public Order(final Customer customer, final boolean deliver, final List<DishOrder> dishOrders,
+      final String customerMessage, final UUID kitchenId) {
     this.customer = customer;
     this.deliver = deliver;
     this.customerMessage = customerMessage;
     this.dishOrders = dishOrders;
     this.status = Status.PENDING;
     this.kitchenId = kitchenId;
+    this.orderDate = LocalDate.now();
   }
 
   public double calcTotPrice() {
     double totPrice = 0;
-    for (DishOrder dishOrder : dishOrders) {
+    for (final DishOrder dishOrder : this.dishOrders) {
       totPrice = dishOrder.calcPriceDishOrder();
     }
-    if (deliver == true || totPrice < minAmountNoDeliverCosts) {
-      totPrice = +deliverCosts;
+    if (this.deliver || totPrice < this.minAmountNoDeliverCosts) {
+      totPrice = +this.deliverCosts;
     }
     return totPrice;
   }
 
-  public void setReview(Review review) {
-    this.review = review;
-  }
-
   public Status getStatus() {
-    return status;
+    return this.status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(final String status) {
     System.out.println(status.toLowerCase());
     switch (status.toLowerCase()) {
       case "accepted" -> this.status = Status.ACCEPTED;
@@ -67,96 +63,88 @@ public class Order implements Persistable<UUID> {
     }
   }
 
-//  public Status getStatus() {
-//    return this.status;
-//  }
-
-//  public void setStatus(String status) {
-//    System.out.println(status);
-//    status.toUpperCase();
-//    status.replaceAll("\\s+","");
-//    System.out.println(status);
-//    this.status = Status.valueOf(status);
-//  }
-
-  public void setStatus(Status status) {
+  public void setStatus(final Status status) {
     this.status = status;
   }
 
   public UUID getId() {
-    return id;
+    return this.id;
   }
 
   @Override
-  public void setId(UUID id) {
+  public void setId(final UUID id) {
     this.id = id;
   }
 
-  public Date getOrderDate() {
-    return orderDate;
+  public LocalDate getOrderDate() {
+    return this.orderDate;
   }
 
-  public void setOrderDate(Date orderDate) {
+  public void setOrderDate(final LocalDate orderDate) {
     this.orderDate = orderDate;
   }
 
   public Customer getCustomer() {
-    return customer;
+    return this.customer;
   }
 
-  public void setCustomer(Customer customer) {
+  public void setCustomer(final Customer customer) {
     this.customer = customer;
   }
 
   public boolean isDeliver() {
-    return deliver;
+    return this.deliver;
   }
 
-  public void setDeliver(boolean deliver) {
+  public void setDeliver(final boolean deliver) {
     this.deliver = deliver;
   }
 
   public List<DishOrder> getDishOrders() {
-    return dishOrders;
+    return this.dishOrders;
   }
 
-  public void setDishOrders(List<DishOrder> dishOrders) {
+  public void setDishOrders(final List<DishOrder> dishOrders) {
     this.dishOrders = dishOrders;
   }
 
   public double getDeliverCosts() {
-    return deliverCosts;
+    return this.deliverCosts;
   }
 
-  public void setDeliverCosts(float deliverCosts) {
+  public void setDeliverCosts(final float deliverCosts) {
     this.deliverCosts = deliverCosts;
   }
 
   public double getMinAmountNoDeliverCosts() {
-    return minAmountNoDeliverCosts;
+    return this.minAmountNoDeliverCosts;
   }
 
-  public void setMinAmountNoDeliverCosts(float minAmountNoDeliverCosts) {
+  public void setMinAmountNoDeliverCosts(final float minAmountNoDeliverCosts) {
     this.minAmountNoDeliverCosts = minAmountNoDeliverCosts;
   }
 
   public String getCustomerMessage() {
-    return customerMessage;
+    return this.customerMessage;
   }
 
-  public void setCustomerMessage(String customerMessage) {
+  public void setCustomerMessage(final String customerMessage) {
     this.customerMessage = customerMessage;
   }
 
   public Review getReview() {
-    return review;
+    return this.review;
+  }
+
+  public void setReview(final Review review) {
+    this.review = review;
   }
 
   public UUID getKitchenId() {
-    return kitchenId;
+    return this.kitchenId;
   }
 
-  public void setKitchenId(UUID kitchenId) {
+  public void setKitchenId(final UUID kitchenId) {
     this.kitchenId = kitchenId;
   }
 

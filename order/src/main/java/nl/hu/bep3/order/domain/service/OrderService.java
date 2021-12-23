@@ -2,19 +2,18 @@ package nl.hu.bep3.order.domain.service;
 
 import java.util.List;
 import java.util.UUID;
-import nl.hu.bep3.order.application.response.OrderResponseToKitchenDTO;
+import nl.hu.bep3.order.application.request.OrderRequestDto;
+import nl.hu.bep3.order.application.request.ReviewRequestDto;
+import nl.hu.bep3.order.application.response.OrderResponseDto;
+import nl.hu.bep3.order.application.response.ReviewResponseDto;
+import nl.hu.bep3.order.domain.Order;
 import nl.hu.bep3.order.domain.Review;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import nl.hu.bep3.order.application.request.OrderRequestDTO;
-import nl.hu.bep3.order.application.request.ReviewRequestDTO;
-import nl.hu.bep3.order.application.response.OrderResponseDTO;
-import nl.hu.bep3.order.application.response.ReviewResponseDTO;
-import nl.hu.bep3.order.domain.Order;
 
 public interface OrderService {
 
-  OrderResponseDTO placeNewOrder(OrderRequestDTO orderRequestDTO);
+  OrderResponseDto placeNewOrder(OrderRequestDto orderRequestDto);
 
   void setStatus(UUID id, String status);
 
@@ -22,11 +21,11 @@ public interface OrderService {
 
   Page<Review> getReviewsPaginated(Pageable pageable);
 
-  ReviewResponseDTO setReview(UUID id, ReviewRequestDTO reviewRequestDTO);
+  ReviewResponseDto setReview(UUID id, ReviewRequestDto reviewRequestDto);
 
   void deleteOrder(UUID id);
 
-  List<OrderResponseDTO> getOrdersFromCustomer(UUID customerId);
+  List<OrderResponseDto> getOrdersFromCustomer(UUID customerId);
 
   double getAmount(UUID id);
 

@@ -26,8 +26,8 @@ import nl.hu.bep3.kitchen.domain.repository.KitchenRepository;
 import nl.hu.bep3.kitchen.infrastructure.rabbitmq.QueueSender;
 import nl.hu.bep3.kitchen.proxy.DishServiceProxy;
 import nl.hu.bep3.kitchen.proxy.OrderServiceProxy;
-import nl.hu.bep3.order.application.response.OrderResponseDTO;
-import nl.hu.bep3.order.application.response.OrderResponseToKitchenDTO;
+import nl.hu.bep3.order.application.response.OrderResponseDto;
+import nl.hu.bep3.order.application.response.OrderResponseToKitchenDto;
 import nl.hu.bep3.order.domain.valueobjects.DishOrder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -41,10 +41,10 @@ public class DomainKitchenService implements KitchenService {
   final OrderServiceProxy orderProxy;
 
   public DomainKitchenService(
-      KitchenRepository kitchenRepository,
-      QueueSender queueSender,
-      DishServiceProxy dishProxy,
-      OrderServiceProxy orderProxy) {
+      final KitchenRepository kitchenRepository,
+      final QueueSender queueSender,
+      final DishServiceProxy dishProxy,
+      final OrderServiceProxy orderProxy) {
     this.kitchenRepository = kitchenRepository;
     this.queueSender = queueSender;
     this.dishProxy = dishProxy;
@@ -53,50 +53,52 @@ public class DomainKitchenService implements KitchenService {
 
   @Override
   public List<Kitchen> findAll() {
-    return kitchenRepository.findAll();
+    return this.kitchenRepository.findAll();
   }
 
-  public Kitchen findById(UUID id) {
-    return kitchenRepository.findById(id).orElseThrow(() -> new KitchenNotFoundException(id));
+  public Kitchen findById(final UUID id) {
+    return this.kitchenRepository.findById(id).orElseThrow(() -> new KitchenNotFoundException(id));
   }
 
   @Override
-  public List<OrderResponseDTO> getAllOrders(UUID kitchenId) {
-    ArrayList<OrderResponseDTO> orders = new ArrayList<>();
+  public List<OrderResponseDto> getAllOrders(final UUID kitchenId) {
+    final ArrayList<OrderResponseDto> orders = new ArrayList<>();
 
-    Kitchen kitchen =
-        kitchenRepository
+    final Kitchen kitchen =
+        this.kitchenRepository
             .findById(kitchenId)
             .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
-    List<UUID> orderIds = kitchen.getAllOrderIds();
-    
-    for (UUID orderId : orderIds) {
-        orders.add(orderProxy.getOrderById(orderId));
+    final List<UUID> orderIds = kitchen.getAllOrderIds();
+
+    for (final UUID orderId : orderIds) {
+      orders.add(this.orderProxy.getOrderById(orderId));
     }
     return orders;
     // uit order context data halen
   }
 
   @Override
-  public OrderDto addOrder(OrderResponseToKitchenDTO order, UUID kitchenId) {
+  public OrderDto addOrder(final OrderResponseToKitchenDto order, final UUID kitchenId) {
     Kitchen kitchen =
-        kitchenRepository
+        this.kitchenRepository
             .findById(kitchenId)
             .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
     kitchen.addPendingOrder(order.id);
 
-    kitchen = kitchenRepository.save(kitchen);
+    kitchen = this.kitchenRepository.save(kitchen);
 
-    List<ProductInStock> ingredientsInStock =
+    final List<ProductInStock> ingredientsInStock =
         new ArrayList<>(kitchen.getStorage().getIngredientInStock());
 
-    HashMap<UUID, Double> ingredientAmounts = new HashMap<UUID, Double>();
+    final HashMap<UUID, Double> ingredientAmounts = new HashMap<UUID, Double>();
 
-    for (DishOrder dishOrder : order.dishOrders) {
-      DishOutDto dish = dishProxy.getDishById(dishOrder.getDish()).getBody();
+    for (final DishOrder dishOrder : order.dishOrders) {
+      final DishOutDto dish = this.dishProxy.getDishById(dishOrder.getDish()).getBody();
 
-      for (IngredientAmountOutDto ingredient : dish.ingredients) {
-        UUID ingredientId = ingredient.id;
+      // FIXME: dish can be null
+      for (final IngredientAmountOutDto ingredient : dish.ingredients) {
+        final UUID ingredientId = ingredient.id;
+        // FIXME: getId can be null
         if (ingredientsInStock.stream()
             .anyMatch(stockIngredient -> stockIngredient.getId().equals(ingredient.id))) {
           // er is een match dus hier toevoegen aan je nieuwe map
@@ -116,8 +118,9 @@ public class DomainKitchenService implements KitchenService {
     }
 
     // check to see if there is enough of the ingredient
-    for (Map.Entry<UUID, Double> item : ingredientAmounts.entrySet()) {
-      ProductInStock productInStock =
+    for (final Map.Entry<UUID, Double> item : ingredientAmounts.entrySet()) {
+      // FIXME: getId can be null
+      final ProductInStock productInStock =
           ingredientsInStock.stream()
               .filter(stockProduct -> stockProduct.getId().equals(item.getKey()))
               .findAny()
@@ -133,31 +136,31 @@ public class DomainKitchenService implements KitchenService {
       }
     }
 
-    kitchenRepository.save(kitchen);
+    this.kitchenRepository.save(kitchen);
     return this.acceptOrder(order.id, kitchenId);
   }
 
   @Override
-  public OrderDto acceptOrder(UUID orderId, UUID kitchenId) {
-    Kitchen kitchen =
-        kitchenRepository
+  public OrderDto acceptOrder(final UUID orderId, final UUID kitchenId) {
+    final Kitchen kitchen =
+        this.kitchenRepository
             .findById(kitchenId)
             .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
     kitchen.acceptOrder(orderId);
 
     System.out.println(kitchen.getOrdersInProcess());
 
-    kitchenRepository.save(kitchen);
-    OrderDto order = new OrderDto(orderId, "accepted");
+    this.kitchenRepository.save(kitchen);
+    final OrderDto order = new OrderDto(orderId, "accepted");
 
-    orderProxy.setStatus(orderId, "accepted");
+    this.orderProxy.setStatus(orderId, "accepted");
     return order;
   }
 
   @Override
-  public OrderDto rejectOrder(UUID orderId, UUID kitchenId) {
-    Kitchen kitchen =
-        kitchenRepository
+  public OrderDto rejectOrder(final UUID orderId, final UUID kitchenId) {
+    final Kitchen kitchen =
+        this.kitchenRepository
             .findById(kitchenId)
             .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
     kitchen.removePendingOrder(orderId);
@@ -167,23 +170,22 @@ public class DomainKitchenService implements KitchenService {
                 .map(UUID::toString)
                 .collect(Collectors.joining(", ")));
 
+    this.kitchenRepository.save(kitchen);
+    final OrderDto order = new OrderDto(orderId, "cancelled");
 
-    kitchenRepository.save(kitchen);
-    OrderDto order = new OrderDto(orderId, "cancelled");
-
-    orderProxy.setStatus(orderId, "cancelled");
+    this.orderProxy.setStatus(orderId, "cancelled");
     return order;
   }
 
   @Override
-  public OrderDto setStatus(UUID orderId, UUID kitchenId, String status) {
-    Kitchen kitchen =
-        kitchenRepository
+  public OrderDto setStatus(final UUID orderId, final UUID kitchenId, final String status) {
+    final Kitchen kitchen =
+        this.kitchenRepository
             .findById(kitchenId)
             .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
 
     if (kitchen.getOrdersInProcess().contains(orderId)) {
-      orderProxy.setStatus(orderId, status);
+      this.orderProxy.setStatus(orderId, status);
       return new OrderDto(orderId, status);
     } else {
       throw new OrderNotFoundException(orderId);
@@ -191,18 +193,18 @@ public class DomainKitchenService implements KitchenService {
   }
 
   @Override
-  public StockDtoOut getStock(UUID kitchenId) {
-    Kitchen kitchen =
-        kitchenRepository
+  public StockDtoOut getStock(final UUID kitchenId) {
+    final Kitchen kitchen =
+        this.kitchenRepository
             .findById(kitchenId)
             .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
-    Storage storage = kitchen.getStorage();
-    StockDtoOut stockDtoOut = new StockDtoOut();
+    final Storage storage = kitchen.getStorage();
+    final StockDtoOut stockDtoOut = new StockDtoOut();
     stockDtoOut.kitchen = kitchenId;
     stockDtoOut.capacity = storage.getCapacity();
-    List<IngredientOutDto> ingredients = new ArrayList<>();
-    for (ProductInStock ingredient : storage.getIngredientInStock()) {
-      ingredients.add(dishProxy.getIngredientById(ingredient.getId()).getBody());
+    final List<IngredientOutDto> ingredients = new ArrayList<>();
+    for (final ProductInStock ingredient : storage.getIngredientInStock()) {
+      ingredients.add(this.dishProxy.getIngredientById(ingredient.getId()).getBody());
       //      ProductDto productDto = new ProductDto();
       //      productDto.amount = ingredient.getAmount();
       //      productDto.amountUnit = ingredient.getAmountUnit();
@@ -215,146 +217,148 @@ public class DomainKitchenService implements KitchenService {
   }
 
   @Override
-  public Kitchen createKitchen(KitchenDtoIn kitchenDtoIn) {
-    if (kitchenRepository.findFirstByAddress(kitchenDtoIn.address).isPresent()) {
+  public Kitchen createKitchen(final KitchenDtoIn kitchenDtoIn) {
+    if (this.kitchenRepository.findFirstByAddress(kitchenDtoIn.address).isPresent()) {
       throw new InvalidKitchenException("There is already a restaurant with the given address");
     }
-    Storage storage = new Storage(kitchenDtoIn.capacity);
-    Kitchen kitchen = new Kitchen(kitchenDtoIn.restaurantName, kitchenDtoIn.address, storage);
+    final Storage storage = new Storage(kitchenDtoIn.capacity);
+    final Kitchen kitchen = new Kitchen(kitchenDtoIn.restaurantName, kitchenDtoIn.address, storage);
 
-    return kitchenRepository.save(kitchen);
+    return this.kitchenRepository.save(kitchen);
   }
 
   @Override
-  public Kitchen updateKitchen(KitchenDtoIn kitchenDtoIn, UUID kitchenId) {
-    Kitchen kitchen =
-        kitchenRepository
+  public Kitchen updateKitchen(final KitchenDtoIn kitchenDtoIn, final UUID kitchenId) {
+    final Kitchen kitchen =
+        this.kitchenRepository
             .findById(kitchenId)
             .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
-
 
     kitchen.setRestaurantName(kitchenDtoIn.restaurantName);
     kitchen.setAddress(kitchenDtoIn.address);
     kitchen.getStorage().setCapacity(kitchenDtoIn.capacity);
 
-    return kitchenRepository.save(kitchen);
+    return this.kitchenRepository.save(kitchen);
   }
 
   @Override
-  public void deleteKitchen(UUID kitchenId) {
-    Kitchen kitchen =
-        kitchenRepository
+  public void deleteKitchen(final UUID kitchenId) {
+    final Kitchen kitchen =
+        this.kitchenRepository
             .findById(kitchenId)
             .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
-    kitchenRepository.delete(kitchen);
+    this.kitchenRepository.delete(kitchen);
   }
 
   @Override
-  public Kitchen addProduct(UUID kitchenId, ProductDtoIn dto) {
-    Kitchen kitchen =
-        kitchenRepository
+  public Kitchen addProduct(final UUID kitchenId, final ProductDtoIn dto) {
+    final Kitchen kitchen =
+        this.kitchenRepository
             .findById(kitchenId)
             .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
-    IngredientInDto ingredientInDto = new IngredientInDto();
+    final IngredientInDto ingredientInDto = new IngredientInDto();
     ingredientInDto.name = dto.name;
     ingredientInDto.allergies = dto.allergies;
 
-    ResponseEntity<IngredientOutDto> p = dishProxy.createIngredient(ingredientInDto);
-    IngredientOutDto ingredient = p.getBody();
+    final ResponseEntity<IngredientOutDto> p = this.dishProxy.createIngredient(ingredientInDto);
+    final IngredientOutDto ingredient = p.getBody();
     if (ingredient == null) {
       throw new NullPointerException("returned ingredient cannot be null");
     }
-    ProductInStock product = new ProductInStock(ingredient.id, dto.amount, dto.amountUnit);
+    final ProductInStock product = new ProductInStock(ingredient.id, dto.amount, dto.amountUnit);
 
     kitchen.getStorage().getIngredientInStock().add(product);
 
-    return kitchenRepository.save(kitchen);
+    return this.kitchenRepository.save(kitchen);
   }
 
   @Override
-  public Kitchen updateProduct(UUID kitchenId, UUID ingredientId, ProductDtoIn productDto) {
-    Kitchen kitchen =
-        kitchenRepository
+  public Kitchen updateProduct(
+      final UUID kitchenId, final UUID ingredientId, final ProductDtoIn productDto) {
+    final Kitchen kitchen =
+        this.kitchenRepository
             .findById(kitchenId)
             .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
-    IngredientInDto ingredientInDto = new IngredientInDto();
+    final IngredientInDto ingredientInDto = new IngredientInDto();
     ingredientInDto.name = productDto.name;
     ingredientInDto.allergies = productDto.allergies;
 
-    List<ProductInStock> productsInStocks = kitchen.getStorage().getIngredientInStock();
-    for (ProductInStock product : productsInStocks) {
+    final List<ProductInStock> productsInStocks = kitchen.getStorage().getIngredientInStock();
+    for (final ProductInStock product : productsInStocks) {
+      // FIXME: getId can be null
       if (product.getId().equals(ingredientId)) {
-        ResponseEntity<IngredientOutDto> p =
-            dishProxy.updateIngredient(ingredientId, ingredientInDto);
+        final ResponseEntity<IngredientOutDto> p =
+            this.dishProxy.updateIngredient(ingredientId, ingredientInDto);
         product.setAmount(productDto.amount);
       }
     }
 
-    return kitchenRepository.save(kitchen);
+    return this.kitchenRepository.save(kitchen);
   }
 
   @Override
-  public Kitchen deleteProduct(UUID kitchenId, UUID ingredientId) {
-    Kitchen kitchen =
-        kitchenRepository
+  public Kitchen deleteProduct(final UUID kitchenId, final UUID ingredientId) {
+    final Kitchen kitchen =
+        this.kitchenRepository
             .findById(kitchenId)
             .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
 
-    List<ProductInStock> productsInStocks = kitchen.getStorage().getIngredientInStock();
-    for (ProductInStock product : productsInStocks) {
+    final List<ProductInStock> productsInStocks = kitchen.getStorage().getIngredientInStock();
+    for (final ProductInStock product : productsInStocks) {
+      assert product.getId() != null;
       if (product.getId().equals(ingredientId)) {
-        dishProxy.deleteIngredient(ingredientId);
+        this.dishProxy.deleteIngredient(ingredientId);
         kitchen.getStorage().getIngredientInStock().remove(product);
         break;
       }
     }
 
-    return kitchenRepository.save(kitchen);
+    return this.kitchenRepository.save(kitchen);
   }
 
   @Override
-  public MenuDto getMenu(UUID kitchenId) {
-    Kitchen kitchen =
-        kitchenRepository
+  public MenuDto getMenu(final UUID kitchenId) {
+    final Kitchen kitchen =
+        this.kitchenRepository
             .findById(kitchenId)
             .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
 
-    List<UUID> menuIds = kitchen.getMenu();
-    MenuDto menu = queueSender.getMenu(menuIds);
+    final List<UUID> menuIds = kitchen.getMenu();
 
-    return menu;
+    return this.queueSender.getMenu(menuIds);
   }
 
   @Override
-  public DishOutDto addDishToMenu(UUID kitchenId, DishInDto dishInDto) {
-    Kitchen kitchen =
-        kitchenRepository
+  public DishOutDto addDishToMenu(final UUID kitchenId, final DishInDto dishInDto) {
+    final Kitchen kitchen =
+        this.kitchenRepository
             .findById(kitchenId)
             .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
 
-    DishOutDto response = dishProxy.createDish(dishInDto).getBody();
+    final DishOutDto response = this.dishProxy.createDish(dishInDto).getBody();
+    // FIXME: response can be null
     kitchen.addToMenu(response.id);
-    kitchenRepository.save(kitchen);
+    this.kitchenRepository.save(kitchen);
     return response;
   }
 
   @Override
-  public MenuDto deleteDish(UUID kitchenId, UUID dishId) {
-    Kitchen kitchen =
-        kitchenRepository
+  public MenuDto deleteDish(final UUID kitchenId, final UUID dishId) {
+    final Kitchen kitchen =
+        this.kitchenRepository
             .findById(kitchenId)
             .orElseThrow(() -> new KitchenNotFoundException(kitchenId));
 
-    List<UUID> dishes = kitchen.getMenu();
-    for (UUID dish : dishes) {
+    final List<UUID> dishes = kitchen.getMenu();
+    for (final UUID dish : dishes) {
       if (dish.equals(dishId)) {
-        dishProxy.deleteDish(dishId);
+        this.dishProxy.deleteDish(dishId);
         kitchen.getMenu().remove(dishId);
         break;
       }
     }
-    kitchenRepository.save(kitchen);
+    this.kitchenRepository.save(kitchen);
 
-    return getMenu(kitchenId);
+    return this.getMenu(kitchenId);
   }
 }

@@ -6,6 +6,7 @@ import java.util.UUID;
 import nl.hu.bep3.management.infrastracture.repository.Persistable;
 
 public class Employee implements Persistable<UUID> {
+
   private UUID id;
   private String firstName;
   private String lastName;

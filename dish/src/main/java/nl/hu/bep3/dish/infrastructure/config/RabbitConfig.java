@@ -21,10 +21,10 @@ public class RabbitConfig {
     return new DirectExchange("bep.dish");
   }
 
-
   @Bean
-  public Binding binding(@Qualifier("directDishExchange") DirectExchange exchange,
-      @Qualifier("dishOutQueue") Queue queue) {
+  public Binding binding(
+      @Qualifier("directDishExchange") final DirectExchange exchange,
+      @Qualifier("dishOutQueue") final Queue queue) {
     return BindingBuilder.bind(queue).to(exchange).with("dish");
   }
 
@@ -39,8 +39,9 @@ public class RabbitConfig {
   }
 
   @Bean
-  public Binding ingredientBinding(@Qualifier("directIngredientExchange") DirectExchange exchange,
-      @Qualifier("ingredientOutQueue") Queue queue) {
+  public Binding ingredientBinding(
+      @Qualifier("directIngredientExchange") final DirectExchange exchange,
+      @Qualifier("ingredientOutQueue") final Queue queue) {
     return BindingBuilder.bind(queue).to(exchange).with("ingredient");
   }
 
@@ -55,8 +56,9 @@ public class RabbitConfig {
   }
 
   @Bean
-  public Binding menuBinding(@Qualifier("directMenuExchange") DirectExchange exchange,
-      @Qualifier("menuOutQueue") Queue queue) {
+  public Binding menuBinding(
+      @Qualifier("directMenuExchange") final DirectExchange exchange,
+      @Qualifier("menuOutQueue") final Queue queue) {
     return BindingBuilder.bind(queue).to(exchange).with("ingredient");
   }
 }

@@ -5,34 +5,34 @@ import nl.hu.bep3.order.infrastructure.repository.Persistable;
 
 public class Review implements Persistable<UUID> {
 
+  private final String reviewMessage;
+  private final int rating;
   private UUID reviewId;
-  private String reviewMessage;
-  private int rating;
 
-  public Review(String reviewMessage, int rating) {
+  public Review(final String reviewMessage, final int rating) {
     this.reviewMessage = reviewMessage;
     this.rating = rating;
   }
 
   public UUID getReviewId() {
-    return reviewId;
+    return this.reviewId;
   }
 
   public String getReviewMessage() {
-    return reviewMessage;
+    return this.reviewMessage;
   }
 
   public int getRating() {
-    return rating;
+    return this.rating;
   }
 
   @Override
   public UUID getId() {
-    return reviewId;
+    return this.reviewId;
   }
 
   @Override
-  public void setId(UUID uuid) {
+  public void setId(final UUID uuid) {
     this.reviewId = uuid;
   }
 

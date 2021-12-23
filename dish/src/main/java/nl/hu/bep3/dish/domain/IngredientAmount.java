@@ -2,24 +2,19 @@ package nl.hu.bep3.dish.domain;
 
 import java.util.Objects;
 import java.util.UUID;
-import org.springframework.data.annotation.Id;
 import org.springframework.data.domain.Persistable;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 public class IngredientAmount implements Persistable<UUID> {
 
   private UUID id;
   private float amount;
   private AmountUnit amountUnit;
-
-  //  @ManyToOne
-//  @JoinColumn(name = "ingredient_id")
   private Ingredient ingredient;
 
-  public IngredientAmount() {
-  }
+  public IngredientAmount() {}
 
-  public IngredientAmount(float amount, AmountUnit amountUnit, Ingredient ingredient) {
+  public IngredientAmount(
+      final float amount, final AmountUnit amountUnit, final Ingredient ingredient) {
     this.id = UUID.randomUUID();
     this.amount = amount;
     this.amountUnit = amountUnit;
@@ -27,26 +22,28 @@ public class IngredientAmount implements Persistable<UUID> {
   }
 
   @Override
-  public UUID getId() {return this.id;}
-
-  public float getAmount() {
-    return amount;
+  public UUID getId() {
+    return this.id;
   }
 
-  public void setAmount(float amount) {
+  public float getAmount() {
+    return this.amount;
+  }
+
+  public void setAmount(final float amount) {
     this.amount = amount;
   }
 
   public AmountUnit getAmountUnit() {
-    return amountUnit;
+    return this.amountUnit;
   }
 
-  public void setAmountUnit(AmountUnit amountUnit) {
+  public void setAmountUnit(final AmountUnit amountUnit) {
     this.amountUnit = amountUnit;
   }
 
   public Ingredient getIngredient() {
-    return ingredient;
+    return this.ingredient;
   }
 
   @Override
@@ -55,18 +52,22 @@ public class IngredientAmount implements Persistable<UUID> {
   }
 
   @Override
-  public boolean equals(Object o) {
-    if (this == o)
+  public boolean equals(final Object o) {
+    if (this == o) {
       return true;
-    if (o == null || getClass() != o.getClass())
+    }
+    if (o == null || this.getClass() != o.getClass()) {
       return false;
-    IngredientAmount that = (IngredientAmount) o;
-    return Float.compare(that.amount, amount) == 0 && id.equals(that.id)
-        && amountUnit == that.amountUnit && Objects.equals(ingredient, that.ingredient);
+    }
+    final IngredientAmount that = (IngredientAmount) o;
+    return Float.compare(that.amount, this.amount) == 0
+        && this.id.equals(that.id)
+        && this.amountUnit == that.amountUnit
+        && Objects.equals(this.ingredient, that.ingredient);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, amount, amountUnit, ingredient);
+    return Objects.hash(this.id, this.amount, this.amountUnit, this.ingredient);
   }
 }

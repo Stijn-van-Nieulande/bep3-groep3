@@ -23,7 +23,7 @@ public class MongoReviewRepository implements ReviewRepository {
   }
 
   @Override
-  public Review save(Review review) {
+  public Review save(final Review review) {
     return this.reviewRepository.save(review);
   }
 }

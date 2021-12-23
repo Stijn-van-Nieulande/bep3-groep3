@@ -21,15 +21,15 @@ public class QueueSender {
     this.queue = queue;
   }
 
-  public void sendDish(Dish dish) {
+  public void sendDish(final Dish dish) {
     final String message = DishApplication.GSON.toJson(new DishOutDto(dish));
 
     this.template.convertAndSend(this.queue.getName(), message);
     System.out.println(" [x] Sent '" + message + "'");
   }
 
-  public void sendIngredient(Ingredient ingredient) {
-    IngredientOutDto ingredientOutDto = new IngredientOutDto(ingredient);
+  public void sendIngredient(final Ingredient ingredient) {
+    final IngredientOutDto ingredientOutDto = new IngredientOutDto(ingredient);
 
     final String message = DishApplication.GSON.toJson(ingredientOutDto);
 

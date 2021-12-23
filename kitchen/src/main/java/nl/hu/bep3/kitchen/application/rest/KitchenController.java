@@ -1,5 +1,6 @@
 package nl.hu.bep3.kitchen.application.rest;
 
+import java.util.List;
 import java.util.UUID;
 import nl.hu.bep3.kitchen.application.request.KitchenDtoIn;
 import nl.hu.bep3.kitchen.domain.Kitchen;
@@ -8,7 +9,6 @@ import nl.hu.bep3.kitchen.domain.exceptions.KitchenNotFoundException;
 import nl.hu.bep3.kitchen.domain.service.DomainKitchenService;
 import nl.hu.bep3.kitchen.domain.service.KitchenService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/kitchen")
@@ -24,45 +25,45 @@ public class KitchenController {
 
   private final KitchenService service;
 
-  public KitchenController(DomainKitchenService service) {
+  public KitchenController(final DomainKitchenService service) {
     this.service = service;
   }
 
   @GetMapping()
-  public ResponseEntity<Kitchen> getAllKitchens() {
+  public List<Kitchen> getAllKitchens() {
     try {
-      return new ResponseEntity(service.findAll(), HttpStatus.OK);
-    } catch (InvalidKitchenException | NullPointerException exception) {
-      return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
+      return this.service.findAll();
+    } catch (final InvalidKitchenException | NullPointerException exception) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
     }
   }
 
   @PostMapping(consumes = "application/json")
-  public ResponseEntity<Kitchen> createKitchen(@RequestBody KitchenDtoIn kitchenDtoIn) {
+  public Kitchen createKitchen(@RequestBody final KitchenDtoIn kitchenDtoIn) {
     try {
-      return new ResponseEntity(service.createKitchen(kitchenDtoIn), HttpStatus.OK);
-    } catch (InvalidKitchenException | NullPointerException exception) {
-      return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
+      return this.service.createKitchen(kitchenDtoIn);
+    } catch (final InvalidKitchenException | NullPointerException exception) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
     }
   }
 
   @PatchMapping(path = "/{kitchenId}", consumes = "application/json")
-  public ResponseEntity<Kitchen> updateKitchen(@PathVariable("kitchenId") UUID kitchenId,
-      @RequestBody KitchenDtoIn kitchenDtoIn) {
+  public Kitchen updateKitchen(
+      @PathVariable("kitchenId") final UUID kitchenId,
+      @RequestBody final KitchenDtoIn kitchenDtoIn) {
     try {
-      return new ResponseEntity(service.updateKitchen(kitchenDtoIn, kitchenId), HttpStatus.OK);
-    } catch (InvalidKitchenException exception) {
-      return new ResponseEntity(exception.getMessage(), HttpStatus.NOT_FOUND);
+      return this.service.updateKitchen(kitchenDtoIn, kitchenId);
+    } catch (final InvalidKitchenException exception) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
     }
   }
 
   @DeleteMapping(path = "/{kitchenId}")
-  public ResponseEntity deleteKitchen(@PathVariable("kitchenId") UUID kitchenId) {
+  public void deleteKitchen(@PathVariable("kitchenId") final UUID kitchenId) {
     try {
-      service.deleteKitchen(kitchenId);
-      return new ResponseEntity(HttpStatus.OK);
-    } catch (KitchenNotFoundException exception) {
-      return new ResponseEntity(exception.getMessage(), HttpStatus.NOT_FOUND);
+      this.service.deleteKitchen(kitchenId);
+    } catch (final KitchenNotFoundException exception) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
     }
   }
 }

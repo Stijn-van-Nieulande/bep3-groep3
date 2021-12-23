@@ -63,8 +63,12 @@ public class Ingredient implements Persistable<UUID> {
 
   @Override
   public boolean equals(final Object o) {
-    if (this == o) return true;
-    if (o == null || this.getClass() != o.getClass()) return false;
+    if (this == o) {
+      return true;
+    }
+    if (o == null || this.getClass() != o.getClass()) {
+      return false;
+    }
     final Ingredient that = (Ingredient) o;
     return this.id.equals(that.id)
         && this.name.equals(that.name)

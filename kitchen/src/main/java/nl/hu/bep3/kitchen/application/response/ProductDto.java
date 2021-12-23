@@ -10,6 +10,5 @@ public class ProductDto {
   public float amount;
   public String ingredientName;
   public List<FoodAllergy> allergies = new ArrayList<>();
-  ;
   public AmountUnit amountUnit;
 }

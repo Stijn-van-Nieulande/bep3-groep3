@@ -5,7 +5,6 @@ import nl.hu.bep3.dish.application.request.DishInDto;
 import nl.hu.bep3.dish.application.request.IngredientInDto;
 import nl.hu.bep3.dish.application.response.DishOutDto;
 import nl.hu.bep3.dish.application.response.IngredientOutDto;
-
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(name = "Dish-service", url = "${app.feign.dish.url}")
 public interface DishServiceProxy {
+
   @GetMapping("/ingredient/{id}")
   ResponseEntity<IngredientOutDto> getIngredientById(@PathVariable("id") UUID id);
 
@@ -24,8 +24,8 @@ public interface DishServiceProxy {
   ResponseEntity<IngredientOutDto> createIngredient(@RequestBody IngredientInDto ingredientInDto);
 
   @PatchMapping("/ingredient/{id}")
-  ResponseEntity<IngredientOutDto> updateIngredient(@PathVariable("id") UUID id,
-      @RequestBody IngredientInDto ingredientInDto);
+  ResponseEntity<IngredientOutDto> updateIngredient(
+      @PathVariable("id") UUID id, @RequestBody IngredientInDto ingredientInDto);
 
   @DeleteMapping("/ingredient/{id}")
   ResponseEntity<IngredientOutDto> deleteIngredient(@PathVariable("id") UUID id);
@@ -34,8 +34,8 @@ public interface DishServiceProxy {
   ResponseEntity<DishOutDto> createDish(@RequestBody DishInDto dishInDto);
 
   @PatchMapping("/dish/{id}")
-  ResponseEntity<DishOutDto> updateDish(@PathVariable("id") UUID id,
-      @RequestBody DishInDto dishInDto);
+  ResponseEntity<DishOutDto> updateDish(
+      @PathVariable("id") UUID id, @RequestBody DishInDto dishInDto);
 
   @DeleteMapping("/dish/{id}")
   ResponseEntity<DishOutDto> deleteDish(@PathVariable("id") UUID id);

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class GenerateUuidListener extends AbstractMongoEventListener<Persistable<UUID>> {
+
   @Override
   public void onBeforeConvert(final BeforeConvertEvent<Persistable<UUID>> event) {
     final Persistable<UUID> persistable = event.getSource();

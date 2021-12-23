@@ -16,8 +16,11 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfiguration {
 
   @Bean
-  KitchenService kitchenService(final KitchenRepository KitchenRepository,
-      final QueueSender queueSender, final DishServiceProxy dishProxy, final OrderServiceProxy orderProxy) {
-      return new DomainKitchenService(KitchenRepository, queueSender, dishProxy, orderProxy);
+  KitchenService kitchenService(
+      final KitchenRepository kitchenRepository,
+      final QueueSender queueSender,
+      final DishServiceProxy dishProxy,
+      final OrderServiceProxy orderProxy) {
+    return new DomainKitchenService(kitchenRepository, queueSender, dishProxy, orderProxy);
   }
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/stock")
 public class StorageController {
+
   private final KitchenServiceProxy kitchenServiceProxy;
 
   public StorageController(final KitchenServiceProxy kitchenServiceProxy) {
@@ -29,9 +30,8 @@ public class StorageController {
   @PatchMapping("/{kitchenId}/{ingredientId}")
   public Kitchen updateStock(
       @PathVariable("kitchenId") final UUID kitchenId,
-      @PathVariable("ingredientId") UUID ingredientId,
+      @PathVariable("ingredientId") final UUID ingredientId,
       @RequestBody final ProductDtoIn productDtoIn) {
-    Kitchen kitchen = this.kitchenServiceProxy.updateStock(kitchenId, ingredientId, productDtoIn);
-    return kitchen;
+    return this.kitchenServiceProxy.updateStock(kitchenId, ingredientId, productDtoIn);
   }
 }

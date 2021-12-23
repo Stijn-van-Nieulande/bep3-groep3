@@ -21,8 +21,8 @@ public class BeanConfiguration {
   }
 
   @Bean
-  DishService dishService(final DishRepository dishRepository,
-      final IngredientService ingredientService) {
+  DishService dishService(
+      final DishRepository dishRepository, final IngredientService ingredientService) {
     return new DomainDishService(dishRepository, ingredientService);
   }
 }

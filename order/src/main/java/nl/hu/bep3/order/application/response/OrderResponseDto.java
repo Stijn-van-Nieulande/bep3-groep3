@@ -8,7 +8,7 @@ import nl.hu.bep3.order.domain.Review;
 import nl.hu.bep3.order.domain.Status;
 import nl.hu.bep3.order.domain.valueobjects.DishOrder;
 
-public class OrderResponseDTO {
+public class OrderResponseDto {
 
   public UUID id;
   public Status status;
@@ -18,11 +18,11 @@ public class OrderResponseDTO {
   public double deliverCosts = 2.50F;
   public String customerMessage;
   public Review review;
-  public UUID kitchenID;
+  public UUID kitchenId;
 
-  public OrderResponseDTO(){ }
+  public OrderResponseDto() {}
 
-  public OrderResponseDTO(Order order) {
+  public OrderResponseDto(final Order order) {
     this.id = order.getId();
     this.status = order.getStatus();
     this.customer = order.getCustomer();
@@ -31,7 +31,6 @@ public class OrderResponseDTO {
     this.deliverCosts = order.getDeliverCosts();
     this.customerMessage = order.getCustomerMessage();
     this.review = order.getReview();
-    this.kitchenID = order.getKitchenId();
+    this.kitchenId = order.getKitchenId();
   }
-
 }

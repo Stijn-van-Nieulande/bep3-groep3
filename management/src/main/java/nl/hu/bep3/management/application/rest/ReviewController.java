@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/reviews")
 public class ReviewController {
+
   private final OrderServiceProxy orderServiceProxy;
 
   public ReviewController(final OrderServiceProxy orderServiceProxy) {

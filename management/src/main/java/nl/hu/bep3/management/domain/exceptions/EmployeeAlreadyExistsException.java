@@ -2,6 +2,7 @@ package nl.hu.bep3.management.domain.exceptions;
 
 /** Exception thrown when an employee is not found. */
 public class EmployeeAlreadyExistsException extends RuntimeException {
+
   public EmployeeAlreadyExistsException(final String message) {
     super(message);
   }

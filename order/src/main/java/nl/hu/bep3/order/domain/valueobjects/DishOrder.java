@@ -1,41 +1,40 @@
 package nl.hu.bep3.order.domain.valueobjects;
 
 import java.util.UUID;
-import nl.hu.bep3.dish.domain.Dish;
 import nl.hu.bep3.order.infrastructure.repository.Persistable;
 
 public class DishOrder implements Persistable<UUID> {
 
+  private final int amount;
+  private final UUID dishId;
+  private final double price;
   private UUID id;
-  private int amount;
-  private UUID dishId;
-  private double price;
 
-  public DishOrder(int amount, UUID dishId, double price) {
+  public DishOrder(final int amount, final UUID dishId, final double price) {
     this.amount = amount;
     this.dishId = dishId;
     this.price = price;
   }
 
   public double calcPriceDishOrder() {
-    return price * amount;
+    return this.price * this.amount;
   }
 
-  public UUID getDish(){
-    return dishId;
+  public UUID getDish() {
+    return this.dishId;
   }
 
-  public int getAmount(){
-    return amount;
+  public int getAmount() {
+    return this.amount;
   }
 
   @Override
   public UUID getId() {
-    return id;
+    return this.id;
   }
 
   @Override
-  public void setId(UUID id) {
+  public void setId(final UUID id) {
     this.id = id;
   }
 

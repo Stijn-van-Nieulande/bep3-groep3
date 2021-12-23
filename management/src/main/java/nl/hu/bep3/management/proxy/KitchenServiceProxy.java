@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @FeignClient(name = "kitchen-service", url = "${app.feign.kitchen.url}")
 public interface KitchenServiceProxy {
+
   @GetMapping("/kitchen/stock/{kitchenId}")
   StockDto getStock(@PathVariable("kitchenId") UUID kitchenId);
 

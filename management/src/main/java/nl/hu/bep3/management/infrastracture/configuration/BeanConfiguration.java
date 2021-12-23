@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(basePackageClasses = ManagementApplication.class)
 public class BeanConfiguration {
+
   @Bean
   EmployeeService employeeService(final EmployeeRepository employeeRepository) {
     return new DomainEmployeeService(employeeRepository);

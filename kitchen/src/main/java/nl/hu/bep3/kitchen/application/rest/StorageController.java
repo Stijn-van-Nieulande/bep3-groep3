@@ -9,7 +9,6 @@ import nl.hu.bep3.kitchen.domain.exceptions.KitchenNotFoundException;
 import nl.hu.bep3.kitchen.domain.service.DomainKitchenService;
 import nl.hu.bep3.kitchen.domain.service.KitchenService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/kitchen/stock")
@@ -26,42 +26,46 @@ public class StorageController {
 
   private final KitchenService service;
 
-  public StorageController(DomainKitchenService service) {
+  public StorageController(final DomainKitchenService service) {
     this.service = service;
   }
 
   @GetMapping("/{kitchenId}")
-  public ResponseEntity<StockDtoOut> showStorage(@PathVariable("kitchenId") UUID kitchenId) {
+  public StockDtoOut showStorage(@PathVariable("kitchenId") final UUID kitchenId) {
     try {
-      return new ResponseEntity(service.getStock(kitchenId), HttpStatus.OK);
-    } catch (KitchenNotFoundException exception) {
-      return new ResponseEntity(exception.getMessage(), HttpStatus.NOT_FOUND);
+      return this.service.getStock(kitchenId);
+    } catch (final KitchenNotFoundException exception) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
     }
   }
 
   @PostMapping("/{kitchenId}")
-  public ResponseEntity<Kitchen> addProduct(@PathVariable("kitchenId") UUID kitchenId, @RequestBody ProductDtoIn productDto) {
+  public Kitchen addProduct(
+      @PathVariable("kitchenId") final UUID kitchenId, @RequestBody final ProductDtoIn productDto) {
     try {
-      return new ResponseEntity(service.addProduct(kitchenId, productDto), HttpStatus.OK);
-    } catch (InvalidIngredientException exception) {
-      return new ResponseEntity(exception.getMessage(), HttpStatus.BAD_REQUEST);
+      return this.service.addProduct(kitchenId, productDto);
+    } catch (final InvalidIngredientException exception) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, exception.getMessage());
     }
   }
 
   @PatchMapping(path = "/{kitchenId}/{ingredient}", consumes = "application/json")
-  public ResponseEntity<Kitchen> updateStock(@PathVariable("kitchenId") UUID kitchenId,
-      @PathVariable("ingredient") UUID ingredientId, @RequestBody ProductDtoIn productDto) {
+  public Kitchen updateStock(
+      @PathVariable("kitchenId") final UUID kitchenId,
+      @PathVariable("ingredient") final UUID ingredientId,
+      @RequestBody final ProductDtoIn productDto) {
     System.out.println("help1");
-    return new ResponseEntity(service.updateProduct(kitchenId, ingredientId, productDto), HttpStatus.OK);
+    return this.service.updateProduct(kitchenId, ingredientId, productDto);
   }
 
   @DeleteMapping(path = "/{kitchenId}")
-  public ResponseEntity<Kitchen> DeleteFromStorage(@PathVariable("kitchenId") UUID kitchenId, @RequestParam UUID ingredientId) {
+  public Kitchen DeleteFromStorage(
+      @PathVariable("kitchenId") final UUID kitchenId, @RequestParam final UUID ingredientId) {
     try {
       System.out.println("help2");
-      return new ResponseEntity(service.deleteProduct(kitchenId, ingredientId), HttpStatus.OK);
-    } catch (KitchenNotFoundException exception){
-      return new ResponseEntity(exception.getMessage(), HttpStatus.NOT_FOUND);
+      return this.service.deleteProduct(kitchenId, ingredientId);
+    } catch (final KitchenNotFoundException exception) {
+      throw new ResponseStatusException(HttpStatus.NOT_FOUND, exception.getMessage());
     }
   }
 }

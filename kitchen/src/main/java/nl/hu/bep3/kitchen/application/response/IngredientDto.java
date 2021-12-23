@@ -6,8 +6,9 @@ import nl.hu.bep3.dish.domain.AmountUnit;
 import nl.hu.bep3.kitchen.domain.FoodAllergy;
 
 public class IngredientDto {
-    public int amount;
-    public String ingredientName;
-    public List<FoodAllergy> allergies = new ArrayList<>();;
-    public AmountUnit amountUnit;
+
+  public int amount;
+  public String ingredientName;
+  public List<FoodAllergy> allergies = new ArrayList<>();
+  public AmountUnit amountUnit;
 }

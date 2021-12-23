@@ -4,15 +4,14 @@ import java.util.List;
 import java.util.UUID;
 import nl.hu.bep3.dish.application.request.DishInDto;
 import nl.hu.bep3.dish.application.response.DishOutDto;
-import nl.hu.bep3.dish.application.response.IngredientOutDto;
 import nl.hu.bep3.dish.application.response.MenuDto;
 import nl.hu.bep3.kitchen.application.request.KitchenDtoIn;
 import nl.hu.bep3.kitchen.application.request.ProductDtoIn;
 import nl.hu.bep3.kitchen.application.response.OrderDto;
 import nl.hu.bep3.kitchen.application.response.StockDtoOut;
 import nl.hu.bep3.kitchen.domain.Kitchen;
-import nl.hu.bep3.order.application.response.OrderResponseDTO;
-import nl.hu.bep3.order.application.response.OrderResponseToKitchenDTO;
+import nl.hu.bep3.order.application.response.OrderResponseDto;
+import nl.hu.bep3.order.application.response.OrderResponseToKitchenDto;
 
 public interface KitchenService {
 
@@ -20,9 +19,9 @@ public interface KitchenService {
 
   Kitchen updateKitchen(KitchenDtoIn kitchenDtoIn, UUID kitchenId);
 
-  List<OrderResponseDTO> getAllOrders(UUID kitchenId);
+  List<OrderResponseDto> getAllOrders(UUID kitchenId);
 
-  OrderDto addOrder(OrderResponseToKitchenDTO order, UUID kitchenId);
+  OrderDto addOrder(OrderResponseToKitchenDto order, UUID kitchenId);
 
   OrderDto acceptOrder(UUID orderId, UUID kitchenId);
 
@@ -46,8 +45,7 @@ public interface KitchenService {
 
   void deleteKitchen(UUID kitchenId);
 
-  Kitchen updateProduct(UUID kitchenId, UUID ingredientId,
-      ProductDtoIn productDto);
+  Kitchen updateProduct(UUID kitchenId, UUID ingredientId, ProductDtoIn productDto);
 
   Kitchen deleteProduct(UUID kitchenId, UUID ingredientId);
 }

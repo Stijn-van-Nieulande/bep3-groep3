@@ -23,21 +23,21 @@ public class MongoDbDishRepository implements DishRepository {
 
   @Override
   public Optional<Dish> findById(final UUID id) {
-    return springDataMongoDishRepository.findById(id);
+    return this.springDataMongoDishRepository.findById(id);
   }
 
   @Override
   public List<Dish> findAll() {
-    return springDataMongoDishRepository.findAll();
+    return this.springDataMongoDishRepository.findAll();
   }
 
   @Override
   public Dish save(final Dish dish) {
-    return springDataMongoDishRepository.save(dish);
+    return this.springDataMongoDishRepository.save(dish);
   }
 
   @Override
   public void delete(final Dish dish) {
-    springDataMongoDishRepository.delete(dish);
+    this.springDataMongoDishRepository.delete(dish);
   }
 }

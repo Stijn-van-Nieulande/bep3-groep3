@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 
 public class ReviewMocks {
+
   public static void setupMockGetOrderReviewsResponse(final WireMockServer mockService)
       throws IOException {
     mockService.stubFor(

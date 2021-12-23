@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Primary
 public class MongoEmployeeRepository implements EmployeeRepository {
+
   private final SpringDataMongoEmployeeRepository repository;
 
   public MongoEmployeeRepository(final SpringDataMongoEmployeeRepository repository) {

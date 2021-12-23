@@ -23,26 +23,26 @@ public class MongoDbIngredientRepository implements IngredientRepository {
 
   @Override
   public Optional<Ingredient> findById(final UUID id) {
-    return springDataMongoIngredientRepository.findById(id);
+    return this.springDataMongoIngredientRepository.findById(id);
   }
 
   @Override
   public Ingredient save(final Ingredient ingredient) {
-    return springDataMongoIngredientRepository.save(ingredient);
+    return this.springDataMongoIngredientRepository.save(ingredient);
   }
 
   @Override
   public List<Ingredient> findAll() {
-    return springDataMongoIngredientRepository.findAll();
+    return this.springDataMongoIngredientRepository.findAll();
   }
 
   @Override
   public Optional<Ingredient> findFirstByName(final String name) {
-    return springDataMongoIngredientRepository.findFirstByName(name);
+    return this.springDataMongoIngredientRepository.findFirstByName(name);
   }
 
   @Override
   public void delete(final Ingredient ingredient) {
-    springDataMongoIngredientRepository.delete(ingredient);
+    this.springDataMongoIngredientRepository.delete(ingredient);
   }
 }

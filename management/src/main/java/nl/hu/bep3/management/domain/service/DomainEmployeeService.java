@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public class DomainEmployeeService implements EmployeeService {
+
   private final EmployeeRepository employeeRepository;
 
   public DomainEmployeeService(final EmployeeRepository employeeRepository) {

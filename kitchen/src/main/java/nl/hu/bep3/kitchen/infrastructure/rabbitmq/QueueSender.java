@@ -21,12 +21,13 @@ public class QueueSender {
   private final DirectExchange ingredientExchange;
   private final DirectExchange menuExchange;
 
-  public QueueSender(RabbitTemplate dishTemplate,
-      RabbitTemplate ingredientTemplate,
-      RabbitTemplate menuTemplate,
-      @Qualifier("directDishExchange") DirectExchange dishExchange,
-      @Qualifier("directIngredientExchange") DirectExchange ingredientExchange,
-      @Qualifier("directMenuExchange") DirectExchange menuExchange) {
+  public QueueSender(
+      final RabbitTemplate dishTemplate,
+      final RabbitTemplate ingredientTemplate,
+      final RabbitTemplate menuTemplate,
+      @Qualifier("directDishExchange") final DirectExchange dishExchange,
+      @Qualifier("directIngredientExchange") final DirectExchange ingredientExchange,
+      @Qualifier("directMenuExchange") final DirectExchange menuExchange) {
     this.dishTemplate = dishTemplate;
     this.ingredientTemplate = ingredientTemplate;
     this.menuTemplate = menuTemplate;
@@ -36,26 +37,26 @@ public class QueueSender {
   }
 
   public String getDish(final UUID id) {
-    String message = (String) dishTemplate.convertSendAndReceive(dishExchange.getName(), "dish",
-        id);
-    return message;
+    return (String)
+        this.dishTemplate.convertSendAndReceive(this.dishExchange.getName(), "dish", id);
   }
 
   public String getIngredient(final UUID id) {
-    String message = (String) ingredientTemplate.convertSendAndReceive(ingredientExchange.getName(),
-        "ingredient", id);
-    return message;
+    return (String)
+        this.ingredientTemplate.convertSendAndReceive(
+            this.ingredientExchange.getName(), "ingredient", id);
   }
 
-  public MenuDto getMenu(List<UUID> menu) {
-    String message = (String) menuTemplate.convertSendAndReceive(menuExchange.getName(),
-        "ingredient", menu);
-    MenuDto responseMenu = KitchenApplication.GSON.fromJson(message, MenuDto.class);
-    return responseMenu;
+  public MenuDto getMenu(final List<UUID> menu) {
+    final String message =
+        (String)
+            this.menuTemplate.convertSendAndReceive(
+                this.menuExchange.getName(), "ingredient", menu);
+    return KitchenApplication.GSON.fromJson(message, MenuDto.class);
   }
 
-  public DishOutDto addDish(UUID kichenId, DishInDto dto) {
-    String message = (String) dishTemplate.convertSendAndReceive(dishExchange);
+  public DishOutDto addDish(final UUID kichenId, final DishInDto dto) {
+    final String message = (String) this.dishTemplate.convertSendAndReceive(this.dishExchange);
     return null;
   }
 }

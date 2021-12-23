@@ -20,12 +20,12 @@ public class MongoOrderRepository implements OrderRepository {
 
   @Override
   public Optional<Order> findById(final UUID id) {
-    return orderRepository.findById(id);
+    return this.orderRepository.findById(id);
   }
 
   @Override
   public Order save(final Order order) {
-    orderRepository.save(order);
+    this.orderRepository.save(order);
     return order;
   }
 
@@ -35,7 +35,7 @@ public class MongoOrderRepository implements OrderRepository {
   }
 
   @Override
-  public List<Order> findOrdersFromCustomer(UUID customerId) {
-    return orderRepository.findOrderByCustomerId(customerId);
+  public List<Order> findOrdersFromCustomer(final UUID customerId) {
+    return this.orderRepository.findOrderByCustomerId(customerId);
   }
 }
