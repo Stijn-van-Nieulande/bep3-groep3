@@ -8,6 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SpringDataMongoKitchenRepository extends MongoRepository<Kitchen, UUID> {
-
   Optional<Kitchen> findFirstByAddress(String address);
 }

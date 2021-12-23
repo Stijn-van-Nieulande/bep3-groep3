@@ -2,6 +2,7 @@ package nl.hu.bep3.dish.domain;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -68,5 +69,21 @@ public class Dish {
 
   public boolean removeIngredient(IngredientAmount ingredient) {
     return ingredients.remove(ingredient);
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o)
+      return true;
+    if (o == null || getClass() != o.getClass())
+      return false;
+    Dish dish = (Dish) o;
+    return Double.compare(dish.price, price) == 0 && id.equals(dish.id) && name.equals(dish.name)
+        && Objects.equals(ingredients, dish.ingredients);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, name, price, ingredients);
   }
 }

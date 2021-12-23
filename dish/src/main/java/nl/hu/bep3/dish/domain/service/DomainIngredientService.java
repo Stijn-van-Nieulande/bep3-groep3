@@ -18,9 +18,9 @@ public class DomainIngredientService implements IngredientService {
 
   @Override
   public Ingredient createIngredient(IngredientInDto ingredientInDto) {
-    if (ingredientRepository.findFirstByName(ingredientInDto.name).isPresent()) {
-      throw new InvalidIngredientException("There is already an ingredient with the given name");
-    }
+//    if (ingredientRepository.findFirstByName(ingredientInDto.name).isPresent()) {
+//      throw new InvalidIngredientException("There is already an ingredient with the given name");
+//    }
     Ingredient ingredient = new Ingredient(ingredientInDto.name, ingredientInDto.allergies);
     return ingredientRepository.save(ingredient);
   }

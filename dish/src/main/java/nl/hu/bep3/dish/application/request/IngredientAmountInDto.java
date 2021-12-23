@@ -1,7 +1,7 @@
 package nl.hu.bep3.dish.application.request;
 
-import java.util.UUID;
 import nl.hu.bep3.dish.domain.AmountUnit;
+import java.util.UUID;
 
 public class IngredientAmountInDto {
 

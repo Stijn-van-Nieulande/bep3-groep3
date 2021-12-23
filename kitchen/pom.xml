@@ -23,8 +23,13 @@
   <dependencies>
     <dependency>
       <groupId>nl.hu.bep3</groupId>
+      <artifactId>order</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>nl.hu.bep3</groupId>
       <artifactId>dish</artifactId>
-      <version>0.1.0</version>
+      <version>${project.version}</version>
     </dependency>
     <dependency>
       <artifactId>lib-swagger-data-provider</artifactId>
@@ -80,7 +85,6 @@
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
-      <version>3.1.0</version>
     </dependency>
     <dependency>
       <groupId>io.github.openfeign</groupId>
@@ -88,6 +92,55 @@
       <version>11.7</version>
     </dependency>
   </dependencies>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <groupId>org.springframework.cloud</groupId>
+        <scope>import</scope>
+        <type>pom</type>
+        <version>2020.0.4</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>spring-snapshots</id>
+      <name>Spring Snapshots</name>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <url>https://repo.spring.io/snapshot</url>
+    </pluginRepository>
+    <pluginRepository>
+      <id>spring-milestones</id>
+      <name>Spring Milestones</name>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <url>https://repo.spring.io/milestone</url>
+    </pluginRepository>
+  </pluginRepositories>
+  <repositories>
+    <repository>
+      <id>spring-snapshots</id>
+      <name>Spring Snapshots</name>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+      <url>https://repo.spring.io/snapshot</url>
+    </repository>
+    <repository>
+      <id>spring-milestones</id>
+      <name>Spring Milestones</name>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+      <url>https://repo.spring.io/milestone</url>
+    </repository>
+  </repositories>
 
   <build>
     <plugins>

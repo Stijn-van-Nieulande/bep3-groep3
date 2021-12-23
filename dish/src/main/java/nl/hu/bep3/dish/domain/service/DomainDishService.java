@@ -7,6 +7,7 @@ import nl.hu.bep3.dish.application.request.DishInDto;
 import nl.hu.bep3.dish.application.request.IngredientAmountInDto;
 import nl.hu.bep3.dish.domain.Dish;
 import nl.hu.bep3.dish.domain.Exceptions.DishNotFoundException;
+import nl.hu.bep3.dish.domain.Exceptions.InvalidIngredientException;
 import nl.hu.bep3.dish.domain.Ingredient;
 import nl.hu.bep3.dish.domain.IngredientAmount;
 import nl.hu.bep3.dish.domain.repository.DishRepository;
@@ -30,15 +31,10 @@ public class DomainDishService implements DishService {
   }
 
   @Override
-  public List<Dish> getAllIngredients() {
-    return dishRepository.findAll();
-  }
-
-  @Override
   public Dish createDish(DishInDto dishInDto) {
     ArrayList<IngredientAmount> ingredients = new ArrayList<>();
     if (dishInDto.ingredients == null || dishInDto.ingredients.isEmpty()) {
-      //TODO: throw exception
+      throw new InvalidIngredientException("There where no ingredients in the dish");
     }
     for (IngredientAmountInDto ingredientAmount : dishInDto.ingredients) {
       Ingredient ingredient = ingredientService.getIngredientById(ingredientAmount.ingredientId);
@@ -46,9 +42,7 @@ public class DomainDishService implements DishService {
           new IngredientAmount(ingredientAmount.amount, ingredientAmount.amountUnit, ingredient));
     }
     Dish dish = new Dish(dishInDto.name, dishInDto.price, ingredients);
-    dishRepository.save(dish);
-
-    return dish;
+    return dishRepository.save(dish);
   }
 
   @Override
