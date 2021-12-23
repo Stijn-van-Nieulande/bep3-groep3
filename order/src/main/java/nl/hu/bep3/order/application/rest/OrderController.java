@@ -44,6 +44,11 @@ public class OrderController {
     return order.getStatus();
   }
 
+  @PutMapping("/review")
+  public ReviewResponseDTO getReviews() {
+    return this.orderService.;
+  }
+
   // Als customer wil ik een review kunnen doen als mijn order gedelivered/opgehaald is.
   // (0/5 + message)
   @PutMapping("/review/{id}")

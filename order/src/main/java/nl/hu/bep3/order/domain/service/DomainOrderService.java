@@ -9,10 +9,13 @@ import nl.hu.bep3.order.application.request.ReviewRequestDTO;
 import nl.hu.bep3.order.application.response.OrderResponseDTO;
 import nl.hu.bep3.order.application.response.ReviewResponseDTO;
 import nl.hu.bep3.order.domain.Order;
+import nl.hu.bep3.order.domain.Review;
 import nl.hu.bep3.order.domain.exception.OrderNotFound;
 import nl.hu.bep3.order.domain.repository.OrderRepository;
 import nl.hu.bep3.order.domain.valueobjects.DishOrder;
 import nl.hu.bep3.order.infrastructure.rabbitmq.QueueSender;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public class DomainOrderService implements OrderService {
 
@@ -55,6 +58,11 @@ public class DomainOrderService implements OrderService {
   @Override
   public void deleteProduct(UUID id) {
     // TODO: Implement me
+  }
+
+  @Override
+  public Page<Review> getReviewsPaginated(Pageable pageable) {
+    return this.orderRepository.findAllReviewsPaginated(pageable);
   }
 
   @Override

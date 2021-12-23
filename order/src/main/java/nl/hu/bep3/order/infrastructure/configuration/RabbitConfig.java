@@ -11,4 +11,9 @@ public class RabbitConfig {
   public DirectExchange directCustomerExchange() {
     return new DirectExchange("bep.customer");
   }
+
+  @Bean
+  public DirectExchange directOrderExchange() {
+    return new DirectExchange("bep.Order");
+  }
 }
